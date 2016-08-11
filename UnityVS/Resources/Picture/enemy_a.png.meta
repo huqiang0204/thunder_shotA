@@ -1,0 +1,491 @@
+fileFormatVersion: 2
+guid: 3656afdb060f55c41a0fac973c7457bb
+timeCreated: 1464350656
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: enemy_a_0
+    21300002: enemy_a_1
+    21300004: enemy_a_2
+    21300006: enemy_a_3
+    21300008: enemy_a_4
+    21300010: enemy_a_5
+    21300012: enemy_a_6
+    21300014: enemy_a_7
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: enemy_a_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -36, y: 104}
+        - {x: -44, y: 99}
+        - {x: -43, y: 67}
+        - {x: -43, y: 59}
+        - {x: -43, y: 69}
+        - {x: -45, y: 74}
+        - {x: -56, y: 69}
+        - {x: -80, y: 72}
+        - {x: -87, y: 60}
+        - {x: -92, y: 28}
+        - {x: -89, y: 27}
+        - {x: -102, y: 20}
+        - {x: -102, y: -16}
+        - {x: -45, y: -95}
+        - {x: 14, y: -95}
+        - {x: 100, y: -18}
+        - {x: 100, y: 26}
+        - {x: 83, y: 65}
+        - {x: 77, y: 71}
+        - {x: 51, y: 104}
+      - - {x: -98, y: 36}
+        - {x: -100, y: 35}
+        - {x: -100, y: 27}
+        - {x: -98, y: 25}
+        - {x: -95, y: 26}
+        - {x: -93, y: 31}
+        - {x: -93, y: 35}
+        - {x: -94, y: 36}
+      - - {x: 91, y: 33}
+        - {x: 91, y: 31}
+        - {x: 95, y: 25}
+        - {x: 98, y: 26}
+        - {x: 98, y: 33}
+        - {x: 95, y: 36}
+        - {x: 94, y: 36}
+      - - {x: -66, y: 73}
+        - {x: -68, y: 72}
+        - {x: -68, y: 65}
+        - {x: -65, y: 63}
+        - {x: -60, y: 65}
+        - {x: -60, y: 68}
+        - {x: -64, y: 73}
+      - - {x: 61, y: 72}
+        - {x: 58, y: 66}
+        - {x: 62, y: 63}
+        - {x: 63, y: 63}
+        - {x: 66, y: 66}
+        - {x: 66, y: 71}
+        - {x: 64, y: 73}
+      - - {x: -15, y: 101}
+        - {x: -14, y: 98}
+        - {x: -11, y: 98}
+        - {x: -9, y: 100}
+        - {x: -10, y: 103}
+        - {x: -13, y: 103}
+      - - {x: 7, y: 101}
+        - {x: 8, y: 98}
+        - {x: 11, y: 98}
+        - {x: 13, y: 100}
+        - {x: 12, y: 103}
+        - {x: 9, y: 103}
+      - - {x: -42, y: 109}
+        - {x: -40, y: 107}
+        - {x: -37, y: 108}
+        - {x: -36, y: 113}
+        - {x: -39, y: 115}
+        - {x: -42, y: 112}
+      - - {x: 34, y: 111}
+        - {x: 37, y: 107}
+        - {x: 40, y: 108}
+        - {x: 40, y: 112}
+        - {x: 37, y: 115}
+        - {x: 34, y: 114}
+      tessellationDetail: 0
+    - name: enemy_a_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -65, y: 103}
+        - {x: -85, y: 77}
+        - {x: -101, y: 27}
+        - {x: -101, y: -15}
+        - {x: -28, y: -95}
+        - {x: 80, y: -95}
+        - {x: 101, y: -23}
+        - {x: 101, y: 98}
+        - {x: 93, y: 103}
+      tessellationDetail: 0
+    - name: enemy_a_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -128, y: 103}
+        - {x: -128, y: -18}
+        - {x: -27, y: -95}
+        - {x: 44, y: -95}
+        - {x: 128, y: -41}
+        - {x: 128, y: 88}
+        - {x: 122, y: 103}
+      - - {x: -35, y: -84}
+        - {x: -32, y: -88}
+        - {x: -28, y: -88}
+        - {x: -26, y: -87}
+        - {x: -26, y: -83}
+        - {x: -27, y: -81}
+        - {x: -33, y: -79}
+        - {x: -35, y: -81}
+      - - {x: 26, y: -80}
+        - {x: 25, y: -82}
+        - {x: 25, y: -87}
+        - {x: 31, y: -87}
+        - {x: 35, y: -83}
+        - {x: 35, y: -81}
+        - {x: 33, y: -79}
+      - - {x: -89, y: 83}
+        - {x: -91, y: 81}
+        - {x: -91, y: 79}
+        - {x: -87, y: 75}
+        - {x: -84, y: 75}
+        - {x: -83, y: 77}
+        - {x: -83, y: 81}
+        - {x: -85, y: 82}
+      - - {x: 86, y: 83}
+        - {x: 81, y: 78}
+        - {x: 82, y: 75}
+        - {x: 88, y: 75}
+        - {x: 91, y: 79}
+        - {x: 91, y: 82}
+        - {x: 89, y: 83}
+      - - {x: -56, y: 90}
+        - {x: -56, y: 84}
+        - {x: -50, y: 82}
+        - {x: -44, y: 82}
+        - {x: -43, y: 83}
+        - {x: -43, y: 87}
+        - {x: -45, y: 90}
+      - - {x: 41, y: 86}
+        - {x: 42, y: 83}
+        - {x: 50, y: 83}
+        - {x: 55, y: 84}
+        - {x: 56, y: 87}
+        - {x: 55, y: 90}
+        - {x: 46, y: 90}
+      - - {x: -87, y: 92}
+        - {x: -87, y: 90}
+        - {x: -83, y: 86}
+        - {x: -81, y: 86}
+        - {x: -79, y: 88}
+        - {x: -81, y: 93}
+        - {x: -85, y: 94}
+      - - {x: 82, y: 94}
+        - {x: 79, y: 92}
+        - {x: 78, y: 88}
+        - {x: 80, y: 86}
+        - {x: 83, y: 86}
+        - {x: 87, y: 90}
+        - {x: 87, y: 92}
+        - {x: 85, y: 94}
+      tessellationDetail: 0
+    - name: enemy_a_3
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 117, y: 82}
+        - {x: 104, y: 82}
+        - {x: 101, y: 80}
+        - {x: 101, y: 78}
+        - {x: 81, y: 101}
+        - {x: 79, y: 103}
+        - {x: 76, y: 103}
+        - {x: 62, y: 91}
+        - {x: 24, y: 98}
+        - {x: -6, y: 103}
+        - {x: -94, y: 103}
+        - {x: -128, y: 74}
+        - {x: -128, y: 1}
+        - {x: -90, y: -69}
+        - {x: -18, y: -95}
+        - {x: 32, y: -95}
+        - {x: 128, y: -12}
+        - {x: 128, y: 46}
+        - {x: 121, y: 48}
+      - - {x: -35, y: -81}
+        - {x: -35, y: -84}
+        - {x: -31, y: -87}
+        - {x: -27, y: -87}
+        - {x: -26, y: -86}
+        - {x: -26, y: -82}
+        - {x: -33, y: -79}
+      - - {x: 26, y: -82}
+        - {x: 26, y: -86}
+        - {x: 28, y: -87}
+        - {x: 32, y: -87}
+        - {x: 35, y: -83}
+        - {x: 35, y: -81}
+        - {x: 33, y: -79}
+      - - {x: -91, y: 80}
+        - {x: -89, y: 76}
+        - {x: -86, y: 75}
+        - {x: -83, y: 76}
+        - {x: -83, y: 78}
+        - {x: -88, y: 83}
+        - {x: -90, y: 83}
+      - - {x: 85, y: 75}
+        - {x: 90, y: 77}
+        - {x: 91, y: 81}
+        - {x: 88, y: 83}
+        - {x: 83, y: 78}
+      - - {x: -45, y: 90}
+        - {x: -56, y: 90}
+        - {x: -56, y: 88}
+        - {x: -55, y: 85}
+        - {x: -48, y: 83}
+        - {x: -44, y: 83}
+        - {x: -43, y: 85}
+        - {x: -43, y: 89}
+      - - {x: 53, y: 90}
+        - {x: 46, y: 90}
+        - {x: 43, y: 86}
+        - {x: 44, y: 83}
+        - {x: 50, y: 83}
+        - {x: 53, y: 84}
+        - {x: 56, y: 86}
+        - {x: 56, y: 89}
+      - - {x: -87, y: 92}
+        - {x: -87, y: 90}
+        - {x: -83, y: 86}
+        - {x: -81, y: 86}
+        - {x: -79, y: 88}
+        - {x: -81, y: 93}
+        - {x: -85, y: 94}
+      - - {x: 80, y: 92}
+        - {x: 79, y: 88}
+        - {x: 81, y: 86}
+        - {x: 83, y: 86}
+        - {x: 87, y: 90}
+        - {x: 87, y: 92}
+        - {x: 85, y: 94}
+      tessellationDetail: 0
+    - name: enemy_a_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 24, y: 99}
+        - {x: 12, y: 87}
+        - {x: 12, y: 66}
+        - {x: 11, y: 75}
+        - {x: 8, y: 79}
+        - {x: 6, y: 82}
+        - {x: 12, y: 89}
+        - {x: 15, y: 92}
+        - {x: 20, y: 106}
+        - {x: 4, y: 120}
+        - {x: -12, y: 120}
+        - {x: -22, y: 90}
+        - {x: -9, y: 83}
+        - {x: -14, y: 78}
+        - {x: -14, y: 74}
+        - {x: -15, y: 82}
+        - {x: -16, y: 85}
+        - {x: -62, y: 108}
+        - {x: -102, y: 72}
+        - {x: -102, y: -42}
+        - {x: -35, y: -128}
+        - {x: 50, y: -128}
+        - {x: 100, y: -96}
+        - {x: 100, y: 62}
+        - {x: 78, y: 75}
+      tessellationDetail: 0
+    - name: enemy_a_5
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 99, y: -64}
+        - {x: 99, y: 64}
+        - {x: 89, y: 100}
+        - {x: 25, y: 100}
+        - {x: 12, y: 89}
+        - {x: 12, y: 68}
+        - {x: 11, y: 77}
+        - {x: 8, y: 81}
+        - {x: 6, y: 84}
+        - {x: 12, y: 91}
+        - {x: 15, y: 94}
+        - {x: 20, y: 108}
+        - {x: 4, y: 122}
+        - {x: -12, y: 122}
+        - {x: -22, y: 92}
+        - {x: -9, y: 85}
+        - {x: -14, y: 80}
+        - {x: -14, y: 76}
+        - {x: -15, y: 84}
+        - {x: -16, y: 87}
+        - {x: -24, y: 85}
+        - {x: -30, y: 91}
+        - {x: -51, y: 92}
+        - {x: -78, y: 76}
+        - {x: -80, y: 44}
+        - {x: -74, y: 35}
+        - {x: -73, y: 33}
+        - {x: -81, y: 40}
+        - {x: -79, y: 41}
+        - {x: -84, y: 48}
+        - {x: -98, y: 47}
+        - {x: -102, y: 45}
+        - {x: -102, y: -29}
+        - {x: -85, y: -31}
+        - {x: -80, y: -29}
+        - {x: -76, y: -15}
+        - {x: -75, y: -9}
+        - {x: -71, y: -40}
+        - {x: -69, y: -42}
+        - {x: -61, y: -42}
+        - {x: -59, y: -40}
+        - {x: -58, y: -48}
+        - {x: -41, y: -116}
+        - {x: -35, y: -128}
+        - {x: -24, y: -128}
+        - {x: -20, y: -123}
+        - {x: -2, y: -128}
+        - {x: 39, y: -128}
+      - - {x: -72, y: 88}
+        - {x: -74, y: 86}
+        - {x: -74, y: 84}
+        - {x: -72, y: 82}
+        - {x: -69, y: 82}
+        - {x: -67, y: 84}
+        - {x: -67, y: 86}
+        - {x: -69, y: 88}
+      - - {x: 66, y: 88}
+        - {x: 64, y: 86}
+        - {x: 64, y: 84}
+        - {x: 66, y: 82}
+        - {x: 69, y: 82}
+        - {x: 71, y: 84}
+        - {x: 71, y: 86}
+        - {x: 69, y: 88}
+      tessellationDetail: 0
+    - name: enemy_a_6
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 55, y: 87}
+        - {x: -43, y: 87}
+        - {x: -102, y: 73}
+        - {x: -102, y: -84}
+        - {x: 98, y: -84}
+        - {x: 102, y: -65}
+        - {x: 102, y: 53}
+        - {x: 93, y: 67}
+      tessellationDetail: 0
+    - name: enemy_a_7
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 54, y: 87}
+        - {x: -44, y: 87}
+        - {x: -103, y: 73}
+        - {x: -103, y: -74}
+        - {x: -73, y: -84}
+        - {x: 84, y: -84}
+        - {x: 101, y: -28}
+        - {x: 101, y: 53}
+        - {x: 92, y: 67}
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

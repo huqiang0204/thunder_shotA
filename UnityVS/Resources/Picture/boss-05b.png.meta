@@ -1,0 +1,1024 @@
+fileFormatVersion: 2
+guid: 5f65b9546c99ced4b8cf5af377ac6718
+timeCreated: 1460681374
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: boss-05b_0
+    21300002: boss-05b_1
+    21300004: boss-05b_2
+    21300006: boss-05b_3
+    21300008: boss-05b_4
+    21300010: boss-05b_5
+    21300012: boss-05b_6
+    21300014: boss-05b_7
+    21300016: boss-05b_8
+    21300018: boss-05b_9
+    21300020: boss-05b_10
+    21300022: boss-05b_11
+    21300024: boss-05b_12
+    21300026: boss-05b_13
+    21300028: boss-05b_14
+    21300030: boss-05b_15
+    21300032: boss-05b_16
+    21300034: boss-05b_17
+    21300036: boss-05b_18
+    21300038: boss-05b_19
+    21300040: boss-05b_20
+    21300042: boss-05b_21
+    21300044: boss-05b_22
+    21300046: boss-05b_23
+    21300048: boss-05b_24
+    21300050: boss-05b_25
+    21300052: boss-05b_26
+    21300054: boss-05b_27
+    21300056: boss-05b_28
+    21300058: boss-05b_29
+    21300060: boss-05b_30
+    21300062: boss-05b_31
+    21300064: boss-05b_32
+    21300066: boss-05b_33
+    21300068: boss-05b_34
+    21300070: boss-05b_35
+    21300072: boss-05b_36
+    21300074: boss-05b_37
+    21300076: boss-05b_38
+    21300078: boss-05b_39
+    21300080: boss-05b_40
+    21300082: boss-05b_41
+    21300084: boss-05b_42
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: boss-05b_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 307
+        width: 145
+        height: 205
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -65.5, y: 102.5}
+        - {x: -72.5, y: 99.5}
+        - {x: -72.5, y: -91.5}
+        - {x: -44.5, y: -102.5}
+        - {x: 46.5, y: -102.5}
+        - {x: 72.5, y: -59.5}
+        - {x: 72.5, y: 91.5}
+        - {x: 69.5, y: 102.5}
+      - - {x: 68.5, y: -81.5}
+        - {x: 63.5, y: -87.5}
+        - {x: 62.5, y: -89.5}
+        - {x: 62.5, y: -93.5}
+        - {x: 66.5, y: -102.5}
+        - {x: 72.5, y: -102.5}
+        - {x: 72.5, y: -81.5}
+      - - {x: -57.5, y: -94.5}
+        - {x: -54.5, y: -93.5}
+        - {x: -54.5, y: -90.5}
+        - {x: -57.5, y: -89.5}
+        - {x: -59.5, y: -91.5}
+      - - {x: 68.5, y: -78.5}
+        - {x: 70.5, y: -81.5}
+        - {x: 72.5, y: -80.5}
+        - {x: 72.5, y: -77.5}
+        - {x: 70.5, y: -76.5}
+      - - {x: 41.5, y: -13.5}
+        - {x: 40.5, y: -16.5}
+        - {x: 39.5, y: -16.5}
+      - - {x: -40.5, y: -15.5}
+        - {x: -39.5, y: -15.5}
+        - {x: -39.5, y: -14.5}
+        - {x: -41.5, y: -14.5}
+      tessellationDetail: 0
+    - name: boss-05b_1
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 424
+        width: 75
+        height: 81
+      alignment: 9
+      pivot: {x: 0.120820925, y: 0.087709025}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 40.93843, y: 73.89557}
+        - {x: 9.938431, y: 42.89557}
+        - {x: -9.061569, y: 14.895569}
+        - {x: -9.061569, y: -7.104431}
+        - {x: 19.93843, y: -7.104431}
+        - {x: 40.93843, y: 10.895569}
+        - {x: 65.93843, y: 65.89557}
+        - {x: 65.93843, y: 73.89557}
+      tessellationDetail: 0
+    - name: boss-05b_2
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 417
+        width: 42
+        height: 86
+      alignment: 9
+      pivot: {x: 0.6246316, y: 0.8553123}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -14.234528, y: 12.443146}
+        - {x: -26.234528, y: -16.556854}
+        - {x: -26.234528, y: -72.556854}
+        - {x: 0.7654724, y: -72.556854}
+        - {x: 15.765472, y: -34.556854}
+        - {x: 15.765472, y: 9.443146}
+        - {x: 13.765472, y: 12.443146}
+      tessellationDetail: 0
+    - name: boss-05b_3
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 480
+        width: 48
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9, y: 16}
+        - {x: -24, y: -2}
+        - {x: -24, y: -16}
+        - {x: -2, y: -16}
+        - {x: 21, y: -14}
+        - {x: 24, y: -5}
+        - {x: 24, y: 16}
+      - - {x: 21, y: -13}
+        - {x: 24, y: -12}
+        - {x: 24, y: -9}
+        - {x: 21, y: -8}
+        - {x: 19, y: -10}
+      tessellationDetail: 0
+    - name: boss-05b_4
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 447
+        width: 41
+        height: 65
+      alignment: 9
+      pivot: {x: 0.7463081, y: 0.8314425}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5.598633, y: 10.956238}
+        - {x: -30.598633, y: -22.043762}
+        - {x: -30.598633, y: -47.043762}
+        - {x: -27.598633, y: -50.043762}
+        - {x: -22.598633, y: -50.043762}
+        - {x: -11.598633, y: -44.043762}
+        - {x: 10.401367, y: -5.043762}
+        - {x: 10.401367, y: 10.956238}
+      - - {x: -30.598633, y: -4.043762}
+        - {x: -27.598633, y: -3.0437622}
+        - {x: -27.598633, y: 2.9562378}
+        - {x: -29.598633, y: 4.956238}
+        - {x: -30.598633, y: 4.956238}
+      tessellationDetail: 0
+    - name: boss-05b_5
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 420
+        width: 41
+        height: 68
+      alignment: 9
+      pivot: {x: 0.66322064, y: 0.87261915}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 12.807953, y: 8.661896}
+        - {x: -9.192047, y: 8.661896}
+        - {x: -20.192047, y: 0.66189575}
+        - {x: -27.192047, y: -33.338104}
+        - {x: -27.192047, y: -59.338104}
+        - {x: -19.192047, y: -59.338104}
+        - {x: 2.807953, y: -33.338104}
+        - {x: 13.807953, y: -16.338104}
+        - {x: 13.807953, y: 6.6618958}
+      tessellationDetail: 0
+    - name: boss-05b_6
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 382
+        width: 36
+        height: 88
+      alignment: 9
+      pivot: {x: 0.50000167, y: 0.85957265}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18.000061, y: 12.357605}
+        - {x: -18.000061, y: -75.642395}
+        - {x: 4.999939, y: -75.642395}
+        - {x: 17.999939, y: -44.642395}
+        - {x: 17.999939, y: 8.357605}
+        - {x: 9.999939, y: 12.357605}
+      tessellationDetail: 0
+    - name: boss-05b_7
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 210
+        width: 70
+        height: 195
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -35, y: 97.5}
+        - {x: -35, y: -48.5}
+        - {x: -34, y: -61.5}
+        - {x: -20, y: -97.5}
+        - {x: 0, y: -97.5}
+        - {x: 14, y: -90.5}
+        - {x: 35, y: -56.5}
+        - {x: 35, y: 3.5}
+        - {x: 15, y: 97.5}
+      - - {x: -35, y: -87.5}
+        - {x: -31, y: -90.5}
+        - {x: -28, y: -89.5}
+        - {x: -28, y: -81.5}
+        - {x: -29, y: -73.5}
+        - {x: -32, y: -72.5}
+        - {x: -35, y: -72.5}
+      - - {x: -35, y: -40.5}
+        - {x: -32, y: -39.5}
+        - {x: -32, y: -34.5}
+        - {x: -34, y: -32.5}
+        - {x: -35, y: -32.5}
+      - - {x: -35, y: 5.5}
+        - {x: -35, y: -13.5}
+        - {x: -31, y: -13.5}
+        - {x: -29, y: -11.5}
+        - {x: -29, y: -2.5}
+        - {x: -32, y: 5.5}
+      - - {x: 22, y: 25.5}
+        - {x: 22, y: 20.5}
+        - {x: 26, y: 14.5}
+        - {x: 27, y: 14.5}
+        - {x: 30, y: 17.5}
+        - {x: 30, y: 21.5}
+        - {x: 25, y: 26.5}
+      tessellationDetail: 0
+    - name: boss-05b_8
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 303
+        width: 11
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_9
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 169
+        width: 251
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 119.5, y: -104}
+        - {x: 125.5, y: -104}
+        - {x: 125.5, y: -96}
+        - {x: 122.5, y: -97}
+      - - {x: 33.5, y: 104}
+        - {x: -125.5, y: 104}
+        - {x: -125.5, y: -51}
+        - {x: -124.5, y: -63}
+        - {x: -79.5, y: -85}
+        - {x: -31.5, y: -104}
+        - {x: 107.5, y: -104}
+        - {x: 125.5, y: -60}
+        - {x: 125.5, y: 92}
+      - - {x: 22.5, y: -96}
+        - {x: 23.5, y: -99}
+        - {x: 30.5, y: -99}
+        - {x: 32.5, y: -97}
+        - {x: 31.5, y: -94}
+        - {x: 24.5, y: -94}
+      - - {x: -113.5, y: -65}
+        - {x: -116.5, y: -65}
+        - {x: -117.5, y: -67}
+        - {x: -117.5, y: -72}
+        - {x: -115.5, y: -74}
+        - {x: -113.5, y: -74}
+        - {x: -109.5, y: -70}
+        - {x: -109.5, y: -68}
+      - - {x: 61.5, y: -57}
+        - {x: 63.5, y: -60}
+        - {x: 67.5, y: -59}
+        - {x: 69.5, y: -56}
+        - {x: 69.5, y: -54}
+        - {x: 66.5, y: -53}
+      - - {x: 82.5, y: -32}
+        - {x: 85.5, y: -35}
+        - {x: 88.5, y: -35}
+        - {x: 91.5, y: -32}
+        - {x: 90.5, y: -29}
+        - {x: 83.5, y: -29}
+      - - {x: 114.5, y: -19}
+        - {x: 115.5, y: -22}
+        - {x: 118.5, y: -22}
+        - {x: 120.5, y: -21}
+        - {x: 122.5, y: -16}
+        - {x: 119.5, y: -14}
+      - - {x: 11.5, y: 100}
+        - {x: 9.5, y: 98}
+        - {x: 10.5, y: 94}
+        - {x: 16.5, y: 93}
+        - {x: 23.5, y: 93}
+        - {x: 23.5, y: 97}
+        - {x: 22.5, y: 100}
+      - - {x: 8.5, y: 104}
+        - {x: 8.5, y: 102}
+        - {x: 10.5, y: 100}
+        - {x: 13.5, y: 100}
+        - {x: 15.5, y: 102}
+        - {x: 15.5, y: 104}
+      tessellationDetail: 0
+    - name: boss-05b_10
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 296
+        width: 5
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_11
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 284
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_12
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 294
+        width: 11
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_13
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 148
+        width: 133
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -38.5, y: -42}
+        - {x: -52.5, y: -42}
+        - {x: -57.5, y: -43}
+        - {x: -57.5, y: -63}
+        - {x: -42.5, y: -77}
+        - {x: -12.5, y: -77}
+        - {x: -12.5, y: -64}
+        - {x: -22.5, y: -54}
+      - - {x: -11.5, y: -24}
+        - {x: -13.5, y: -29}
+        - {x: -13.5, y: -46}
+        - {x: 13.5, y: -62}
+        - {x: 31.5, y: -62}
+        - {x: 34.5, y: -56}
+        - {x: 34.5, y: -45}
+        - {x: 5.5, y: -24}
+      - - {x: -5.5, y: 28}
+        - {x: -18.5, y: 24}
+        - {x: -18.5, y: 5}
+        - {x: -1.5, y: -20}
+        - {x: 10.5, y: -22}
+        - {x: 47.5, y: -22}
+        - {x: 52.5, y: -20}
+        - {x: 52.5, y: 0}
+        - {x: 22.5, y: 28}
+      - - {x: 13.5, y: -14}
+        - {x: 10.5, y: -17}
+        - {x: 10.5, y: -18}
+        - {x: 12.5, y: -20}
+        - {x: 14.5, y: -20}
+        - {x: 16.5, y: -18}
+        - {x: 16.5, y: -16}
+        - {x: 14.5, y: -14}
+      - - {x: 55.5, y: -16}
+        - {x: 62.5, y: -16}
+        - {x: 62.5, y: -12}
+        - {x: 58.5, y: -7}
+        - {x: 54.5, y: -7}
+        - {x: 52.5, y: -8}
+        - {x: 52.5, y: -12}
+      - - {x: -60.5, y: 43}
+        - {x: -66.5, y: 16}
+        - {x: -66.5, y: -9}
+        - {x: -62.5, y: -14}
+        - {x: -55.5, y: -14}
+        - {x: -35.5, y: 6}
+        - {x: -35.5, y: 42}
+        - {x: -36.5, y: 43}
+      - - {x: 61.5, y: 11}
+        - {x: 62.5, y: 8}
+        - {x: 66.5, y: 8}
+        - {x: 66.5, y: 13}
+        - {x: 63.5, y: 13}
+      - - {x: 21.5, y: 18}
+        - {x: 24.5, y: 19}
+        - {x: 24.5, y: 22}
+        - {x: 21.5, y: 23}
+        - {x: 19.5, y: 21}
+      - - {x: 47.5, y: 43}
+        - {x: 43.5, y: 34}
+        - {x: 43.5, y: 27}
+        - {x: 48.5, y: 22}
+        - {x: 65.5, y: 22}
+        - {x: 66.5, y: 23}
+        - {x: 66.5, y: 43}
+      - - {x: 23.5, y: 54}
+        - {x: 20.5, y: 53}
+        - {x: 17.5, y: 46}
+        - {x: 17.5, y: 40}
+        - {x: 19.5, y: 38}
+        - {x: 24.5, y: 34}
+        - {x: 36.5, y: 34}
+        - {x: 42.5, y: 42}
+        - {x: 42.5, y: 51}
+        - {x: 39.5, y: 54}
+      - - {x: 3.5, y: 76}
+        - {x: -8.5, y: 76}
+        - {x: -10.5, y: 73}
+        - {x: -10.5, y: 48}
+        - {x: -2.5, y: 46}
+        - {x: 12.5, y: 46}
+        - {x: 15.5, y: 49}
+        - {x: 15.5, y: 62}
+        - {x: 11.5, y: 69}
+      - - {x: -31.5, y: 55}
+        - {x: -34.5, y: 52}
+        - {x: -34.5, y: 50}
+        - {x: -32.5, y: 48}
+        - {x: -27.5, y: 48}
+        - {x: -25.5, y: 50}
+        - {x: -25.5, y: 51}
+        - {x: -29.5, y: 55}
+      - - {x: -66.5, y: 77}
+        - {x: -66.5, y: 58}
+        - {x: -65.5, y: 57}
+        - {x: -52.5, y: 60}
+        - {x: -49.5, y: 68}
+        - {x: -49.5, y: 77}
+      - - {x: -50.5, y: 63}
+        - {x: -52.5, y: 62}
+        - {x: -52.5, y: 58}
+        - {x: -50.5, y: 57}
+        - {x: -47.5, y: 57}
+        - {x: -46.5, y: 59}
+        - {x: -46.5, y: 61}
+        - {x: -47.5, y: 63}
+      - - {x: 54.5, y: 66}
+        - {x: 55.5, y: 63}
+        - {x: 60.5, y: 63}
+        - {x: 62.5, y: 65}
+        - {x: 61.5, y: 68}
+        - {x: 56.5, y: 68}
+      - - {x: 59.5, y: 72}
+        - {x: 60.5, y: 69}
+        - {x: 64.5, y: 69}
+        - {x: 66.5, y: 71}
+        - {x: 65.5, y: 74}
+        - {x: 61.5, y: 74}
+      tessellationDetail: 0
+    - name: boss-05b_14
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 273
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_15
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 261
+        width: 21
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_16
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 239
+        width: 28
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_17
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 249
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_18
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 211
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_19
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 205
+        width: 67
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2.5, y: 20.5}
+        - {x: -33.5, y: 20.5}
+        - {x: -33.5, y: 3.5}
+        - {x: -19.5, y: -16.5}
+        - {x: 8.5, y: -20.5}
+        - {x: 33.5, y: -20.5}
+        - {x: 33.5, y: 0.5}
+      - - {x: -6.5, y: -18.5}
+        - {x: -5.5, y: -20.5}
+        - {x: -0.5, y: -20.5}
+        - {x: -0.5, y: -15.5}
+        - {x: -1.5, y: -14.5}
+        - {x: -3.5, y: -14.5}
+        - {x: -6.5, y: -17.5}
+      - - {x: 7.5, y: 18.5}
+        - {x: 7.5, y: 20.5}
+        - {x: 2.5, y: 20.5}
+        - {x: 4.5, y: 17.5}
+      tessellationDetail: 0
+    - name: boss-05b_20
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 211
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_21
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 146
+        width: 41
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20.5, y: 17.5}
+        - {x: -20.5, y: -5.5}
+        - {x: 0.5, y: -17.5}
+        - {x: 20.5, y: -17.5}
+        - {x: 20.5, y: 1.5}
+        - {x: 0.5, y: 17.5}
+      tessellationDetail: 0
+    - name: boss-05b_22
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 165
+        width: 43
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3.5, y: 17}
+        - {x: -21.5, y: 17}
+        - {x: -21.5, y: -4}
+        - {x: -14.5, y: -14}
+        - {x: -2.5, y: -17}
+        - {x: 21.5, y: -17}
+        - {x: 21.5, y: 4}
+      tessellationDetail: 0
+    - name: boss-05b_23
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 145
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_24
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 88
+        width: 104
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -52, y: 50}
+        - {x: -52, y: -43}
+        - {x: -40, y: -50}
+        - {x: 43, y: -50}
+        - {x: 52, y: -48}
+        - {x: 52, y: 50}
+      tessellationDetail: 0
+    - name: boss-05b_25
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 479
+        width: 44
+        height: 32
+      alignment: 9
+      pivot: {x: 0.487555, y: 0.45792437}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 22.547577, y: 17.346436}
+        - {x: 6.547577, y: 17.346436}
+        - {x: -21.452423, y: 0.34643555}
+        - {x: -21.452423, y: -14.653564}
+        - {x: -9.452423, y: -14.653564}
+        - {x: 0.5475769, y: -11.653564}
+        - {x: 16.547577, y: -4.6535645}
+        - {x: 22.547577, y: 3.3464355}
+      tessellationDetail: 0
+    - name: boss-05b_26
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 489
+        width: 61
+        height: 23
+      alignment: 9
+      pivot: {x: 0.49719435, y: 0.49301207}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_27
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 61
+        width: 67
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5.5, y: 46.5}
+        - {x: -33.5, y: 12.5}
+        - {x: -33.5, y: -20.5}
+        - {x: -23.5, y: -46.5}
+        - {x: 6.5, y: -46.5}
+        - {x: 33.5, y: -11.5}
+        - {x: 33.5, y: 27.5}
+        - {x: 24.5, y: 46.5}
+      tessellationDetail: 0
+    - name: boss-05b_28
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 75
+        width: 37
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6.5, y: 22.5}
+        - {x: -12.5, y: 21.5}
+        - {x: -18.5, y: 3.5}
+        - {x: -18.5, y: -32.5}
+        - {x: -3.5, y: -32.5}
+        - {x: 6.5, y: -26.5}
+        - {x: 10.5, y: -0.5}
+        - {x: 10.5, y: 22.5}
+      - - {x: 12.5, y: 32.5}
+        - {x: 11.5, y: 31.5}
+        - {x: 11.5, y: 29.5}
+        - {x: 13.5, y: 27.5}
+        - {x: 18.5, y: 27.5}
+        - {x: 18.5, y: 32.5}
+      tessellationDetail: 0
+    - name: boss-05b_29
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 135
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_30
+      rect:
+        serializedVersion: 2
+        x: 321
+        y: 123
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_31
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 97
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_32
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 117
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_33
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 46
+        width: 86
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 42, y: 15}
+        - {x: 24, y: 34}
+        - {x: -43, y: 34}
+        - {x: -43, y: -13}
+        - {x: -21, y: -34}
+        - {x: 21, y: -34}
+        - {x: 23, y: -33}
+        - {x: 43, y: -14}
+        - {x: 43, y: 12}
+      tessellationDetail: 0
+    - name: boss-05b_34
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 101
+        width: 28
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_35
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 67
+        width: 66
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 20.5}
+        - {x: -33, y: 20.5}
+        - {x: -33, y: 2.5}
+        - {x: 1, y: -20.5}
+        - {x: 33, y: -20.5}
+        - {x: 33, y: -2.5}
+        - {x: 32, y: -1.5}
+      - - {x: 8, y: 18.5}
+        - {x: 8, y: 20.5}
+        - {x: 3, y: 20.5}
+        - {x: 5, y: 17.5}
+      tessellationDetail: 0
+    - name: boss-05b_36
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 73
+        width: 6
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_37
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 73
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_38
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 56
+        width: 152
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - name: boss-05b_39
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 433
+        width: 56
+        height: 46
+      alignment: 9
+      pivot: {x: 0.50000054, y: 0.50000095}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28.00003, y: -23.00003}
+        - {x: 12.9999695, y: -23.00003}
+        - {x: 27.99997, y: -4.0000305}
+        - {x: 27.99997, y: 22.99997}
+        - {x: -2.0000305, y: 22.99997}
+        - {x: -28.00003, y: 14.9999695}
+      tessellationDetail: 0
+    - name: boss-05b_40
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 8
+        width: 40
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16, y: -17.5}
+        - {x: -5, y: -17.5}
+        - {x: -6, y: -14.5}
+        - {x: -14, y: -13.5}
+        - {x: -16, y: -15.5}
+      - - {x: -20, y: 17.5}
+        - {x: -20, y: -5.5}
+        - {x: 0, y: -17.5}
+        - {x: 20, y: -17.5}
+        - {x: 20, y: 0.5}
+        - {x: 1, y: 17.5}
+      tessellationDetail: 0
+    - name: boss-05b_41
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 27
+        width: 44
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22, y: 17}
+        - {x: -22, y: -2}
+        - {x: -4, y: -17}
+        - {x: 22, y: -17}
+        - {x: 22, y: 1}
+        - {x: 0, y: 17}
+      tessellationDetail: 0
+    - name: boss-05b_42
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 5
+        width: 15
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

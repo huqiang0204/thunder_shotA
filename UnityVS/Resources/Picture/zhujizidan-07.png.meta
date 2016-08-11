@@ -1,0 +1,198 @@
+fileFormatVersion: 2
+guid: baba07bb30c387e4abad82b5525431cd
+timeCreated: 1466510080
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: zhujizidan-07_0
+    21300002: zhujizidan-07_1
+    21300004: zhujizidan-07_2
+    21300006: zhujizidan-07_3
+    21300008: zhujizidan-07_4
+    21300010: zhujizidan-07_5
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: zhujizidan-07_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 42
+        width: 43
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 17.5, y: 89}
+        - {x: 12.5, y: 92}
+        - {x: -12.5, y: 92}
+        - {x: -19.5, y: 88}
+        - {x: -21.5, y: 83}
+        - {x: -21.5, y: -19}
+        - {x: -7.5, y: -92}
+        - {x: 7.5, y: -92}
+        - {x: 14.5, y: -84}
+        - {x: 21.5, y: -17}
+        - {x: 21.5, y: 82}
+      tessellationDetail: 0
+    - name: zhujizidan-07_1
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 37
+        width: 44
+        height: 188
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19, y: -92}
+        - {x: -19, y: -94}
+        - {x: -13, y: -94}
+        - {x: -13, y: -92}
+        - {x: -15, y: -90}
+        - {x: -17, y: -90}
+      - - {x: 13, y: -92}
+        - {x: 13, y: -94}
+        - {x: 19, y: -94}
+        - {x: 19, y: -92}
+        - {x: 17, y: -90}
+        - {x: 15, y: -90}
+      - - {x: -18, y: 94}
+        - {x: -22, y: 87}
+        - {x: -22, y: -90}
+        - {x: 22, y: -90}
+        - {x: 22, y: 93}
+        - {x: 21, y: 94}
+      tessellationDetail: 0
+    - name: zhujizidan-07_2
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
+        width: 48
+        height: 228
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 24, y: 114}
+        - {x: -24, y: 114}
+        - {x: -24, y: -92}
+        - {x: -18, y: -114}
+        - {x: 15, y: -114}
+        - {x: 20, y: -109}
+        - {x: 24, y: -55}
+      tessellationDetail: 0
+    - name: zhujizidan-07_3
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 42
+        width: 90
+        height: 186
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 39, y: 93}
+        - {x: -40, y: 93}
+        - {x: -45, y: 88}
+        - {x: -45, y: -41}
+        - {x: -16, y: -93}
+        - {x: 8, y: -93}
+        - {x: 9, y: -88}
+        - {x: 45, y: -24}
+        - {x: 45, y: 92}
+      tessellationDetail: 0
+    - name: zhujizidan-07_4
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 1
+        width: 94
+        height: 227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -44, y: 113.5}
+        - {x: -47, y: 103.5}
+        - {x: -47, y: -78.5}
+        - {x: -12, y: -113.5}
+        - {x: 42, y: -113.5}
+        - {x: 47, y: -54.5}
+        - {x: 47, y: 111.5}
+        - {x: 44, y: 113.5}
+      tessellationDetail: 0
+    - name: zhujizidan-07_5
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 0
+        width: 86
+        height: 228
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -43, y: 114}
+        - {x: -43, y: -27}
+        - {x: -37, y: -73}
+        - {x: -6, y: -112}
+        - {x: 5, y: -112}
+        - {x: 27, y: -95}
+        - {x: 43, y: -3}
+        - {x: 43, y: 104}
+        - {x: 38, y: 114}
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
