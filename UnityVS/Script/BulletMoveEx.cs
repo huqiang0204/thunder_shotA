@@ -53,13 +53,15 @@ namespace Assets.UnityVS.Script
         {
             if (state.extra_p % 6 == 0)// 1/7=0.1428571
             {
-                float uv = ((float)state.extra_p) / 42f;
+                float x = (float)state.extra_p;
+                x*= 0.023809f;
+                Vector2[] uv = bpe.uv;
                 int id = state.id * 4;
-                bpe.uv[id].x = uv;
-                bpe.uv[id+1].x = uv;
-                uv += 0.14328751f;
-                bpe.uv[id+2].x = uv;
-                bpe.uv[id+3].x = uv;
+                uv[id].x = x;
+                uv[id+1].x = x;
+                x += 0.14328751f;
+                uv[id+2].x = x;
+                uv[id+3].x = x;
             }
             state.extra_p++;
             if (state.extra_p > 36)
@@ -370,7 +372,6 @@ namespace Assets.UnityVS.Script
             state.location.y += y;
             state.extra++;
         }
-        static int diamon_index = 0;
         static Point3[] diamond_increment = new Point3[12] { new Point3(0,-0.1f,180),new Point3(0.033f,0.038f,200),new Point3(0.0165f,0.076f,200),
             new Point3(0.05f,0,180),new Point3(-0.0165f,0.076f,160),new Point3(-0.033f,0.038f,160),new Point3(0,0.1f,180),new Point3(-0.033f,-0.038f,200),
             new Point3(-0.0165f,-0.076f,200),new Point3(-0.05f,0,180),new Point3(0.0165f,-0.076f,160),new Point3(0.033f,-0.038f,160)};
@@ -379,11 +380,9 @@ namespace Assets.UnityVS.Script
             if (state.extra == 0)
             {
                 state.extra++;
-                state.extra2 = diamon_index;
-                state.angle = (int)diamond_increment[diamon_index].z;
-                diamon_index++;
-                if (diamon_index > 11)
-                    diamon_index = 0;
+                int s = state.id % 12;
+                state.angle = (int)diamond_increment[s].z;
+                state.extra2 = s;
             }
             if (state.extra < 10)
             {
@@ -700,6 +699,14 @@ namespace Assets.UnityVS.Script
             bse.location.x = x;
             bse.location.y = y;
             bse.extra++;
+        }
+        public static void Missile(ref BulletPropertyEx bpe,ref BulletStateEx bse)
+        {
+            if (bse.location.y < -5.5f)
+            {
+                bse.active = false;
+            }
+            bse.location.y -= ts * 0.01f;
         }
     }
 }

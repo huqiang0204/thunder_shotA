@@ -6,22 +6,63 @@ namespace Assets.UnityVS.Script
     class ShotBullet:GameControl
     {
         #region bullet shot style  bullet id and enemyid
-        public static void Angle6_Rotate(ref BulletPropertyEx bpe,ref EnemyBaseEX epe)
+        public static void Angle5_Rotate(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            bpe.shotpoint = SP.GetSixAngle(bpe.extra,epe.location);
+            bpe.shotpoint = SP.GetFiveAngle(bpe.extra,ref location);
+            bpe.extra += 6;
+            if (bpe.extra > 60)
+            {
+                bpe.extra = 0;
+                extra_b = -1000;
+            }
+            bpe.s_count = 5;
+        }
+        public static void Angle5_RotateA(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
+        {
+            bpe.extra -= 6;
+            if (bpe.extra < 0)
+            {
+                bpe.extra = 72;
+            }
+            bpe.shotpoint = SP.GetFiveAngle(bpe.extra, ref location);
+            bpe.s_count = 5;
+            if (bpe.extra <= 0)
+            {
+                bpe.extra = 0;
+                extra_b = -1000;
+            }
+        }
+        public static void Angle6_Rotate(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
+        {
+            bpe.shotpoint = SP.GetSixAngle(bpe.extra,ref location);
             bpe.extra += 5;
             if (bpe.extra > 60)
             {
                 bpe.extra = 0;
-                epe.extra_b = -300;
+                extra_b = -1000;
             }
             bpe.s_count = 6;
         }
-        public static void Angle6_RotateA(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Angle6_RotateA(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
+        {
+            bpe.extra -= 6;
+            if (bpe.extra < 0)
+            {
+                bpe.extra = 60;
+            }
+            bpe.shotpoint = SP.GetSixAngle(bpe.extra, ref location);
+            bpe.s_count = 6;
+            if (bpe.extra <= 0)
+            {
+                bpe.extra = 0;
+                extra_b = -1000;
+            }
+        }
+        public static void Angle6_RotateB(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
             Point3 temp = new Point3();
-            temp.x = epe.location.x;
-            temp.y = epe.location.y - 0.5f;
+            temp.x = location.x;
+            temp.y = location.y - 0.5f;
             temp.z = bpe.extra;
             bpe.shotpoint = new Point3[6];
             for (int i = 0; i < 6; i++)
@@ -35,7 +76,7 @@ namespace Assets.UnityVS.Script
                 bpe.extra += 5;
                 if (bpe.extra >= 60)
                 {
-                    epe.extra_b = -150;
+                    extra_b = -150;
                 }
             }
             else
@@ -43,27 +84,27 @@ namespace Assets.UnityVS.Script
                 bpe.extra -= 5;
                 if (bpe.extra <= 0)
                 {
-                    epe.extra_b = -300;
+                    extra_b = -300;
                     bpe.extra = 0;
                     return;
                 }
             }
         }
-        public static void Down_Arc(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Down_Arc(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y-0.3f;
+            float x = location.x;
+            float y = location.y-0.3f;
             bpe.shotpoint = new Point3[7];
             for (int i = 0; i < 7; i++)
                 bpe.shotpoint[i] = new Point3(x, y, i * 10 + 150);
             bpe.s_count = 7;
         }
-        public static void Down_Arc3(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Down_Arc3(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
             if (bpe.extra < 3)
             {
-                float x = epe.location.x;
-                float y = epe.location.y- 0.3f;
+                float x = location.x;
+                float y = location.y- 0.3f;
                 bpe.shotpoint = new Point3[7];
                 for (int i = 0; i < 7; i++)
                     bpe.shotpoint[i] =  new Point3(x, y, i * 10 + 150);
@@ -73,13 +114,13 @@ namespace Assets.UnityVS.Script
             else
             {
                 bpe.extra = 0;
-                epe.extra_b = -3000;
+                extra_b = -3000;
             }
         }
-        public static void Three_Circle12(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Three_Circle12(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y-0.3f;
+            float x = location.x;
+            float y = location.y-0.3f;
             bpe.shotpoint = new Point3[12];
             float angle = 0;
             if (bpe.extra == 1)
@@ -88,17 +129,17 @@ namespace Assets.UnityVS.Script
             {
                 angle = 20;
                 bpe.extra = -1;
-                epe.extra_b = -3000;
+                extra_b = -3000;
             }
             bpe.extra++;
             for (int i = 0; i < 12; i++)
                 bpe.shotpoint[i] = new Point3(x, y, i * 30+angle);
             bpe.s_count = 12;
         }
-        public static void Three_Circle36(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Three_Circle36(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y - 0.3f;
+            float x = location.x;
+            float y = location.y - 0.3f;
             bpe.shotpoint = new Point3[36];
             float angle = 0;
             if (bpe.extra == 1)
@@ -107,19 +148,19 @@ namespace Assets.UnityVS.Script
             {
                 angle = 6;
                 bpe.extra = -1;
-                epe.extra_b = -6000;
+                extra_b = -6000;
             }
             bpe.extra++;
             for (int i = 0; i < 36; i++)
                 bpe.shotpoint[i] =  new Point3(x, y, i * 10+angle);
             bpe.s_count = 36;
         }
-        public static void Circle36A(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Circle36A(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y - 0.3f;
+            float x = location.x;
+            float y = location.y - 0.3f;
             bpe.shotpoint = new Point3[36];
-            float z = Aim(ref epe.location, ref core_location);
+            float z = Aim(ref location, ref core_location);
             z -= 15;
             if (z < 0)
                 z += 360;
@@ -141,71 +182,85 @@ namespace Assets.UnityVS.Script
             if(bpe.extra>3)
             {
                 bpe.extra = 0;
-                epe.extra_b = -3000;
+                extra_b = -3000;
             }
         }
 
-        public static void Pentagram(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Pentagram(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
             bpe.shotpoint = new Point3[1];
-            float x = epe.location.x;
-            float y = epe.location.y;
+            float x = location.x;
+            float y = location.y;
             bpe.shotpoint[0] = new Point3(x,y,18);
             bpe.s_count = 1;
             bpe.extra++;
             if (bpe.extra> 48)
             {
                 bpe.extra = 0;
-                epe.extra_b = -3000;
+                extra_b = -3000;
             }
         }
-        public static void Aim2(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Aim2(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y;
-            float z = Aim(ref epe.location, ref core_location);
+            float x = location.x;
+            float y = location.y;
+            float z = Aim(ref location, ref core_location);
             bpe.shotpoint = new Point3[] { new Point3(x, y, z), new Point3(x, y, z) };
             bpe.s_count = 2;
             bpe.extra++;
             if (bpe.extra > 12)
             {
                 bpe.extra = 0;
-                epe.extra_b = -3600;
+                extra_b = -3600;
             }
         }
-        public static void Aim_3(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Aim_3(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y;
-            float z = Aim(ref epe.location, ref core_location);
-            bpe.shotpoint = new Point3[] { new Point3(x, y, z)};
+            float x = location.x;
+            float y = location.y;
+            float z = Aim(ref location, ref core_location);
+            bpe.shotpoint = new Point3[] { new Point3(x, y, z) };
             bpe.s_count = 1;
             bpe.extra++;
             if (bpe.extra > 3)
             {
                 bpe.extra = 0;
-                epe.extra_b = -2400;
+                extra_b = -2400;
             }
         }
-        public static void Aim_12(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Aim_6(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y;
-            float z = Aim(ref epe.location, ref core_location);
+            float x = location.x;
+            float y = location.y;
+            float z = Aim(ref location, ref core_location);
+            bpe.shotpoint = new Point3[] { new Point3(x, y, z)};
+            bpe.s_count = 1;
+            bpe.extra++;
+            if (bpe.extra > 6)
+            {
+                bpe.extra = 0;
+                extra_b = -2400;
+            }
+        }
+        public static void Aim_12(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
+        {
+            float x = location.x;
+            float y = location.y;
+            float z = Aim(ref location, ref core_location);
             bpe.shotpoint = new Point3[] { new Point3(x, y, z) };
             bpe.s_count = 1;
             bpe.extra++;
             if (bpe.extra > 12)
             {
                 bpe.extra = 0;
-                epe.extra_b = -2400;
+                extra_b = -2400;
             }
         }
-        public static void Aim_Arc3(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Aim_Arc3(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y;
-            float z = Aim(ref epe.location, ref core_location);
+            float x = location.x;
+            float y = location.y;
+            float z = Aim(ref location, ref core_location);
             z -= 10;
             if (z < 0)
                 z += 360;
@@ -223,14 +278,14 @@ namespace Assets.UnityVS.Script
             if (bpe.extra > 12)
             {
                 bpe.extra = 0;
-                epe.extra_b = -3000;
+                extra_b = -3000;
             }
         }
-        public static void Aim_Arc6(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Aim_Arc6(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y;
-            float z = Aim(ref epe.location,ref core_location);
+            float x = location.x;
+            float y = location.y;
+            float z = Aim(ref location,ref core_location);
             z -= 30;
             if (z < 0)
                 z += 360;
@@ -248,14 +303,14 @@ namespace Assets.UnityVS.Script
             if (bpe.extra > 8)
             {
                 bpe.extra = 0;
-                epe.extra_b = -3000;
+                extra_b = -3000;
             }
         }
-        public static void Aim_Arc18(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Aim_Arc18(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y;
-            float z = Aim(ref epe.location, ref core_location);
+            float x = location.x;
+            float y = location.y;
+            float z = Aim(ref location, ref core_location);
             z -= 60;
             if (z < 0)
                 z += 360;
@@ -279,12 +334,12 @@ namespace Assets.UnityVS.Script
             if (bpe.extra > 4)
             {
                 bpe.extra = 0;
-                epe.extra_b = -3000;
+                extra_b = -3000;
             }
         }
-        public static void Diamond(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Diamond(ref BulletPropertyEx bpe, ref Vector3 location,ref int extra_b)
         {
-            Point3 p = new Point3(epe.location.x,epe.location.y,0);
+            Point3 p = new Point3(location.x,location.y,0);
             Point3[] temp = new Point3[12];
             for (int i = 0; i < 12; i++)
                 temp[i] = p;
@@ -294,54 +349,66 @@ namespace Assets.UnityVS.Script
             if(bpe.extra>1)
             {
                 bpe.extra = 0;
-                epe.extra_b = -3000;
+                extra_b = -3000;
             }            
         }
-        public static void ThreePoint(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void ThreeDown(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y;
-            float z = epe.angle.z;
-            bpe.shotpoint = new Point3[] { new Point3(x,y,z),new Point3(x,y,z-30),new Point3(x,y,z+30)};
+            float x = location.x;
+            float y = location.y;
+            bpe.shotpoint = new Point3[] { new Point3(x, y, 180), new Point3(x-0.2f, y, 180), new Point3(x+0.2f, y, 180) };
+            bpe.s_count = 3;
+            bpe.extra++;
+            if (bpe.extra > 10)
+            {
+                bpe.extra = 0;
+                extra_b = -1500;
+            }
+        }
+        public static void ThreePoint(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
+        {
+            float x = location.x;
+            float y =location.y;
+            bpe.shotpoint = new Point3[] { new Point3(x,y,150),new Point3(x,y,180),new Point3(x,y,210)};
             bpe.s_count = 3;
             bpe.extra++;
             if(bpe.extra>5)
             {
                 bpe.extra = 0;
-                epe.extra_b = -1500;
+                extra_b = -1500;
             }
         }
-        public static void ThreeBeline10(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void ThreeBeline10(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y;
+            float x = location.x;
+            float y = location.y;
             bpe.shotpoint = new Point3[] { new Point3(x, y, 150), new Point3(x, y, 180), new Point3(x, y, 210) };
             bpe.s_count = 3;
             bpe.extra++;
             if (bpe.extra > 10)
             {
                 bpe.extra = 0;
-                epe.extra_b = -1500;
+                extra_b = -1500;
             }
         }
-        public static void ThreeBeline20(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void ThreeBeline20(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = epe.location.x;
-            float y = epe.location.y;
+            float x = location.x;
+            float y = location.y;
             bpe.shotpoint = new Point3[] { new Point3(x, y, 150), new Point3(x, y, 180), new Point3(x, y, 210) };
             bpe.s_count = 3;
             bpe.extra++;
             if (bpe.extra > 20)
             {
                 bpe.extra = 0;
-                epe.extra_b = -1500;
+                extra_b = -1500;
             }
         }
-        public static void Downflowers(ref BulletPropertyEx bpe, ref EnemyBaseEX epe)
+        public static void Downflowers(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
             int angle = bpe.extra;
-            float x = epe.location.x;
-            float y = epe.location.y;
+            float x = location.x;
+            float y = location.y;
             bpe.shotpoint = new Point3[] { new Point3(x, y, 160 - angle),new Point3(x, y, 120 - angle) ,
             new Point3(x, y, 240 + angle) ,new Point3(x, y, 220 - angle)};
             bpe.s_count = 4;
@@ -349,32 +416,32 @@ namespace Assets.UnityVS.Script
             if(bpe.extra>=60)
             {
                 bpe.extra = 0;
-                epe.extra_b = -3000;
+                extra_b = -3000;
             }
         }
-        public static void Parabola(ref BulletPropertyEx bpe,ref EnemyBaseEX epe)
+        public static void Parabola(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
             int a = bpe.extra>>3;
             if((a&1)==0)
             {
-                bpe.shotpoint =new Point3[] { new Point3(epe.location.x, epe.location.y, 10) };
+                bpe.shotpoint =new Point3[] { new Point3(location.x, location.y, 10) };
             }
             else
             {
-                bpe.shotpoint = new Point3[] { new Point3(epe.location.x, epe.location.y, 350) };
+                bpe.shotpoint = new Point3[] { new Point3(location.x, location.y, 350) };
             }
             bpe.s_count = 1;
             bpe.extra++;
             if (bpe.extra > 48)
             {
                 bpe.extra = 0;
-                epe.extra_b = -2000;
+                extra_b = -2000;
             }
         }
-        public static void Sharp_V(ref BulletPropertyEx bpe,ref EnemyBaseEX ebe)
+        public static void Sharp_V(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = ebe.location.x;
-            float y = ebe.location.y - 0.25f;
+            float x = location.x;
+            float y = location.y - 0.25f;
             if (bpe.extra==0)
             {
                 Point3[] pt = new Point3[6];
@@ -415,13 +482,13 @@ namespace Assets.UnityVS.Script
             if(bpe.extra>3)
             {
                 bpe.extra = 0;
-                ebe.extra_b = -2000;
+                extra_b = -2000;
             }
         }
-        public static void Sharp_O(ref BulletPropertyEx bpe, ref EnemyBaseEX ebe)
+        public static void Sharp_O(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = ebe.location.x;
-            float y = ebe.location.y - 0.25f;
+            float x = location.x;
+            float y = location.y - 0.25f;
             if (bpe.extra == 0|bpe.extra==7)
             {
                 Point3[] pt = new Point3[6];
@@ -463,15 +530,15 @@ namespace Assets.UnityVS.Script
             if (bpe.extra > 7)
             {
                 bpe.extra = 0;
-                ebe.extra_b = -3000;
+                extra_b = -3000;
             }
         }
-        public static void Random(ref BulletPropertyEx bpe,ref EnemyBaseEX ebe)
+        public static void Random(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
             float f = (float)lucky.NextDouble();
             float x =  f* 5-2.5f;
             int c = (int)(f * 4)+1;
-            float y = ebe.location.y + f;
+            float y = location.y + f;
             x -= 2.5f;
             Point3[] pt = new Point3[c];
             for(int i=0;i< c;i++)
@@ -485,7 +552,7 @@ namespace Assets.UnityVS.Script
                 f += f;
                 if (f > 1)
                     f--;
-                y = ebe.location.y + f;
+                y = location.y + f;
             }
             bpe.shotpoint = pt;
             bpe.s_count = c;
@@ -493,13 +560,13 @@ namespace Assets.UnityVS.Script
             if(bpe.extra>15)
             {
                 bpe.extra = 0;
-                ebe.extra_b = -3000;
+                extra_b = -3000;
             }
         }
-        public static void Rotate_left(ref BulletPropertyEx bpe, ref EnemyBaseEX ebe)
+        public static void Rotate_left(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = ebe.location.x;
-            float y = ebe.location.y - 0.25f;
+            float x = location.x;
+            float y = location.y - 0.25f;
             int c = bpe.extra;
             Point3[] pt = new Point3[6];
             for (int i = 0; i < 6; i++)
@@ -520,13 +587,13 @@ namespace Assets.UnityVS.Script
             if (bpe.extra >= 60)
             {
                 bpe.extra = 0;
-                ebe.extra_b = -2000;
+                extra_b = -2000;
             }
         }
-        public static void Rotate_right(ref BulletPropertyEx bpe, ref EnemyBaseEX ebe)
+        public static void Rotate_right(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = ebe.location.x;
-            float y = ebe.location.y - 0.25f;
+            float x = location.x;
+            float y = location.y - 0.25f;
             int c = bpe.extra;
             if (c < 0)
                 c += 60;
@@ -547,13 +614,13 @@ namespace Assets.UnityVS.Script
             if (bpe.extra <= -60)
             {
                 bpe.extra = 0;
-                ebe.extra_b = -2000;
+                extra_b = -2000;
             }
         }
-        public static void MultiBeline(ref BulletPropertyEx bpe, ref EnemyBaseEX ebe)
+        public static void MultiBeline(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)
         {
-            float x = ebe.location.x+0.5f;
-            float y = ebe.location.y;
+            float x = location.x+0.5f;
+            float y = location.y;
             Point3[] pt = new Point3[12];
             float a1 = 155;
             float a2 = 205;
@@ -599,7 +666,23 @@ namespace Assets.UnityVS.Script
             if (bpe.extra > 20)
             {
                 bpe.extra = 0;
-                ebe.extra_b = -3000;
+                extra_b = -3000;
+            }
+        }
+        public static void DwonAngleA(ref BulletPropertyEx bpe, ref Vector3 location, ref int extra_b)//140-220
+        {
+            int c = bpe.extra;
+            if (c >= 40)
+                c = 80 - c;
+            float x = location.x;
+            float y = location.y;
+            bpe.shotpoint = new Point3[] { new Point3(x,y,178-c),new Point3(x,y,182+c)};
+            bpe.s_count = 2;
+            bpe.extra += 5;
+            if (bpe.extra>=80)
+            {
+                bpe.extra = 0;
+                extra_b = -1000;
             }
         }
         #endregion
@@ -663,7 +746,6 @@ namespace Assets.UnityVS.Script
                 bpe.t_uv = SP.uv_zhihui[1];
                 bpe.uv_rect = SP.p_zhihui[1];
                 bpe.extra=0;
-                Vector3 site = core_location;
                 bpe.shotpoint= new Point3[] {new Point3(x,y,3),new Point3(x,y,10),
                     new Point3(x,y, 15),new Point3(x,y, 20),new Point3(x,y, 340),
                       new Point3(x,y, 357) ,new Point3(x,y, 350) ,new Point3(x,y,345)};

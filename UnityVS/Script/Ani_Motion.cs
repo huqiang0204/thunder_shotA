@@ -2,7 +2,7 @@
 
 namespace Assets.UnityVS.Script
 {
-    class Ani_Motion:GameControl
+    class Ani_Motion : GameControl
     {
         #region moth
         public static void Moth_stage0(ref AnimatEx[] ae)
@@ -34,7 +34,7 @@ namespace Assets.UnityVS.Script
             ae[23].pivot_p.y = 0.33f;
             ae[24].pivot_p.y = 0.33f;
         }
-        public static bool Moth_stageA(ref AnimatBaseEx  abe, ref AnimatEx[] ae, float ta)//0-24 ta=time ratio
+        public static bool Moth_stageA(ref AnimatBaseEx abe, ref AnimatEx[] ae, float ta)//0-24 ta=time ratio
         {
             if (ae.Length < 25)
                 return true;
@@ -180,7 +180,7 @@ namespace Assets.UnityVS.Script
         {
             if (ae.Length < 10)
                 return true;
-            if(ta>1000)
+            if (ta > 1000)
                 return true;
             ta *= 0.001f;
             if (ta < 0.2f)
@@ -283,7 +283,7 @@ namespace Assets.UnityVS.Script
             ae[4].location.y += angle_table[180].y * nh_s;
             ae[9].location.x += angle_table[180].x * nh_s;
             ae[9].location.y += angle_table[180].y * nh_s;
-            
+
             ae[0].location.x += angle_table[45].x * nh_s;
             ae[0].location.y += angle_table[45].y * nh_s;
             ae[5].location.x += angle_table[315].x * nh_s;
@@ -318,15 +318,15 @@ namespace Assets.UnityVS.Script
             ae[25].angle = 320;
             ae[0].pivot_p.y = 0.1f;
             ae[1].pivot_p.y = 0.15f;
-            ae[2].pivot_p.y =  0.4f;
-            ae[3].pivot_p.y =  0.3f;
-            ae[4].pivot_p.y =  0.4f;
+            ae[2].pivot_p.y = 0.4f;
+            ae[3].pivot_p.y = 0.3f;
+            ae[4].pivot_p.y = 0.4f;
             ae[5].pivot_p.y = 0.4f;
             ae[6].pivot_p.y = 0.4f;
-            ae[7].pivot_p.y =  0.4f;
-            ae[8].pivot_p.y =  0.1f;
-            ae[9].pivot_p.y =  0.15f;
-            ae[10].pivot_p.y =  0.4f;
+            ae[7].pivot_p.y = 0.4f;
+            ae[8].pivot_p.y = 0.1f;
+            ae[9].pivot_p.y = 0.15f;
+            ae[10].pivot_p.y = 0.4f;
             ae[11].pivot_p.y = 0.3f;
             ae[12].pivot_p.y = 0.4f;
             ae[13].pivot_p.y = 0.4f;
@@ -347,7 +347,7 @@ namespace Assets.UnityVS.Script
         {
             if (ae.Length < 30)
                 return true;
-            if(ta<33)
+            if (ta < 33)
             {
                 ae[0].pivot_p.y = 0.1f;
                 ae[1].pivot_p.y = 0.15f;
@@ -484,27 +484,28 @@ namespace Assets.UnityVS.Script
         #endregion
 
         #region bigboom
-        public static bool bb_stage1(ref AnimatBaseEx abe, ref AnimatEx[] ae,float ta )
+        public static bool bb_stage1(ref AnimatBaseEx abe, ref AnimatEx[] ae, float ta)
         {
-            if(ta>3000)
+            if (ta > 3000)
             {
-                for(int i=0;i<10;i++)
+                for (int i = 0; i < 8; i++)
                 {
                     ae[i].scale = 0;
                 }
                 return true;
             }
             ta *= 0.001f;
-            if(ta<0.2f)
+            if (ta < 0.2f)
             {
                 float t = ta * 15;
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 8; i++)
                     ae[i].scale = t;
                 abe.col.a = 1;
-                abe.col.r =1+ t;
-                abe.col.g =1+ t;
+                abe.col.r = 1 + t;
+                abe.col.g = 1 + t;
                 abe.col.b = 0.5f + t;
-            }else if(ta<2.6f)
+            }
+            else if (ta < 2.6f)
             {
                 float t = ta * 66;
                 ae[0].angle = t;
@@ -513,10 +514,10 @@ namespace Assets.UnityVS.Script
                 ae[3].angle = 360 - t;
                 t = ta * 0.6f;
                 t = 2 - t;
-                abe.col.r =  t;
+                abe.col.r = t;
                 abe.col.g = t;
                 abe.col.b = t - 0.5f;
-                abe.col.a = 1-ta*0.3f;
+                abe.col.a = 1 - ta * 0.3f;
             }
             else
             {
@@ -526,7 +527,7 @@ namespace Assets.UnityVS.Script
             }
             return false;
         }
-        public static bool sh_stage1(ref AnimatBaseEx abe,ref AnimatEx[] ae,float ta)
+        public static bool sh_stage1(ref AnimatBaseEx abe, ref AnimatEx[] ae, float ta)
         {
             ae[0].angle += 1f;
             if (ae[0].angle >= 360)
@@ -536,7 +537,7 @@ namespace Assets.UnityVS.Script
         #endregion
 
         #region ra2l wing
-        public static bool ra2l_stage1(ref AnimatBaseEx abe,ref AnimatEx[] ae,float ta)
+        public static bool ra2l_stage1(ref AnimatBaseEx abe, ref AnimatEx[] ae, float ta)
         {
             float x = wing_location.x - 1;
             float y = wing_location.y;
@@ -576,6 +577,60 @@ namespace Assets.UnityVS.Script
                 ae[1].angle = Aim(ref v, ref buff_enemy[c2].location);
             }
             return false;
+        }
+        #endregion
+
+        #region huijin
+        public static void huijin_stage0(ref AnimatEx[] ae)
+        {
+            ae[2].angle = 45;
+            ae[5].angle = 315;
+            ae[15].location.x = 0.42f;
+            ae[15].location.y = 0.25f;
+            ae[20].location.x = -0.42f;
+            ae[20].location.y = 0.25f;
+            ae[18].pivot_p.y = 0.2470529f;
+            ae[23].pivot_p.y = 0.2470529f;
+        }
+        public static bool huijin_stage1(ref AnimatBaseEx abe, ref AnimatEx[] ae, float ta)
+        {
+            if (ta > 250)
+                return true;
+            ta *=0.0025f;
+            if (ta < 0.5f)
+            {
+                float a = ta * 90;
+                ae[2].angle = 45 - a;
+                ae[5].angle = 315 + a;
+                float x = ta * 2.5f + 1;
+                ta *= 0.4f;
+                ae[15].location.x = 0.42f * x;
+                ae[15].location.y = 0.25f - ta;
+                ae[20].location.x = -0.42f * x;
+                ae[20].location.y = 0.25f - ta;
+            }
+            else
+            {
+                ae[2].angle = 0;
+                ae[5].angle = 0;
+                ae[15].location.x = 0.945f;
+                ae[15].location.y = 0.03f;
+                ae[20].location.x = -0.945f;
+                ae[20].location.y = 0.03f;
+            }
+            return false;
+        }
+        public static bool huijin_stage2(ref AnimatBaseEx abe, ref AnimatEx[] ae, float ta)
+        {
+            ae[18].pivot_p.y = 0.32f;
+            ae[23].pivot_p.y = 0.32f;
+            return true;
+        }
+        public static bool huijin_stage3(ref AnimatBaseEx abe, ref AnimatEx[] ae, float ta)
+        {
+            ae[18].pivot_p.y = 0.2470529f;
+            ae[23].pivot_p.y = 0.2470529f;
+            return true;
         }
         #endregion
     }

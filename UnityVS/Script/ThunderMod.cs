@@ -68,6 +68,11 @@ namespace Assets.UnityVS.Script
             location = new Vector3(-2.15f, -3.6f, layer),
             imagepath = "Picture/burn"
         };
+        static TextProperty score_text = new TextProperty()
+        {
+            location = new Vector3(2,4.5f,layer),color=Color.green,scale=new Vector3(0.1f,0.1f),
+            fontsize=33,text="score:"
+        };
 #endregion
 
         static CircleButtonBase big_boom_button = new CircleButtonBase() { click = BigBoom, r = 0.5f };
@@ -75,7 +80,7 @@ namespace Assets.UnityVS.Script
 #region sence control
         static void CaculateEnemyA()
         {
-            area = CircleMoveArea(oldloaction, core_location, 0.09f, ref areapoints);
+            area = CircleMoveArea(oldloaction, core_location, 0.25f, ref areapoints);
             oldloaction = core_location;
             xy.x = core_location.x;
             xy.y = core_location.y;
@@ -149,14 +154,14 @@ namespace Assets.UnityVS.Script
                             x = current.skill.location.x - buff_enemy[i].location.x;
                             y = current.skill.location.y - buff_enemy[i].location.y;
                             d = x * x + y * y;
-                            float d1 = current.skill.r * current.skill.r + buff_enemy[i].minrange +
-                                2 * current.skill.r * Mathf.Sqrt(buff_enemy[i].minrange);
+                            float d1 = current.skill.r * current.skill.r + buff_enemy[i].minrange;
                             if (d < d1)
                             {
                                 buff_enemy[i].c_blood -= current.skill.attack;
                                 if (buff_enemy[i].c_blood <= 0)
                                 {
                                     generateA(10 + currentwave, buff_enemy[i].location);
+                                    score += buff_enemy[i].score;
                                 }
                             }
                         }
@@ -308,8 +313,13 @@ namespace Assets.UnityVS.Script
             RegMatA(current.wing.mat_name,ref current.wing.mat_id);
             RegMatA(current.w_back.mat_name,ref current.w_back.mat_id);
             RegMatA(current.skill.mat_name,ref current.skill.mat_id);
+
             RegMatA(mat_prop_u,ref pro_id[2]);
             RegMatA(mat_prop_b, ref pro_id[3]);
+            RegMatA(mat_crystal,ref cry_mat_id);
+            RegMatA(ThunderData.b_missile.mat_name,ref ThunderData.b_missile.mat_id);
+            RegMatA(ThunderData.e_meteor.enemy.mat_name,ref ThunderData.e_meteor.enemy.mat_id);
+            RegMatA(ThunderData.b_hit.mat_name,ref ThunderData.b_hit.mat_id);
         }
         static void Preinital()
         {
@@ -320,11 +330,11 @@ namespace Assets.UnityVS.Script
                 current.w_back.ani_id = RegAni(ref current.w_back.abe);
             current.skill.ani_id = RegAni(ref current.skill.abe);
             big_boom.ani_id = RegAni(ref big_boom.abe);
-            current.warplane.bulletid = RegBulletEx(ref current.warplane.bpe,26);
-            current.B_second.bulletid = RegBulletEx(ref current.B_second.bpe,26);
-            current.wing.bulletid = RegBulletEx(ref current.wing.bpe,26);
-            current.bs_back.bulletid = RegBulletEx(ref current.bs_back.bpe,26);
-            current.w_back.bulletid = RegBulletEx(ref current.w_back.bpe,26);
+            current.warplane.bulletid = RegBulletEx(ref current.warplane.bpe,24);
+            current.B_second.bulletid = RegBulletEx(ref current.B_second.bpe,24);
+            current.wing.bulletid = RegBulletEx(ref current.wing.bpe,24);
+            current.bs_back.bulletid = RegBulletEx(ref current.bs_back.bpe,24);
+            current.w_back.bulletid = RegBulletEx(ref current.w_back.bpe,24);
         }
         public static void UnPreLoad()
         {
@@ -351,6 +361,7 @@ namespace Assets.UnityVS.Script
             AsyncManage.AsyncDelegate(ThreadA);
             AsyncManage.AsyncDelegate(ThreadB);
             AsyncManage.AsyncDelegate(ThreadC);
+
 #if pc
             if (Input.GetKeyDown(KeyCode.Space))
                 BigBoom();
@@ -383,6 +394,10 @@ namespace Assets.UnityVS.Script
             damageC = DamageCalculateC;
             generateA = GenerateProp;
             update = FixedUpdate;
+            Missile_Inital();
+            Cry_Inital();
+            CollisionInital();
+            score = 0;
             MainCamera.update = FixedUpdate;
             ot = DateTime.Now.Millisecond;
         }
@@ -401,18 +416,18 @@ namespace Assets.UnityVS.Script
             Prop_Destory();
             ClearWarPlane();
             unloadgamebutton();
-            CanvasControl.GameOverCallBack(pass, destory_enemy);
+            CanvasControl.GameOverCallBack(pass, score);
             Resources.UnloadUnusedAssets();
         }
         static void ThreadA()
         {
-            Move_BulletEx(0, 38,2);
+            Move_BulletEx(0, 32,2);
             PlanMove();
             CalculateSkill();
         }
         static void ThreadB()
         {
-            Move_BulletEx(1, 38, 2);
+            Move_BulletEx(1, 32, 2);
             UpdateBlood();
         }
         static void ThreadC()
@@ -422,6 +437,8 @@ namespace Assets.UnityVS.Script
             Bomb_Update2A();
             Ani_Update();
             CaculateEnemyA();
+            Update_missile();
+            Cry_move();
         }
         #endregion
 
@@ -672,6 +689,7 @@ namespace Assets.UnityVS.Script
             buff_img[spid2].spriterender.material.SetFloat("_r", current.shiled.current / current.shiled.max);
             buff_img[epid2].spriterender.material.SetFloat("_r", current.skill.energy_c / current.skill.energy_max);
             buff_img[buff_button[4]].spriterender.material.SetFloat("_r", Big_boomaready *0.0000333f);
+            buff_text[buff_button[6]].textmesh.text = "score:" + score.ToString();
         }
         static void PlanMove()//x 0.8-1.2 y-0.3
         {
@@ -870,7 +888,7 @@ namespace Assets.UnityVS.Script
         }
 #endregion
 
-#region demage
+#region demage //暂时改成无敌
         public static void DamageCalculateA(ref BulletPropertyEx bpe)
         {
             float harm = 0;
@@ -879,6 +897,7 @@ namespace Assets.UnityVS.Script
                 harm = bpe.attack - current.shiled.defence;
                 if (harm > 0)
                 {
+                    harm = 1;//删除此行
                     current.shiled.current -= harm;
                     if (current.shiled.current < 0)
                     {
@@ -913,6 +932,9 @@ namespace Assets.UnityVS.Script
                         bomb_count++;
                     }
                     generateA(10 + currentwave, epe.location);
+                    score += epe.score;
+                    if(!epe.boss)
+                    Cry_create(epe.score,epe.location.x,epe.location.y);
                 }
             }
         }
@@ -928,6 +950,7 @@ namespace Assets.UnityVS.Script
 #region gamerun button
         static float Big_boomaready;
         static int[] buff_button = new int[7];
+        
         static void loadgamebutton()
         {
             buff_button[0] = CreateCircleButton(null, skill_button);
@@ -944,6 +967,7 @@ namespace Assets.UnityVS.Script
             buff_img[buff_button[4]].spriterender.material = Mat_fan;
             big_boom_button.transform = buff_img[buff_button[4]].transform;
             buff_button[5] = RegCircleButton(big_boom_button);
+            buff_button[6] = CreateText(null,score_text);
         }
         static void unloadgamebutton()
         {
@@ -953,6 +977,7 @@ namespace Assets.UnityVS.Script
             ClearImage(buff_button[3]);
             ClearImage(buff_button[4]);
             UnRegCircleButton(buff_button[5]);
+            RecycleText(buff_button[6]);
         }
         static void Skill_Click()
         {
@@ -1179,9 +1204,10 @@ namespace Assets.UnityVS.Script
         {
             RecycleImgEx(bomb_state[16]);
         }
-#endregion
+        #endregion
 
-#region laser cut
+
+        #region laser cut
         static LaserProject lp;
         static bool lp_up;
         public static void Laser_Initial(ref BulletPropertyEx bpe)
@@ -1497,6 +1523,7 @@ namespace Assets.UnityVS.Script
                         if (s < 2 & c_s<255)
                             c_s = Chain_Multi(ref bpe, s + 1, index, c_s);
                         DamageCalculateB(ref bpe ,ref buff_enemy[index]);
+                        CreateCollision(ref bse.location,0);
                         goto label1;
                     }
                     int a = (int)Aim(ref bse.location, ref buff_enemy[index].location);
@@ -1910,7 +1937,7 @@ namespace Assets.UnityVS.Script
                 {
                     insB(ratio);
                     laser_stageC(ref bpe.vertexs, x, y);
-                    if (laser_collison(x, y, 8))
+                    if (laser_collison(x, y, 0.3984f, 8))
                         DamageCalculateA(ref bpe);
                 }
                 else
@@ -1925,7 +1952,7 @@ namespace Assets.UnityVS.Script
                         y2 = ratio - 0.2f;
                         y2 *= 124;
                         laser_stageB(ref bpe.vertexs, x, y, y2);
-                        if (laser_collison(x, y, y2))
+                        if (laser_collison(x, y, 0.3984f,y2))
                             DamageCalculateA(ref bpe);
                     }
                     else//max x=0.2 y=0.25
@@ -2055,11 +2082,11 @@ namespace Assets.UnityVS.Script
             v3[9].x = x1;
             v3[9].y = y1;
         }
-        static bool laser_collison(float x, float y, float len)
+        static bool laser_collison(float x, float y, float w ,float h)
         {
-            float x1 = x + 0.3984f;
-            x -= 0.3985f;
-            float y1 = y - 8f;
+            float x1 = x + w;
+            x -= w;
+            float y1 = y - h;
             if (area)
             {
                 Point2[] tp = new Point2[4];
@@ -2076,6 +2103,8 @@ namespace Assets.UnityVS.Script
             }
             else
             {
+                x -= 0.02f;
+                x1 += 0.02f;
                 float a = core_location.x;
                 float b = core_location.y;
                 if (a >= x & a <= x1)
@@ -2137,9 +2166,143 @@ namespace Assets.UnityVS.Script
                 ibe.gameobject.SetActive(false);
             }
         }
-#endregion
+        #endregion
 
-#region enemy
+        #region huijin lasesr
+        static int[] laser04_tri=GetTri(4) ;
+        static Vector3[] ls04_v3=new Vector3[16];
+        static Vector2[] ls04_uv=new Vector2[16];
+        static void ls04_insV(ref Vector3[] v3,float x,float y ,int s)
+        {
+            float x1 = x - 0.5f;
+            x += 0.5f;
+            float y1 = y - 8;
+            v3[s].x = x1;
+            v3[s].y = y1;
+            s++;
+            v3[s].x = x1;
+            v3[s].y = y;
+            s++;
+            v3[s].x = x;
+            v3[s].y = y;
+            s++;
+            v3[s].x = x;
+            v3[s].y = y1;
+            s++;
+            y -= 0.4f;
+            v3[s].x = x1;
+            v3[s].y = y1;
+            s++;
+            v3[s].x = x1;
+            v3[s].y = y;
+            s++;
+            v3[s].x = x;
+            v3[s].y = y;
+            s++;
+            v3[s].x = x;
+            v3[s].y = y1;
+        }
+        static void ls04_insUV(ref Vector2[] uv, int s)
+        {
+            for (int c = 0; c < 4; c++)
+            {
+                uv[s] = SP.uv_def_8x1[0][c];
+                s++;
+            }
+            for (int c = 0; c < 4; c++)
+            {
+                uv[s] = SP.uv_def_8x1[3][c];
+                s++;
+            }
+        }
+        static void  ls04_insUV(ref Vector2[] uv,int s,int id)
+        {
+            int t = id  + 3;
+            for (int c = 0; c < 4; c++)
+            {
+                uv[s] = SP.uv_def_8x1[t][c];
+                s++;
+            }  
+        }
+        public static void CaculLaser04(ref BulletPropertyEx bpe,ref BulletStateEx[] bse)
+        {
+            if (bpe.s_count > 0)
+            {
+                bpe.s_count = 0;
+                bpe.a_count = 1;
+                bpe.extra = 0;
+                bse[1].extra = 0;
+                bse[3].extra = 0;
+                ls04_insV(ref ls04_v3,bse[0].location.x,bse[0].location.y,0);
+                ls04_insV(ref ls04_v3, bse[2].location.x, bse[2].location.y, 8);
+                ls04_insUV(ref ls04_uv,0);
+                ls04_insUV(ref ls04_uv,8);
+            }
+            else if (bpe.a_count > 0)
+            {
+                bpe.extra += ts;
+                if(bpe.extra>1500)
+                {
+                    bpe.extra = 0;
+                    bpe.a_count = 0;
+                    return;
+                }
+                int i = 1;
+                label1:;
+                bse[i].extra++;
+                if(bse[i].extra>19)
+                {
+                    bse[i].extra = 0;
+                }
+                if(bse[i].extra%5==0)
+                {
+                    int c = bse[i].extra / 5;
+                    if(i>2)
+                        ls04_insUV(ref ls04_uv, 12, c);
+                    else
+                    ls04_insUV(ref ls04_uv,4,c);
+                }
+                i += 2;
+                if (i < 4)
+                    goto label1;
+                if( laser_collison(bse[0].location.x,bse[0].location.y,0.25f,8))
+                    DamageCalculateA(ref bpe);
+                if( laser_collison(bse[2].location.x, bse[2].location.y, 0.25f, 8))
+                    DamageCalculateA(ref bpe);
+            }
+        }
+        public static void Laser04_update(ref ImageBaseEx ibe)
+        {
+            int extra = ibe.extra;
+            if (buff_b_ex[extra].a_count > 0)
+            {
+                ibe.gameobject.SetActive(true);
+                Mesh mesh = ibe.mesh;
+                if (buff_b_ex[extra].update)
+                {
+                    mesh.triangles = null;
+                    buff_b_ex[extra].update = false;
+                    int mat_id = buff_b_ex[extra].mat_id;
+                    Material mat = buff_mat[mat_id].mat;
+                    if (mat == null)
+                        mat = CreateMat(mat_id);
+                    ibe.mr.material = mat;
+                    mesh.vertices = ls04_v3;
+                    mesh.uv = ls04_uv;
+                    mesh.triangles = laser04_tri;
+                    return;
+                }
+                mesh.vertices = ls04_v3;
+                mesh.uv = ls04_uv;
+            }
+            else
+            {
+                ibe.gameobject.SetActive(false);
+            }
+        }
+        #endregion
+
+        #region enemyA
         static Vector3 boss_v = Vector3.zero;
         static int boss_state=0;
         static int a10_extra=0;
@@ -2166,12 +2329,12 @@ namespace Assets.UnityVS.Script
                     boss_v.x = -0.01f + (float)lucky.NextDouble() * 0.01f;
             }
         }
-        public static bool M_Boss_a10(ref EnemyBaseEX ebe)
+        public static bool M_a10(ref EnemyBaseEX ebe)
         {
             if (ebe.extra_m < 100)
             {
                 ebe.extra_m++;
-                ebe.location.y -= 0.03f;
+                ebe.location.y -= 0.05f;
                 return true;
             }
             else//mov
@@ -2181,26 +2344,6 @@ namespace Assets.UnityVS.Script
                     ebe.extra_m++;
                     boss_v.x = -0.02f - (float)lucky.NextDouble() / 50;
                     boss_v.y = 0.02f + (float)lucky.NextDouble() / 50;
-                }
-                if (ebe.location.x > 0.8f)
-                {
-                    boss_v.x = -0.02f - (float)lucky.NextDouble() / 50;
-                }
-                if (ebe.location.x < -0.8f)
-                {
-                    boss_v.x = 0.02f + (float)lucky.NextDouble() / 50;
-                }
-                if (ebe.location.y > 4f)
-                {
-                    boss_v.y = -0.02f - (float)lucky.NextDouble() / 50;
-                    if (boss_v.x == 0)
-                        boss_v.x = -0.04f + (float)lucky.NextDouble() / 12.5f;
-                }
-                if (ebe.location.y < 2.6f)
-                {
-                    boss_v.y = 0.02f + (float)lucky.NextDouble() / 50;
-                    if (boss_v.x == 0)
-                        boss_v.x = -0.04f + (float)lucky.NextDouble() / 12.5f;
                 }
             }
             int eid;
@@ -2278,6 +2421,7 @@ namespace Assets.UnityVS.Script
                     }
                 case 2:
                     {
+                        Boss_Move(ref ebe.location);
                         ebe.location += boss_v;
                         if (ebe.extra_b>8)
                         {
@@ -2333,56 +2477,34 @@ namespace Assets.UnityVS.Script
                         break;
                     }
                 case 4:
+                    if (ebe.extra_b > 30)
                     {
-                        if (ebe.extra_b > 2)
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[3];
+                        if (ebe.extra_a >= 10)
+                            ShotBullet.Angle6_RotateA(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
+                        else
+                            ShotBullet.Angle6_Rotate(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
+                        ebe.extra_a++;
+                        if (ebe.extra_a >= 20)
                         {
-                            ebe.extra_b = 0;
-                            eid = ebe.bulletid[3];
-                            y += 0.5f;
-                            float z = a10_extra;
-                            Point3[] pt = new Point3[6];
-                            for (int i = 0; i < 6; i++)
-                            {
-                                pt[i] = new Point3(x,y,z);
-                                z += 60;
-                                if (z > 360)
-                                    z -= 360;
-                            }
-                            buff_b_ex[eid].shotpoint = pt;
-                            buff_b_ex[eid].s_count = 6;
-                            if (ebe.extra_a < 12)
-                            {
-                                a10_extra += 5;
-                                if(ebe.extra_a==11)
-                                {
-                                    ebe.extra_b = -5;
-                                }
-                            }
-                            else
-                            {
-                                a10_extra -= 5;
-                                if (ebe.extra_a >= 23)
-                                {
-                                    ebe.extra_b = -50;
-                                    ebe.extra_a = 0;
-                                    boss_state = 0;
-                                    break;
-                                }
-                            }
-                            ebe.extra_a++;
+                            ebe.extra_a = 0;
+                            boss_state = 0;
+                            ebe.extra_b = -600;
+                            buff_b_ex[bid].extra = 0;
                         }
-                        break;
                     }
+                    break;
             }           
-            ebe.extra_b++;
+            ebe.extra_b+=ts;
             return true;
         }
-        public static bool M_Boss_Moth(ref EnemyBaseEX ebe)
+        public static bool M_Moth(ref EnemyBaseEX ebe)
         {
             if(ebe.c_blood/ebe.f_blood<=0.5f)
             {
                 Ani_Run_D(0,ebe.ani_id);
-                ebe.move = M_Boss_MothA;
+                ebe.move = M_MothA;
                 ebe.points = SP.p_mothB;
                 return true;
             }
@@ -2401,20 +2523,18 @@ namespace Assets.UnityVS.Script
                     boss_v.y = 0.01f + (float)lucky.NextDouble() * 0.01f;
                     ebe.extra_a = lucky.Next(0, 4);
                 }
-                Boss_Move(ref ebe.location);
             }
-            float x = ebe.location.x;
-            float y = ebe.location.y;
             ebe.extra_b += ts;
             switch (ebe.extra_a)
             {
                 case 0:
+                    Boss_Move(ref ebe.location);
                     ebe.location += boss_v;
                     if(ebe.extra_b>0)
                     {
                         int bid = ebe.bulletid[0];
                         buff_b_ex[bid].move = BulletMoveEx.Parabola;
-                        ShotBullet.Parabola(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.Parabola(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2429,7 +2549,7 @@ namespace Assets.UnityVS.Script
                         int bid = ebe.bulletid[4];
                         buff_b_ex[bid].move = null;
                         buff_b_ex[bid].speed = 0.003f;
-                        ShotBullet.Sharp_V(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.Sharp_V(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2438,6 +2558,7 @@ namespace Assets.UnityVS.Script
                     }
                     break;
                 case 2:
+                    Boss_Move(ref ebe.location);
                     ebe.location += boss_v;
                     if (ebe.extra_b > 60)
                     {
@@ -2445,7 +2566,7 @@ namespace Assets.UnityVS.Script
                         int bid = ebe.bulletid[2];
                         buff_b_ex[bid].move = null;
                         buff_b_ex[bid].t_uv = SP.uv_def_3x1[1];
-                        ShotBullet.ThreeBeline20(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.ThreeBeline20(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2460,7 +2581,7 @@ namespace Assets.UnityVS.Script
                         int bid = ebe.bulletid[3];
                         buff_b_ex[bid].move = null;
                         buff_b_ex[bid].t_uv = SP.uv_def_3x1[0];
-                        ShotBullet.Rotate_right(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.Rotate_right(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2475,7 +2596,7 @@ namespace Assets.UnityVS.Script
                         int bid = ebe.bulletid[2];
                         buff_b_ex[bid].move = null;
                         buff_b_ex[bid].t_uv = SP.uv_def_3x1[0];
-                        ShotBullet.Rotate_left(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.Rotate_left(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2495,22 +2616,20 @@ namespace Assets.UnityVS.Script
             }
             return true;
         }
-        static bool M_Boss_MothA(ref EnemyBaseEX ebe)
+        static bool M_MothA(ref EnemyBaseEX ebe)
         {
-            Boss_Move(ref ebe.location);
-            float x = ebe.location.x;
-            float y = ebe.location.y;
             ebe.extra_b += ts;
             switch (ebe.extra_a)
             {
                 case 0:
+                    Boss_Move(ref ebe.location);
                     ebe.location += boss_v;
                     if (ebe.extra_b > 200)
                     {
                         ebe.extra_b =0;
                         int bid = ebe.bulletid[4];
                         buff_b_ex[bid].move = null;
-                        ShotBullet.Random(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.Random(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2525,7 +2644,7 @@ namespace Assets.UnityVS.Script
                         int bid = ebe.bulletid[4];
                         buff_b_ex[bid].move = null;
                         buff_b_ex[bid].speed = 0.003f;
-                        ShotBullet.Sharp_O(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.Sharp_O(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2534,6 +2653,7 @@ namespace Assets.UnityVS.Script
                     }
                     break;
                 case 2:
+                    Boss_Move(ref ebe.location);
                     ebe.location += boss_v;
                     if (ebe.extra_b > 60)
                     {
@@ -2541,7 +2661,7 @@ namespace Assets.UnityVS.Script
                         int bid = ebe.bulletid[2];
                         buff_b_ex[bid].move = null;
                         buff_b_ex[bid].t_uv = SP.uv_def_3x1[1];
-                        ShotBullet.MultiBeline(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.MultiBeline(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2556,7 +2676,7 @@ namespace Assets.UnityVS.Script
                         int bid = ebe.bulletid[3];
                         buff_b_ex[bid].move = null;
                         buff_b_ex[bid].t_uv = SP.uv_def_3x1[0];
-                        ShotBullet.Rotate_right(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.Rotate_right(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2571,7 +2691,7 @@ namespace Assets.UnityVS.Script
                         int bid = ebe.bulletid[2];
                         buff_b_ex[bid].move = null;
                         buff_b_ex[bid].t_uv = SP.uv_def_3x1[0];
-                        ShotBullet.Rotate_left(ref buff_b_ex[bid], ref ebe);
+                        ShotBullet.Rotate_left(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
                         if (ebe.extra_b < 0)
                         {
                             ebe.extra_a = lucky.Next(0, 6);
@@ -2591,7 +2711,351 @@ namespace Assets.UnityVS.Script
             }
             return true;
         }
-#endregion
+        public static bool M_huijin(ref EnemyBaseEX ebe)
+        {
+            if (ebe.c_blood / ebe.f_blood <= 0.5f)
+            {
+                Ani_Run_D(0, ebe.ani_id);
+                ebe.move = M_huijinA;
+                ebe.points = SP.p_hjB;
+                return true;
+            }
+            ebe.extra_b += ts;
+            if (ebe.extra_m < 200)
+            {
+                ebe.extra_m++;
+                ebe.location.y -= 0.015f;
+                return true;
+            }
+            else//mov
+            {
+                if (ebe.extra_m == 200)
+                {
+                    ebe.extra_m++;
+                    boss_v.x = -0.01f - (float)lucky.NextDouble() * 0.01f;
+                    boss_v.y = 0.01f + (float)lucky.NextDouble() * 0.01f;
+                    //ebe.extra_a = lucky.Next(0, 4);
+                }
+                
+            }
+            switch (ebe.extra_a)
+            {
+                case 0:
+                    Boss_Move(ref ebe.location);
+                    ebe.location += boss_v;
+                    if (ebe.extra_b>60)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[0];
+                        Vector3 v = ebe.location;
+                        v.x -= 1f;
+                        v.y -= 1.5f;
+                        ShotBullet.ThreeBeline20(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        v.x += 2f;
+                        bid = ebe.bulletid[1];
+                        ShotBullet.ThreeBeline20(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        if (ebe.extra_b < 0)
+                        {
+                            ebe.extra_b = -500;
+                            ebe.extra_a = lucky.Next(0, 5);
+                        }
+                    }
+                    break;
+                case 1:
+                    if (ebe.extra_b > 60)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[0];
+                        Vector3 v = ebe.location;
+                        v.x -= 1f;
+                        v.y -= 1.5f;
+                        ShotBullet.Aim_Arc6(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        v.x += 2f;
+                        bid = ebe.bulletid[1];
+                        ShotBullet.Aim_Arc6(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        if (ebe.extra_b < 0)
+                        {
+                            ebe.extra_b = -500;
+                            ebe.extra_a = lucky.Next(0, 5);
+                        }
+                    }
+                    break;
+                case 2:
+                    if(ebe.extra_b>1800)
+                    {
+                        ebe.extra_b = -400;
+                        ebe.extra_a = lucky.Next(0, 4);
+                        Ani_Run_D(2,ebe.ani_id);
+                    }else if(ebe.extra_b<0)
+                    {
+                        boss_state = 0;
+                        ebe.extra_b = 0;
+                        Ani_Run_D(1, ebe.ani_id);
+                    }
+                    if (boss_state<1& ebe.extra_b > 100)
+                    {
+                        boss_state = 1;
+                        int bid = ebe.bulletid[3];
+                        Vector2 v = ebe.location;
+                        v.x -= 1;
+                        v.y -= 1.2f;
+                        buff_b_ex[bid].b_s[0].location = v;
+                        v.x += 2;
+                        buff_b_ex[bid].b_s[2].location = v;
+                        buff_b_ex[bid].s_count = 1;
+                    }
+                    break;
+                case 3:
+                    if (ebe.extra_b > 60)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[2];
+                        Vector3 v = ebe.location;
+                        v.y -= 1.5f;
+                        ShotBullet.Aim_Arc3(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        ebe.extra_b = -500;
+                        ebe.extra_a = lucky.Next(0, 5);
+                    }
+                    break;
+                default:
+                    Boss_Move(ref ebe.location);
+                    ebe.location += boss_v;
+                    if (ebe.extra_b > 200)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[2];
+                        Vector3 v = ebe.location;
+                        v.y -= 1.5f;
+                        ShotBullet.Aim_3(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        if (ebe.extra_b < 0)
+                        {
+                            ebe.extra_b = -500;
+                            ebe.extra_a = lucky.Next(0, 5);
+                        }
+                    }
+                    break;
+            }
+            return true;
+        }
+        static bool M_huijinA(ref EnemyBaseEX ebe)
+        {
+            ebe.extra_b += ts;
+            switch (ebe.extra_a)
+            {
+                case 0:
+                    Boss_Move(ref ebe.location);
+                    ebe.location += boss_v;
+                    if (ebe.extra_b > 60)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[0];
+                        Vector3 v = ebe.location;
+                        v.y -= 1.5f;
+                        ShotBullet.ThreeBeline20(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        v.x -= 1.4f;
+                        bid = ebe.bulletid[1];
+                        ShotBullet.ThreeBeline20(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        v.x += 2.8f;
+                        bid = ebe.bulletid[4];
+                        ShotBullet.ThreeBeline20(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        if (ebe.extra_b < 0)
+                        {
+                            ebe.extra_b = -500;
+                            ebe.extra_a = lucky.Next(0, 5);
+                        }
+                    }
+                    break;
+                case 1:
+                    if (ebe.extra_b > 60)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[0];
+                        Vector3 v = ebe.location;
+                        v.x -= 1.4f;
+                        v.y -= 1.5f;
+                        ShotBullet.Aim_Arc6(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        v.x += 2.8f;
+                        bid = ebe.bulletid[1];
+                        ShotBullet.Aim_Arc6(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        if (ebe.extra_b < 0)
+                        {
+                            ebe.extra_b = -300;
+                            ebe.extra_a = lucky.Next(0, 5);
+                        }
+                    }
+                    break;
+                case 2:
+                    if (ebe.extra_b > 1800)
+                    {
+                        ebe.extra_b = -400;
+                        ebe.extra_a = lucky.Next(0, 4);
+                        Ani_Run_D(2, ebe.ani_id);
+                    }
+                    else if (ebe.extra_b < 0)
+                    {
+                        boss_state = 0;
+                        ebe.extra_b = 0;
+                        Ani_Run_D(1, ebe.ani_id);
+                    }
+                    if (boss_state < 1 & ebe.extra_b > 100)
+                    {
+                        boss_state = 1;
+                        int bid = ebe.bulletid[3];
+                        Vector2 v = ebe.location;
+                        v.x -= 1.4f;
+                        v.y -= 1.5f;
+                        buff_b_ex[bid].b_s[0].location = v;
+                        v.x += 2.8f;
+                        buff_b_ex[bid].b_s[2].location = v;
+                        buff_b_ex[bid].s_count = 1;
+                    }
+                    break;
+                case 3:
+                    if (ebe.extra_b > 60)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[2];
+                        Vector3 v = ebe.location;
+                        v.y -= 1.5f;
+                        ShotBullet.Aim_Arc3(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        ebe.extra_b = -500;
+                        ebe.extra_a = lucky.Next(0, 5);
+                    }
+                    break;
+                default:
+                    Boss_Move(ref ebe.location);
+                    ebe.location += boss_v;
+                    if (ebe.extra_b > 60)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[5];
+                        Vector3 v = ebe.location;
+                        v.x -= 1;
+                        v.y -= 1.5f;
+                        ShotBullet.ThreeDown(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        v.x += 2;
+                        bid = ebe.bulletid[6];
+                        ShotBullet.ThreeDown(ref buff_b_ex[bid], ref v, ref ebe.extra_b);
+                        if (ebe.extra_b < 0)
+                        {
+                            ebe.extra_b = -500;
+                            ebe.extra_a = lucky.Next(0, 5);
+                        }
+                    }
+                    break;
+            }
+            return true;
+        }
+        public static bool M_bee(ref EnemyBaseEX ebe)
+        {
+            if (ebe.extra_m < 100)
+            {
+                ebe.extra_m++;
+                ebe.location.y -= 0.03f;
+                return true;
+            }
+            else//mov
+            {
+                if (ebe.extra_m == 100)
+                {
+                    ebe.extra_m++;
+                    boss_v.x = -0.02f - (float)lucky.NextDouble() / 50;
+                    boss_v.y = 0.02f + (float)lucky.NextDouble() / 50;
+                    boss_state = lucky.Next(0,5);
+                }
+            }
+            float x = ebe.location.x;
+            float y = ebe.location.y;
+            switch (boss_state)
+            {
+                case 0:
+                    if (ebe.extra_b > 60)
+                    {
+                        ebe.extra_b = 0;
+                        int bid =ebe.bulletid[0];
+                        ShotBullet.Angle5_Rotate(ref buff_b_ex[bid],ref ebe.location,ref ebe.extra_b);
+                        bid = ebe.bulletid[1];
+                        ShotBullet.Angle5_RotateA(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
+                        ebe.extra_a++;
+                        if (ebe.extra_b < 0)
+                            ebe.extra_b = 0;
+                        if(ebe.extra_a>30)
+                        {
+                            ebe.extra_a = 0;
+                            ebe.extra_b = -600;
+                            boss_state = lucky.Next(1, 5);
+                        }
+                    }
+                    break;
+                case 1:
+                    if (ebe.extra_b > 0)
+                    {
+                        int bid = ebe.bulletid[2];
+                        x -= 0.3f;
+                        y -= 0.5f;
+                        Vector3 v = Vector3.zero;
+                        v.x = x;
+                        v.y = y;
+                        ShotBullet.Aim_Arc3(ref buff_b_ex[bid],ref v,ref ebe.extra_b);
+                        ebe.extra_b = -500;
+                        boss_state = lucky.Next(3, 5);
+                    }
+                    break;
+                case 2:
+                    Boss_Move(ref ebe.location);
+                    ebe.location += boss_v;
+                    if (ebe.extra_b>120)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[0];
+                        ShotBullet.Aim_Arc6(ref buff_b_ex[bid],ref ebe.location,ref ebe.extra_b);
+                        ebe.extra_a++;
+                        if (ebe.extra_a > 3)
+                        {
+                            ebe.extra_a = 0;
+                            ebe.extra_b = -500;
+                            boss_state = 3;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (ebe.extra_b > 30)
+                    {
+                        int bid = ebe.bulletid[1];
+                        Vector3 v = ebe.location;
+                        v.y -= 1f;
+                        ShotBullet.DwonAngleA(ref buff_b_ex[bid],ref v,ref ebe.extra_b);
+                        ebe.extra_a++;
+                        ebe.extra_b = 0;
+                        if (ebe.extra_a > 36)
+                        {
+                            ebe.extra_b = -500;
+                            ebe.extra_a = 0;
+                            boss_state = lucky.Next(0, 3);
+                        }
+                    }
+                    break;
+                default:
+                    if(ebe.extra_b>200)
+                    {
+                        ebe.extra_b = 0;
+                        int bid = ebe.bulletid[3];
+                        ShotBullet.Three_Circle36(ref buff_b_ex[bid], ref ebe.location, ref ebe.extra_b);
+                        ebe.extra_a++;
+                        if (ebe.extra_a>=3)
+                        {
+                            ebe.extra_a = 0;
+                            boss_state = 0;
+                            ebe.extra_b = -600;
+                            boss_state = lucky.Next(0, 4);
+                        }
+                    }  
+                    break;
+            }
+            ebe.extra_b+=ts;
+            return true;
+        }
+        #endregion
     }
 
 }

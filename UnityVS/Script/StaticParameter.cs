@@ -5,32 +5,8 @@ namespace Assets.UnityVS.Script
 {
     class SP//StaticParameter
     {
-        #region def
-        public static readonly float layer = 1;
-        public static readonly Vector3 def_angle45 = new Vector3(0, 0, 45);
-        public static readonly Vector3 def_angle90 = new Vector3(0, 0, 90);
-        public static readonly Vector3 def_angle270 = new Vector3(0, 0, 270);
-        public static readonly Vector3 def_angle315 = new Vector3(0, 0, 315);
-        public readonly static Vector2 pivot_center = new Vector2(0.5f, 0.5f);
-        public static readonly SpriteInfo[] def_sprite1280x512_5x2 = new SpriteInfo[] {
-            new SpriteInfo() {rect= new Rect(0, 0, 256, 256),pivot=pivot_center} ,
-            new SpriteInfo() {rect= new Rect(256, 0, 256, 256), pivot=pivot_center},
-            new SpriteInfo() {rect= new Rect(512, 0, 256, 256), pivot=pivot_center},
-            new SpriteInfo() {rect= new Rect(768, 0, 256, 256),pivot=pivot_center},
-            new SpriteInfo() {rect= new Rect(1024, 0, 256, 256),pivot=pivot_center} ,
-            new SpriteInfo() {rect= new Rect(0, 256, 256, 256), pivot=pivot_center},
-            new SpriteInfo() {rect= new Rect(256, 256, 256, 256), pivot=pivot_center},
-            new SpriteInfo() {rect= new Rect(512, 256, 256, 256), pivot=pivot_center},
-            new SpriteInfo() {rect= new Rect(768, 256, 256, 256), pivot=pivot_center},
-            new SpriteInfo() {rect= new Rect(1024, 256, 256, 256),pivot=pivot_center}};
 
-        public readonly static Grid def_4x4 = new Grid(4, 4);
-        public readonly static Grid def_8x2 = new Grid(8, 2);
-        public readonly static Vector3 def_scale = new Vector3(1, 1), def_scale_l = new Vector3(-1, 1), def_angle180 = new Vector3(0, 0, 180), def_location = new Vector3(0, 0, layer);
-        //public static Material Mat_effect = Resources.Load("Shader/Effect") as Material;
-        #endregion
-
-        #region wave order
+        #region start points
         public static System.Random random = new System.Random();
         public static Point3[] S_RandomDown_1()
         {
@@ -39,9 +15,9 @@ namespace Assets.UnityVS.Script
         }
         public static readonly Point3[] S_Up_1 = new Point3[] {new Point3(-2,6,0) };
         public static readonly Point3[] S_Up_2 = new Point3[] { new Point3(-1,6,0)};
-        public static readonly Point3[] S_Up_3 = new Point3[] { new Point3(0,6,0)};
+        public static readonly Point3[] S_Up_3 = new Point3[] { new Point3(0,7,0)};
         public static readonly Point3[] S_Up_4 = new Point3[] { new Point3(1,6,0)};
-        public static readonly Point3[] S_Up_5 = new Point3[] {new Point3(2,6,0) };
+        public static readonly Point3[] S_Up_5 = new Point3[] {new Point3(2,6,0)};
         public static readonly Point3[] S_Dwon_2 = new Point3[] { new Point3(-1,6,0),new Point3(1,6,0)};
         public static readonly Point3[] S_Dwon_3 = new Point3[] { new Point3(-2, 6f, 0),new Point3(0,6,0),new Point3(2,6,0)};
         public static readonly Point3[] S_UpLeft_1 = new Point3[] { new Point3(-4,6,45) };
@@ -194,6 +170,14 @@ new Point2(0.1564344f, 0.9876884f),new Point2(0.1391731f, 0.9902681f),new Point2
         public static Vector2[][] uv_def_3x2 = new Vector2[][] { def_3x2_00, def_3x2_01, def_3x2_02, def_3x2_10, def_3x2_11, def_3x2_12};
         #endregion
 
+        #region uv_def 4x1
+        static Vector2[] def_4x1_00 = new Vector2[] { new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(0.25f, 1f), new Vector2(0.25f, 0f) };
+        static Vector2[] def_4x1_01 = new Vector2[] { new Vector2(0.25f, 0f), new Vector2(0.25f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 0f) };
+        static Vector2[] def_4x1_02 = new Vector2[] { new Vector2(0.5f, 0f), new Vector2(0.5f, 1f), new Vector2(0.75f, 1f), new Vector2(0.75f, 0f) };
+        static Vector2[] def_4x1_03 = new Vector2[] { new Vector2(0.75f, 0f), new Vector2(0.75f, 1f), new Vector2(1f, 1f), new Vector2(1f, 0f) };
+        public static Vector2[][] uv_def_4x1 = new Vector2[][] { def_4x1_00, def_4x1_01, def_4x1_02, def_4x1_03, };
+        #endregion
+
         #region uv_def 4x2
         static Vector2[] def_4x2_00 = new Vector2[] { new Vector2(0f, 0f), new Vector2(0f, 0.5f), new Vector2(0.25f, 0.5f), new Vector2(0.25f, 0f) };
         static Vector2[] def_4x2_01 = new Vector2[] { new Vector2(0.25f, 0f), new Vector2(0.25f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0f) };
@@ -256,6 +240,52 @@ new Point2(0.1564344f, 0.9876884f),new Point2(0.1391731f, 0.9902681f),new Point2
         static Vector2[] def_5x2_13 = new Vector2[] { new Vector2(0.6f, 0.5f), new Vector2(0.6f, 1f), new Vector2(0.8f, 1f), new Vector2(0.8f, 0.5f) };
         static Vector2[] def_5x2_14 = new Vector2[] { new Vector2(0.8f, 0.5f), new Vector2(0.8f, 1f), new Vector2(1f, 1f), new Vector2(1f, 0.5f) };
         public static Vector2[][] uv_def_5x2 = new Vector2[][] { def_5x2_00, def_5x2_01, def_5x2_02, def_5x2_03, def_5x2_04, def_5x2_10, def_5x2_11, def_5x2_12, def_5x2_13, def_5x2_14 };
+        #endregion
+
+        #region uv_def 6x5
+        static Vector2[] def_6x5_00 = new Vector2[] { new Vector2(0f, 0f), new Vector2(0f, 0.2f), new Vector2(0.1666667f, 0.2f), new Vector2(0.1666667f, 0f) };
+        static Vector2[] def_6x5_01 = new Vector2[] { new Vector2(0.1666667f, 0f), new Vector2(0.1666667f, 0.2f), new Vector2(0.3333333f, 0.2f), new Vector2(0.3333333f, 0f) };
+        static Vector2[] def_6x5_02 = new Vector2[] { new Vector2(0.3333333f, 0f), new Vector2(0.3333333f, 0.2f), new Vector2(0.5f, 0.2f), new Vector2(0.5f, 0f) };
+        static Vector2[] def_6x5_03 = new Vector2[] { new Vector2(0.5f, 0f), new Vector2(0.5f, 0.2f), new Vector2(0.6666667f, 0.2f), new Vector2(0.6666667f, 0f) };
+        static Vector2[] def_6x5_04 = new Vector2[] { new Vector2(0.6666667f, 0f), new Vector2(0.6666667f, 0.2f), new Vector2(0.8333333f, 0.2f), new Vector2(0.8333333f, 0f) };
+        static Vector2[] def_6x5_05 = new Vector2[] { new Vector2(0.8333333f, 0f), new Vector2(0.8333333f, 0.2f), new Vector2(1f, 0.2f), new Vector2(1f, 0f) };
+        static Vector2[] def_6x5_10 = new Vector2[] { new Vector2(0f, 0.2f), new Vector2(0f, 0.4f), new Vector2(0.1666667f, 0.4f), new Vector2(0.1666667f, 0.2f) };
+        static Vector2[] def_6x5_11 = new Vector2[] { new Vector2(0.1666667f, 0.2f), new Vector2(0.1666667f, 0.4f), new Vector2(0.3333333f, 0.4f), new Vector2(0.3333333f, 0.2f) };
+        static Vector2[] def_6x5_12 = new Vector2[] { new Vector2(0.3333333f, 0.2f), new Vector2(0.3333333f, 0.4f), new Vector2(0.5f, 0.4f), new Vector2(0.5f, 0.2f) };
+        static Vector2[] def_6x5_13 = new Vector2[] { new Vector2(0.5f, 0.2f), new Vector2(0.5f, 0.4f), new Vector2(0.6666667f, 0.4f), new Vector2(0.6666667f, 0.2f) };
+        static Vector2[] def_6x5_14 = new Vector2[] { new Vector2(0.6666667f, 0.2f), new Vector2(0.6666667f, 0.4f), new Vector2(0.8333333f, 0.4f), new Vector2(0.8333333f, 0.2f) };
+        static Vector2[] def_6x5_15 = new Vector2[] { new Vector2(0.8333333f, 0.2f), new Vector2(0.8333333f, 0.4f), new Vector2(1f, 0.4f), new Vector2(1f, 0.2f) };
+        static Vector2[] def_6x5_20 = new Vector2[] { new Vector2(0f, 0.4f), new Vector2(0f, 0.6f), new Vector2(0.1666667f, 0.6f), new Vector2(0.1666667f, 0.4f) };
+        static Vector2[] def_6x5_21 = new Vector2[] { new Vector2(0.1666667f, 0.4f), new Vector2(0.1666667f, 0.6f), new Vector2(0.3333333f, 0.6f), new Vector2(0.3333333f, 0.4f) };
+        static Vector2[] def_6x5_22 = new Vector2[] { new Vector2(0.3333333f, 0.4f), new Vector2(0.3333333f, 0.6f), new Vector2(0.5f, 0.6f), new Vector2(0.5f, 0.4f) };
+        static Vector2[] def_6x5_23 = new Vector2[] { new Vector2(0.5f, 0.4f), new Vector2(0.5f, 0.6f), new Vector2(0.6666667f, 0.6f), new Vector2(0.6666667f, 0.4f) };
+        static Vector2[] def_6x5_24 = new Vector2[] { new Vector2(0.6666667f, 0.4f), new Vector2(0.6666667f, 0.6f), new Vector2(0.8333333f, 0.6f), new Vector2(0.8333333f, 0.4f) };
+        static Vector2[] def_6x5_25 = new Vector2[] { new Vector2(0.8333333f, 0.4f), new Vector2(0.8333333f, 0.6f), new Vector2(1f, 0.6f), new Vector2(1f, 0.4f) };
+        static Vector2[] def_6x5_30 = new Vector2[] { new Vector2(0f, 0.6f), new Vector2(0f, 0.8f), new Vector2(0.1666667f, 0.8f), new Vector2(0.1666667f, 0.6f) };
+        static Vector2[] def_6x5_31 = new Vector2[] { new Vector2(0.1666667f, 0.6f), new Vector2(0.1666667f, 0.8f), new Vector2(0.3333333f, 0.8f), new Vector2(0.3333333f, 0.6f) };
+        static Vector2[] def_6x5_32 = new Vector2[] { new Vector2(0.3333333f, 0.6f), new Vector2(0.3333333f, 0.8f), new Vector2(0.5f, 0.8f), new Vector2(0.5f, 0.6f) };
+        static Vector2[] def_6x5_33 = new Vector2[] { new Vector2(0.5f, 0.6f), new Vector2(0.5f, 0.8f), new Vector2(0.6666667f, 0.8f), new Vector2(0.6666667f, 0.6f) };
+        static Vector2[] def_6x5_34 = new Vector2[] { new Vector2(0.6666667f, 0.6f), new Vector2(0.6666667f, 0.8f), new Vector2(0.8333333f, 0.8f), new Vector2(0.8333333f, 0.6f) };
+        static Vector2[] def_6x5_35 = new Vector2[] { new Vector2(0.8333333f, 0.6f), new Vector2(0.8333333f, 0.8f), new Vector2(1f, 0.8f), new Vector2(1f, 0.6f) };
+        static Vector2[] def_6x5_40 = new Vector2[] { new Vector2(0f, 0.8f), new Vector2(0f, 1f), new Vector2(0.1666667f, 1f), new Vector2(0.1666667f, 0.8f) };
+        static Vector2[] def_6x5_41 = new Vector2[] { new Vector2(0.1666667f, 0.8f), new Vector2(0.1666667f, 1f), new Vector2(0.3333333f, 1f), new Vector2(0.3333333f, 0.8f) };
+        static Vector2[] def_6x5_42 = new Vector2[] { new Vector2(0.3333333f, 0.8f), new Vector2(0.3333333f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 0.8f) };
+        static Vector2[] def_6x5_43 = new Vector2[] { new Vector2(0.5f, 0.8f), new Vector2(0.5f, 1f), new Vector2(0.6666667f, 1f), new Vector2(0.6666667f, 0.8f) };
+        static Vector2[] def_6x5_44 = new Vector2[] { new Vector2(0.6666667f, 0.8f), new Vector2(0.6666667f, 1f), new Vector2(0.8333333f, 1f), new Vector2(0.8333333f, 0.8f) };
+        static Vector2[] def_6x5_45 = new Vector2[] { new Vector2(0.8333333f, 0.8f), new Vector2(0.8333333f, 1f), new Vector2(1f, 1f), new Vector2(1f, 0.8f) };
+        public static Vector2[][] uv_def_6x5 = new Vector2[][] { def_6x5_00, def_6x5_01, def_6x5_02, def_6x5_03, def_6x5_04, def_6x5_05, def_6x5_10, def_6x5_11, def_6x5_12, def_6x5_13, def_6x5_14, def_6x5_15, def_6x5_20, def_6x5_21, def_6x5_22, def_6x5_23, def_6x5_24, def_6x5_25, def_6x5_30, def_6x5_31, def_6x5_32, def_6x5_33, def_6x5_34, def_6x5_35, def_6x5_40, def_6x5_41, def_6x5_42, def_6x5_43, def_6x5_44, def_6x5_45, };
+        #endregion
+
+        #region uv_def 8x1
+        static Vector2[] def_8x1_00 = new Vector2[] { new Vector2(0f, 0f), new Vector2(0f, 1f), new Vector2(0.125f, 1f), new Vector2(0.125f, 0f) };
+        static Vector2[] def_8x1_01 = new Vector2[] { new Vector2(0.125f, 0f), new Vector2(0.125f, 1f), new Vector2(0.25f, 1f), new Vector2(0.25f, 0f) };
+        static Vector2[] def_8x1_02 = new Vector2[] { new Vector2(0.25f, 0f), new Vector2(0.25f, 1f), new Vector2(0.375f, 1f), new Vector2(0.375f, 0f) };
+        static Vector2[] def_8x1_03 = new Vector2[] { new Vector2(0.375f, 0f), new Vector2(0.375f, 1f), new Vector2(0.5f, 1f), new Vector2(0.5f, 0f) };
+        static Vector2[] def_8x1_04 = new Vector2[] { new Vector2(0.5f, 0f), new Vector2(0.5f, 1f), new Vector2(0.625f, 1f), new Vector2(0.625f, 0f) };
+        static Vector2[] def_8x1_05 = new Vector2[] { new Vector2(0.625f, 0f), new Vector2(0.625f, 1f), new Vector2(0.75f, 1f), new Vector2(0.75f, 0f) };
+        static Vector2[] def_8x1_06 = new Vector2[] { new Vector2(0.75f, 0f), new Vector2(0.75f, 1f), new Vector2(0.875f, 1f), new Vector2(0.875f, 0f) };
+        static Vector2[] def_8x1_07 = new Vector2[] { new Vector2(0.875f, 0f), new Vector2(0.875f, 1f), new Vector2(1f, 1f), new Vector2(1f, 0f) };
+        public static Vector2[][] uv_def_8x1 = new Vector2[][] { def_8x1_00, def_8x1_01, def_8x1_02, def_8x1_03, def_8x1_04, def_8x1_05, def_8x1_06, def_8x1_07 };
         #endregion
 
         #region uv_def 8x6
@@ -386,13 +416,33 @@ new Point3(-1.5f,5f,180),new Point3(-0.5f,5f,180),new Point3(0.5f,5f,180),new Po
         #endregion
 
         #region six angle 6
-        public static Point3[] GetSixAngle(float angle, Vector3 location)
+        public static Point3[] GetFiveAngle(float angle,ref Vector3 location)//0-72
         {
             float x = location.x;
             float y = location.y;
-            return
-                new Point3[] { new Point3(x,y,angle),  new Point3(x, y, 120 + angle) , new Point3(x, y, 240 + angle),
-                new Point3(x, y, 120 - angle) , new Point3(x, y, 240 - angle) ,new Point3(x, y, 360 - angle)  };
+            Point3[] p = new Point3[5];
+            for(int i=0;i<5;i++)
+            {
+                p[i].x = x;
+                p[i].y = y;
+                p[i].z = angle;
+                angle += 72;
+            }
+            return p;
+        }
+        public static Point3[] GetSixAngle(float angle,ref  Vector3 location)//0-60
+        {
+            float x = location.x;
+            float y = location.y;
+            Point3[] p = new Point3[6];
+            for (int i = 0; i < 6; i++)
+            {
+                p[i].x = x;
+                p[i].y = y;
+                p[i].z = angle;
+                angle += 60;
+            }
+            return p;
         }
         #endregion
 
@@ -490,7 +540,7 @@ new Point3(2.8f,-3.25f,135),new Point3(2.8f,-4.25f,135),
         public static Point2[] p_e_b03 = new Point2[] { new Point2(153f, 0.2376079f), new Point2(27f, 0.2445699f), new Point2(333f, 0.2445699f), new Point2(207f, 0.2376079f) };
         public static Point2[] p_r_b04 = new Point2[] { new Point2(158f, 0.371402f), new Point2(22f, 0.3786444f), new Point2(338f, 0.3786444f), new Point2(202f, 0.371402f) };
         public static Point2[] p_e_b04 = new Point2[] { new Point2(180f, 0.2265625f), new Point2(90f, 0.0546875f), new Point2(0f, 0.2578125f), new Point2(270f, 0.0546875f) };
-        
+        public static Point2[] p_b_missile01 = new Point2[] { new Point2(166f, 0.2576941f), new Point2(14f, 0.2576941f), new Point2(346f, 0.2576941f), new Point2(194f, 0.2576941f) };
         #endregion
 
         #region uv_laser02
@@ -499,9 +549,12 @@ new Point3(2.8f,-3.25f,135),new Point3(2.8f,-4.25f,135),
 
         #endregion
 
-        #region e_moth points
+        #region boss points
         public static Point2[] p_mothA = new Point2[] { new Point2(180f, 0.7734375f), new Point2(145f, 0.6502704f), new Point2(64f, 0.6184224f), new Point2(0f, 0.7890625f), new Point2(296f, 0.6184224f), new Point2(215f, 0.6502704f) };
         public static Point2[] p_mothB = new Point2[] { new Point2(180f, 0.7734375f), new Point2(91f, 1.836536f), new Point2(0f, 0.7890625f), new Point2(269f, 1.836536f), };
+        public static Point2[] p_hjA = new Point2[] { new Point2(0,-1.7465f),new Point2(-1.638f,-0.074f),new Point2(0,0.78864f),new Point2(1.638f,-0.0746f)};
+        public static Point2[] p_hjB = new Point2[] { new Point2(0, -1.7465f),new Point2(-1.6936f,-1.183f),new Point2(-2.1127f,0.04899f),new Point2(0, 0.78864f),new Point2(2.1127f,0.04899f),new Point2(1.6936f, -1.183f) };
+        public static Point2[] p_a10 = new Point2[] { new Point2(180f, 1.15f), new Point2(80f, 1.31f), new Point2(0f, 1.13f), new Point2(280f, 1.31f) };
         #endregion
     }
 }

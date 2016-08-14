@@ -366,7 +366,7 @@ namespace Assets.UnityVS.Script
             QueueSourceEX.RecycleImage(bk_id);
             QueueSourceEX.DeleteCircleButton(buff_button[0]);
         }
-        public static void GameOverCallBack(bool win ,int count)
+        public static void GameOverCallBack(bool win ,int score)
         {
             clear_current_button = clear_GOC;
             back = Initial;
@@ -379,9 +379,9 @@ namespace Assets.UnityVS.Script
             {
                 goc_text.text = lang_win;
                 Goods ga = FileManage.GetGood(9);
-                count *= 10 + current_level;
-                count /= 10;
-                ga.exp +=count;
+                score *= 10 + current_level;
+                score /= 10;
+                ga.exp +=score;
                 if(ga.level==current_level)
                    ga.level++;
                 FileManage.ResetGood(9, ga);
@@ -389,10 +389,10 @@ namespace Assets.UnityVS.Script
             else
             {
                 goc_text.text = lang_lose;
-                count = 0;
+                score = 0;
             }
             buff_imgid[1]= QueueSourceEX.CreateText(null, goc_text);
-            goc_text1.text = lang_forgold + count.ToString();
+            goc_text1.text = lang_forgold + score.ToString();
             buff_imgid[2] = QueueSourceEX.CreateText(null,goc_text1);          
         }
         static void Game_back()
@@ -461,7 +461,7 @@ namespace Assets.UnityVS.Script
             int pass = FileManage.GetGood(9).level;           
             ItemBindData ibd = new ItemBindData();
             ibd.imgpath = new string[] { "Picture/lock" };
-            for(int i=0;i<5;i++)
+            for(int i=0;i<8;i++)
             {
                 if (i > pass)
                 {

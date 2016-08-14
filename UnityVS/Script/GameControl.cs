@@ -26,12 +26,14 @@ namespace Assets.UnityVS.Script
         protected static string mat_prop_b = "Mat_Phone/prop_b";
         static string mat_bk = "Mat_Phone/bk";
 #endif
+        protected static string mat_crystal = "Mat_PC/crystal";
 
+        #region variate
         protected static int ot, ts;//old time, timeslice
         protected static CurrentDispose current;       
         protected static ShotW damageA;
         protected static Action damageC;
-        protected static ShotEx damageB;
+        protected static DamageW damageB;
         protected static GenerateProp generateA;
         protected static Action<bool> D_gameover;
         protected static int currentwave = 0, destory_enemy;
@@ -40,14 +42,18 @@ namespace Assets.UnityVS.Script
         protected static Action update;
         protected static Action<int> propcollid;
         protected static EnemyWave crt_wave;
-        protected static int[] tri_256;
+        protected static int[] tri_256,tri_64;
         protected static Vector3 core_location,wing_location;
         static Vector3[] bld_v3;
         static Vector2[] bld_uv2;
         static int[] bld_tri;
         static float b_boss = 0;
+        static Vector3[] cry_v3;
+        static Vector2[] cry_uv;
+        static Crystal[] cry_state;
+        #endregion
 
-#region data source
+        #region data source
         protected static ImageProperty blood_back = new ImageProperty()
         {
             imagepath = "Picture/bloodt",
@@ -77,8 +83,9 @@ namespace Assets.UnityVS.Script
             sorting = 7
         };
 
-#endregion
+        #endregion
 
+        #region base control
         public static void LoadBaseComponent()
         {
             InitialBloodEx();
@@ -122,10 +129,11 @@ namespace Assets.UnityVS.Script
 
 #region bullet mesh buff
             tri_256 = GetTri(256);
+            tri_64 = GetTri(64);
 #endregion
 
 #region bullet state buff
-            for(int i=0;i<38;i++)
+            for(int i=0;i<32;i++)
             {
                 buff_b_ex[i].vertexs = new Vector3[1024];
                 buff_b_ex[i].uv = new Vector2[1024];
@@ -135,8 +143,14 @@ namespace Assets.UnityVS.Script
 
             buff_wave = new BattelField();
             buff_wave.wave = new List<EnemyWave>();
+
+            #region crystal
+            cry_v3 = new Vector3[256];
+            cry_uv = new Vector2[256];
+            cry_state = new Crystal[64];
+            #endregion
         }
-        static int[] GetTri(int len)
+        protected static int[] GetTri(int len)
         {
             int l = len * 6;
             int[] temp = new int[l];
@@ -155,7 +169,7 @@ namespace Assets.UnityVS.Script
         }
         protected static void ClearData()
         {
-            for(int i=0;i<38;i++)
+            for(int i=0;i<32;i++)
             {
                 for (int c = 0; c < buff_b_ex[i].max; c++)
                     buff_b_ex[i].b_s[c].active = false;
@@ -192,10 +206,13 @@ namespace Assets.UnityVS.Script
             buff_prop_b[0].closely = false;
             buff_prop_b[1].created = false;
             buff_prop_b[1].closely = false;
+            for (int i = 0; i < 64; i++)
+                cry_state[i].active = false;
             generate = false; 
         }
+        #endregion
 
-#region move
+        #region move
         internal static void Plane_Move(Vector3 dot)
         {
             if (mousedown)
@@ -352,7 +369,10 @@ namespace Assets.UnityVS.Script
             {
                 buff_img_ex[iid].update = UpdateEnemy;
             }
-            buff_enemy[i].c_blood = target.enemy.f_blood;
+            float t = (float)buff_wave.level * 0.1f + 1;
+            buff_enemy[i].f_blood *= t;
+            buff_enemy[i].c_blood = buff_enemy[i].f_blood;
+            buff_enemy[i].defance *= t;
             buff_enemy[i].location.x = p.x;
             buff_enemy[i].location.y = p.y;
             buff_enemy[i].location.z = layer;
@@ -845,8 +865,118 @@ namespace Assets.UnityVS.Script
 #region collision
         protected static Vector3 oldloaction = Vector3.zero;
         protected static Point2[] areapoints = new Point2[4];
-        protected static Point2 xy = new Point2(0, 0);           
-       
+        protected static Point2 xy = new Point2(0, 0);
+
+        static int colli_id, colli_s;
+        protected static void CollisionInital()
+        {
+            colli_id = RegBulletEx(ref ThunderData.b_hit, 0);
+            colli_s = 0;
+        }
+        protected static void CreateCollision(ref Vector2 loc, int style)
+        {
+            BulletStateEx[] bse = buff_b_ex[colli_id].b_s;
+            Vector3[] v3 = buff_b_ex[colli_id].vertexs;
+            Vector2[] uv = buff_b_ex[colli_id].uv;
+            int i;
+            for (i = colli_s; i < 255; i++)
+            {
+                if (!bse[i].active)
+                {
+                    bse[i].active = true;
+                    bse[i].extra = 0;
+                    colli_s = i + 1;
+                    if (colli_s > buff_b_ex[colli_id].max)
+                        buff_b_ex[colli_id].max = colli_s;
+                    break;
+                }
+            }
+            i *= 4;
+            float x = loc.x - 0.125f;
+            float x1 = loc.x + 0.125f;
+            float y = loc.y - 0.125f;
+            float y1 = loc.y + 0.125f;
+            // style*=4;
+            // bse[i].extra_p=style;
+            v3[i].x = x;
+            v3[i].y = y;
+            uv[i] = SP.uv_def_4x1[style][0];
+            i++;
+            v3[i].x = x;
+            v3[i].y = y1;
+            uv[i] = SP.uv_def_4x1[style][1];
+            i++;
+            v3[i].x = x1;
+            v3[i].y = y1;
+            uv[i] = SP.uv_def_4x1[style][2];
+            i++;
+            v3[i].x = x1;
+            v3[i].y = y;
+            uv[i] = SP.uv_def_4x1[style][3];
+        }
+        public static void CalculCollision(ref BulletPropertyEx bpe, ref BulletStateEx[] bse)
+        {
+            colli_s = 0;
+            bpe.a_count = 0;
+            int max = bpe.max;
+            int s = 0;
+            Vector3[] v3 = bpe.vertexs;
+            Vector2[] uv = bpe.uv;
+            for (int i = 0; i < max; i++)
+            {
+                if (bse[i].active)
+                {
+                    bse[i].extra++;
+                    if (bse[i].extra >= 16)
+                    {
+                        bse[i].active = false;
+                        bse[i].extra = 0;
+                        int ss = i * 4;
+                        v3[ss] = Vector3.zero;
+                        ss++;
+                        v3[ss] = Vector3.zero;
+                        ss++;
+                        v3[ss] = Vector3.zero;
+                        ss++;
+                        v3[ss] = Vector3.zero;
+                    }
+                    else
+                    {
+                        s = i;
+                        int index = bse[i].extra;
+                        if ((index & 3) == 0)
+                        {
+                            index >>= 2;
+                            index += bse[i].extra_p;
+                            int ss = i * 4;
+                            uv[ss] = SP.uv_def_4x1[index][0];
+                            ss++;
+                            uv[ss] = SP.uv_def_4x1[index][1];
+                            ss++;
+                            uv[ss] = SP.uv_def_4x1[index][2];
+                            ss++;
+                            uv[ss] = SP.uv_def_4x1[index][3];
+                            ss++;
+                        }
+                    }
+                }
+            }
+            if (s == 0)
+            {
+                bpe.a_count = 0;
+                bpe.max = 0;
+            }
+            else
+            {
+                bpe.a_count = s;
+                if (s < max - 1)
+                {
+                    bpe.max = s + 1;
+                }
+            }
+           
+        }
+
         protected static bool CircleMoveArea(Vector3 A, Vector3 B, float r, ref Point2[] temp)
         {
             float x = A.x - B.x;
@@ -914,11 +1044,6 @@ namespace Assets.UnityVS.Script
         {
             float x = state.location.x;
             float y = state.location.y;
-            int z = state.angle;
-            Point2 temp = new Point2(x, y);
-            Point2[] P = new Point2[0];
-            if (bpe.radius == 0)
-                P = RotatePoint2(ref bpe.edgepoints, temp, z);
             for (int cc = 0; cc < 20; cc++)
             {
                 if (buff_enemy[cc].c_blood >0)
@@ -931,11 +1056,13 @@ namespace Assets.UnityVS.Script
                         if (bpe.penetrate == false)
                             state.active = false;
                         damageB(ref bpe, ref buff_enemy[cc]);
+                        if (!bpe.offset)
+                            CreateCollision(ref state.location, bpe.c_style);
                         return true;
                     }
                     if (d < bpe.maxrange)
                     {
-                        bool collid = false;
+                        Point2 temp = new Point2(x, y);
                         if (bpe.radius > 0)
                         {
                             if(buff_enemy[cc].radius>0)
@@ -945,27 +1072,40 @@ namespace Assets.UnityVS.Script
                                     if (bpe.penetrate == false)
                                         state.active = false;
                                     damageB(ref bpe, ref buff_enemy[cc]);
+                                    if (!bpe.offset)
+                                        CreateCollision(ref state.location, bpe.c_style);
                                     return true;
                                 }
                             }
                             else if(buff_enemy[cc].offset!=null)
-                                collid = CircleToPolygon(temp, bpe.radius, buff_enemy[cc].offset);
-                        }                            
+                                if(!CircleToPolygon(temp, bpe.radius, buff_enemy[cc].offset))
+                                    return false;
+                            CreateCollision(ref state.location, bpe.c_style);
+                        }
                         else
                         {
-                            if(buff_enemy[cc].radius>0)
-                                collid = CircleToPolygon(buff_enemy[cc].location, buff_enemy[cc].radius, P);
-                            else if(buff_enemy[cc].offset!=null)
-                                collid = PToP2(buff_enemy[cc].offset, P);
-                        }                            
-                        if (collid)
-                        {
-                            damageB(ref bpe, ref buff_enemy[cc]);
-                            if (bpe.penetrate == false)
+                            int z = state.angle;
+                            Point2[] P = RotatePoint2(ref bpe.edgepoints, temp, z);
+                            if (buff_enemy[cc].radius > 0)
                             {
-                                state.active = false;
-                                return true;
+                                if (!CircleToPolygon(buff_enemy[cc].location, buff_enemy[cc].radius, P))
+                                    return false;
                             }
+                            else if (buff_enemy[cc].offset != null)
+                            {
+                                if (!PToP2(buff_enemy[cc].offset, P))
+                                    return false;
+                            }
+                            Vector2 v= Vector2.zero;
+                            v.x = P[2].x;
+                            v.y = P[2].y;
+                            CreateCollision(ref v, bpe.c_style);
+                        }
+                        damageB(ref bpe, ref buff_enemy[cc]);
+                        if (bpe.penetrate == false)
+                        {
+                            state.active = false;
+                            return true;
                         }
                     }
                 }
@@ -983,7 +1123,7 @@ namespace Assets.UnityVS.Script
         protected static bool generate;
         protected static Vector3 build_position;
         protected static int build_type;
-        static Grid prop_grid = new Grid(3, 2);
+        //static Grid prop_grid = new Grid(3, 2);
         protected static int[] pro_id = new int[4];
         static MeshData[] md = new MeshData[2];
         protected static void Prop_Inital()
@@ -1324,8 +1464,8 @@ namespace Assets.UnityVS.Script
 #endregion
 
 #region bullet contronl ex
-        protected static BulletPropertyEx[] buff_b_ex = new BulletPropertyEx[38];
-        protected static int[] bex_id = new int[38];
+        protected static BulletPropertyEx[] buff_b_ex = new BulletPropertyEx[32];
+        protected static int[] bex_id = new int[32];
         protected static void UpdateBulletEx(ref ImageBaseEx ibe)
         {
             int extra = ibe.extra;
@@ -1337,16 +1477,18 @@ namespace Assets.UnityVS.Script
                 Mesh mesh = ibe.mesh;
                 int vl = len * 4;
                 int il = len * 6;
+                Vector3[] v3 = buff_b_ex[extra].vertexs;
+                Vector2[] uv = buff_b_ex[extra].uv;
                 if (il != mesh.triangles.Length)
                 {
                     mesh.triangles = null;
                     Vector3[] tv = new Vector3[vl];
                     for (int i = 0; i < vl; i++)
-                        tv[i] = buff_b_ex[extra].vertexs[i];
+                        tv[i] = v3[i];
                     mesh.vertices = tv;
                     Vector2[] tu = new Vector2[vl];
                     for (int i = 0; i < vl; i++)
-                        tu[i] = buff_b_ex[extra].uv[i];
+                        tu[i] = uv[i];
                     mesh.uv = tu;
                     int[] tr = new int[il];
                     for (int i = 0; i < il; i++)
@@ -1357,61 +1499,13 @@ namespace Assets.UnityVS.Script
                 {
                     Vector3[] tv = new Vector3[vl];
                     for (int i = 0; i < vl; i++)
-                        tv[i] = buff_b_ex[extra].vertexs[i];
+                        tv[i] = v3[i];
                     mesh.vertices = tv;
                     Vector2[] tu = new Vector2[vl];
                     for (int i = 0; i < vl; i++)
-                        tu[i] = buff_b_ex[extra].uv[i];
+                        tu[i] = uv[i];
                     mesh.uv = tu;
                 }
-//#if unsafe
-//                unsafe
-//                {
-//                    fixed (Vector3* vp = &buff_b_ex[extra].vertexs[0])
-//                    {
-//                        fixed (Vector2* up = &buff_b_ex[extra].uv[0])
-//                        {
-//                            fixed (int* ip = &tri_256[0])
-//                            {
-//                                int* ivp = (int*)vp;
-//                                int* iup = (int*)up;
-//                                int* iip = ip;
-//#if x64
-//                                ivp -= 2;
-//                                iup -= 2;
-//                                iip -= 2;
-//#else
-//                                ivp--;
-//                                iup--;
-//                                iip--;
-//#endif
-//                                *ivp = vl;
-//                                *iup = vl;
-//                                if (il != mesh.triangles.Length)
-//                                {
-//                                    *iip = il;
-//                                    mesh.triangles = null;
-//                                    mesh.vertices = buff_b_ex[extra].vertexs;
-//                                    mesh.uv = buff_b_ex[extra].uv;
-//                                    mesh.triangles = tri_256;
-//                                    *iip = 1536;
-//                                }
-//                                else
-//                                {
-//                                    //*iip = il;
-//                                    //mesh.triangles = null;
-//                                    mesh.vertices = buff_b_ex[extra].vertexs;
-//                                    mesh.uv = buff_b_ex[extra].uv;
-//                                //mesh.triangles = tri_256;
-//                                }
-//                                *ivp = 1024;
-//                                *iup = 1024;
-//                                //*iip = 1536;
-//                            }
-//                        }
-//                    }
-//                }
-//#endif 
                 if (buff_b_ex[extra].update)
                 {
                     int mat_id = buff_b_ex[extra].mat_id;
@@ -1432,25 +1526,25 @@ namespace Assets.UnityVS.Script
         }
         public static void IniB_ExA()
         {
-            for(int i=0;i<26;i++)
+            for(int i=0;i<24;i++)
             {
                 int id=  CreateImgNullEx(UpdateBulletEx,i);
                 bex_id[i] = id;
                 buff_img_ex[id].mr.sortingOrder = 5;
                 buff_img_ex[id].gameobject.SetActive(false);
             }
-            for (int i = 26; i < 38; i++)
+            for (int i = 24; i < 32; i++)
             {
                 int id = CreateImgNullEx(UpdateBulletEx, i);
                 bex_id[i] = id;
-                //buff_img_ex[id].mr.sortingOrder = 2;
+                buff_img_ex[id].mr.sortingOrder = 3;
                 buff_img_ex[id].gameobject.SetActive(false);
             }
         }
         protected static int RegBulletEx(ref BulletPropertyEx target,int start)
         {
             int i;
-            for (i = start; i < 38; i++)
+            for (i = start; i < 32; i++)
             {
                 if (!buff_b_ex[i].active & buff_b_ex[i].a_count < 1)
                 {
@@ -1462,6 +1556,11 @@ namespace Assets.UnityVS.Script
                 buff_img_ex[iid].update = target.up_img;
             else buff_img_ex[iid].update = UpdateBulletEx;
             CopyBullet(ref buff_b_ex[i],ref target);
+            if(start<24)
+            {
+                float t = (float)buff_wave.level * 0.1f + 1;
+                buff_b_ex[i].attack *= t;
+            }
             return i;
         }
         protected static void CopyBullet(ref BulletPropertyEx target,ref BulletPropertyEx source)
@@ -1524,6 +1623,7 @@ namespace Assets.UnityVS.Script
         protected static void Cacul_Bullet(ref BulletPropertyEx bpe, ref BulletStateEx[] bse)
         {
             int a = 0;
+            int s_count = bpe.s_count;
             if (bpe.a_count > 0 | bpe.active)
             {
                 int max = bpe.max;
@@ -1533,11 +1633,10 @@ namespace Assets.UnityVS.Script
                     for (int c = 0; c < max; c++)
                     {
                         if (Calcul_BPEA(ref bpe, ref bse[c], ref bpe.vertexs, ref bpe.uv, offset))
-                            a++;
+                             a++;
                         offset += 4;
                     }
                 }
-                int s_count = bpe.s_count;
                 if (s_count > 0)
                 {
                     if (bpe.t_uv != null)
@@ -1547,7 +1646,7 @@ namespace Assets.UnityVS.Script
                             if (max >= 255)
                                 break;
                             Create_BSEA(ref bpe, ref bse[max], ref bpe.vertexs, ref bpe.uv, offset, c);
-                            bse[c].id = max;
+                            bse[max].id = max;
                             offset += 4;
                             if (offset >= 1020)
                             {
@@ -1629,53 +1728,77 @@ namespace Assets.UnityVS.Script
         protected static bool Calcul_BPEA(ref BulletPropertyEx bpe, ref BulletStateEx bse,ref Vector3[] v3, ref Vector2[] uv2, int id )
         {
             float x, y;
-            if (bpe.move != null)
+            if(bse.active)
             {
-                bpe.move(ref bpe, ref bse);
-                if (bse.active)
+                if (bpe.move != null)
                 {
-                    if(bpe.collision!=null)
+                    bpe.move(ref bpe, ref bse);
+                    if (bse.active)
                     {
-                        bpe.collision(ref bpe, ref bse);
-                        if (bse.active)
-                            goto label1;
+                        if (bpe.collision != null)
+                        {
+                            bpe.collision(ref bpe, ref bse);
+                            if (bse.active)
+                                goto label1;
+                        }
+                    }
+                }
+                else
+                {
+                    x = bse.location.x;
+                    y = bse.location.y;
+                    if (y > 5.5f | y < -5.5f | x > 3f | x < -3f)
+                    {
+                        bse.active = false;
+                    }
+                    else
+                    {
+                        if (bse.extra == 0)
+                        {
+                            bse.extra++;
+                            int z = bse.angle;
+                            if (z < 0)
+                                z += 360;
+                            if (z > 360)
+                                z -= 360;
+                            float s = bpe.speed;
+                            bse.movexyz.x = angle_table[z].x * s;
+                            bse.movexyz.y = angle_table[z].y * s;
+                        }
+                        x = bse.movexyz.x * ts;
+                        y = bse.movexyz.y * ts;
+                        bse.location.x += x;
+                        bse.location.y += y;
+                        if (bpe.collision != null)
+                        {
+                            bpe.collision(ref bpe, ref bse);
+                            if (bse.active)
+                                goto label1;
+                        }
                     }
                 }
             }
             else
             {
-                x = bse.location.x;
-                y = bse.location.y;
-                if (y > 5.5f | y < -5.5f | x > 3f | x < -3f)
+                if (bpe.s_count > 0)
                 {
-                    bse.active = false;
+                    bpe.s_count--;
+                    int s_count = bpe.s_count;
+                    bse.active = true;
+                    bse.extra = 0;
+                    bse.extra2 = 0;
+                    bse.extra_p = 0;
+                    bse.uv_rect = bpe.uv_rect;
+                    bse.location.x = bpe.shotpoint[s_count].x;
+                    bse.location.y = bpe.shotpoint[s_count].y;
+                    bse.angle = (int)bpe.shotpoint[s_count].z;
+                    uv2[id] = bpe.t_uv[0];
+                    uv2[id + 1] = bpe.t_uv[1];
+                    uv2[id + 2] = bpe.t_uv[2];
+                    uv2[id + 3] = bpe.t_uv[3];
+                    goto label1;
                 }
-                else
-                {
-                    if (bse.extra == 0)
-                    {
-                        bse.extra++;
-                        int z = bse.angle;
-                        if (z < 0)
-                            z += 360;
-                        if (z > 360)
-                            z -= 360;
-                        float s = bpe.speed;
-                        bse.movexyz.x = angle_table[z].x * s;
-                        bse.movexyz.y = angle_table[z].y * s;
-                    }
-                    x = bse.movexyz.x * ts;
-                    y = bse.movexyz.y * ts;
-                    bse.location.x += x;
-                    bse.location.y += y;
-                    if (bpe.collision != null)
-                    {
-                        bpe.collision(ref bpe, ref bse);
-                        if (bse.active)
-                            goto label1;
-                    } 
-                }
-
+                return false;
             }
             if (bpe.s_count > 0)
             {
@@ -1827,6 +1950,293 @@ namespace Assets.UnityVS.Script
             bk_c_id = t_id;
             bk_chang = 2;
         }
-#endregion
+        #endregion
+
+        #region crystal control
+        protected static int cry_mat_id;
+        protected static int score,cry_a_c;//active count
+        protected static void Cry_Inital()
+        {
+            int iid= CreateImgNullEx(Cry_Update,0);
+            Material mat = CreateMat(cry_mat_id);
+            buff_img_ex[iid].mr.material = mat;
+            buff_img_ex[iid].mr.sortingOrder = 5;
+            Mesh mesh = buff_img_ex[iid].mesh;
+            mesh.triangles = null;
+            mesh.vertices = cry_v3;
+            mesh.uv = cry_uv;
+            mesh.triangles = tri_64;
+        }
+        protected static void Cry_create(int s,float x,float y)
+        {
+            int c = 0;
+            int index = 0;
+            
+            if (s>5)
+            {
+                float x1 = x+0.1f, y1 = y+0.2f;
+                c = s / 5;
+                s %=5;
+                for (int i = index; i < 64; i++)
+                {
+                    if (!cry_state[i].active)
+                    {
+                        cry_state[i].style = 2;
+                        cry_state[i].active = true;
+                        cry_state[i].extra = 0;
+                        cry_state[i].location.x = x1;
+                        cry_state[i].location.y = y1;
+                        x1 -= c * 0.1f;
+                        index = i;
+                        c--;
+                        if (c < 1)
+                            break;
+                    }
+                }
+            }
+            if(s>3)
+            {
+                c = s / 3;
+                s %= 3;
+                for (int i = index; i < 64; i++)
+                {
+                    if (!cry_state[i].active)
+                    {
+                        cry_state[i].style = 1;
+                        cry_state[i].active = true;
+                        cry_state[i].extra = 0;
+                        cry_state[i].location.x = x;
+                        cry_state[i].location.y = y;
+                        index = i;
+                        c--;
+                        if (c < 1)
+                            break;
+                    }
+                }
+            }
+            c = s;
+            if(c>0)
+            {
+                float x1 = x - 0.2f, y1 = y -0.1f;
+                for (int i = index; i < 64; i++)
+                {
+                    if (!cry_state[i].active)
+                    {
+                        cry_state[i].style = 0;
+                        cry_state[i].active = true;
+                        cry_state[i].extra = 0;
+                        cry_state[i].location.x = x1;
+                        if((c&2)==0)
+                        cry_state[i].location.y = y1-0.1f;
+                        else cry_state[i].location.y = y1;
+                        x1 += 0.2f;
+                        c--;
+                        if (c < 1)
+                            break;
+                    }
+                }
+            }
+        }
+        // w=256/6/128/2=0.166667  h=256/5/128/2=0.2
+        protected static void Cry_move()
+        {
+            float x, y, x1, y1;
+            float s = ts * 0.006f;
+            int index = 0;
+            cry_a_c = 0;
+            for(int i=0;i<64;i++)
+            {
+                if(cry_state[i].active)
+                {
+                     x = cry_state[i].location.x;
+                     y = cry_state[i].location.y;
+                     x1 = x - core_location.x;
+                     y1 = y - core_location.y;
+                    if(x1 > -0.2f & x1 < 0.2f)
+                    {
+                        if (y1 > -0.2f & y1 < 0.2f)
+                        {
+                            if(cry_state[i].style==0)
+                            {
+                                score += 1;
+                            }else if(cry_state[i].style==1)
+                            {
+                                score += 3;
+                            }
+                            else
+                            {
+                                score += 5;
+                            }
+                            goto label3;
+                        }
+                    }
+                    if(x1 > -1f & x1 < 1f)
+                    {
+                        if (y1 > -1f & y1 < 1f)
+                        {
+                            if (x1 < 0)
+                                x += s;
+                            else x -= s;
+                            if (y1 < 0)
+                                y += ts;
+                            else y -= s;
+                            goto label2;
+                        }
+                    }
+                    y -= s;
+                    if (y < -5.2f)
+                        goto label3;
+                    label2:;
+                    cry_state[i].location.x = x;
+                    cry_state[i].location.y = y;
+                    cry_v3[index].x = x - 0.16667f;
+                    cry_v3[index].y = y - 0.2f;
+                    cry_v3[index+1].x = x - 0.16667f;
+                    cry_v3[index+1].y = y + 0.2f;
+                    cry_v3[index+2].x = x + 0.16667f;
+                    cry_v3[index+2].y = y + 0.2f;
+                    cry_v3[index+3].x = x + 0.16667f;
+                    cry_v3[index+3].y = y - 0.2f;
+                    Cry_play(ref cry_state[i],index);
+                    cry_a_c = 1;
+                    goto label4;
+                }
+                label3:;
+                cry_state[i].active = false;
+                cry_v3[index] = Vector3.zero;
+                cry_v3[index + 1] = Vector3.zero;
+                cry_v3[index + 2] = Vector3.zero;
+                cry_v3[index + 3] = Vector3.zero;
+                label4:;
+                index += 4;
+            }
+        }
+        static void Cry_play(ref Crystal c,int s)
+        {
+            c.extra++;
+            int i;
+            if(c.style==0)
+            {
+                if (c.extra >= 32)
+                    c.extra = 0;
+                 i = c.extra;
+                if ((i & 0x8) == 0)
+                {
+                    i >>= 4;
+                    goto label1;
+                }
+                return;
+            }
+            else if(c.style==1)
+            {
+                if (c.extra >= 56)
+                    c.extra = 0;
+                i = c.extra;
+                if ((i & 0x8) == 0)
+                {
+                    i >>= 4;
+                    i += 5;
+                    goto label1;
+                }
+                return;
+            }
+            else
+            {
+                if (c.extra >= 48)
+                    c.extra = 0;
+                i = c.extra;
+                if ((i & 0x8) == 0)
+                {
+                    i >>= 4;
+                    i += 12;
+                    goto label1;
+                }
+                return;
+            }
+            label1:;
+            cry_uv[s] = SP.uv_def_6x5[i][0];
+            s++;
+            cry_uv[s] = SP.uv_def_6x5[i][1];
+            s++;
+            cry_uv[s] = SP.uv_def_6x5[i][2];
+            s++;
+            cry_uv[s] = SP.uv_def_6x5[i][3];
+        }
+        static void Cry_Update(ref ImageBaseEx ibe)
+        {
+            if(cry_a_c>0)
+            {
+                ibe.gameobject.SetActive(true);
+                Mesh mesh = ibe.mesh;
+                mesh.vertices = cry_v3;
+                mesh.uv = cry_uv;
+            }
+            else
+            {
+                ibe.gameobject.SetActive(false);
+            }
+            
+        }
+        #endregion
+
+        #region missile and meteor
+        static int r_time,missile_bid;
+        protected static void Missile_Inital()
+        {
+            missile_bid= RegBulletEx(ref ThunderData.b_missile,0);
+            r_time= lucky.Next(5000, 10000);
+        }
+        protected static void Update_missile()
+        {
+            r_time -= ts;
+            if(r_time<16)
+            {
+                if((r_time&8)==0)//missile
+                {
+                    int c1 = r_time & 3;
+                    int c2 = r_time;
+                    c2 >>= 2;
+                    c2 &= 7;
+                    float x = c2;
+                    x *= 0.645f;
+                    x -= 2.25f;
+                    float c3 = 4 - c1;
+                    c3 += 0.25f;
+                    c1++;
+                    Point3[] tp = new Point3[c1];
+                    for (int i = 0; i < c1; i++)
+                    {
+                        tp[i].x = x;
+                        tp[i].y = 6;
+                        x += c3;
+                        if (x > 2.25f)
+                            x -= 4.5f;
+                    }
+                    buff_b_ex[missile_bid].shotpoint = tp;
+                    buff_b_ex[missile_bid].s_count = c1;
+                }
+                else//meteor
+                {
+                    int c1 = r_time & 3;
+                    c1 >>= 1;
+                    int c2 = r_time;
+                    c2 >>= 2;
+                    c2 &= 7;
+                    float x = c2;
+                    x *= 0.645f;
+                    x -= 2.25f;
+                    float c3 =3- c1;
+                    for(int i=0;i<=c1;i++)
+                    {
+                        CreateEnemy(ref ThunderData.e_meteor, new Point3(x,6,0));
+                        x += c3;
+                        if (x > 2.25f)
+                            x -= 4.5f;
+                    }
+                }
+                r_time = lucky.Next(2000,10000);
+            }
+        }
+        #endregion
     }
 }

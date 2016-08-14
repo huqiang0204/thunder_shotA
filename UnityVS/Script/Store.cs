@@ -7,8 +7,8 @@ namespace Assets.UnityVS.Script
     class Store:GameControl
     {
         #region preview
-        static ShotW[] pv_shot = new ShotW[3];
-        static int[] pv_shot_id = new int[5];
+        //static ShotW[] pv_shot = new ShotW[3];
+        //static int[] pv_shot_id = new int[5];
         static WarPlane pv_wp;
         static Wing pv_w;
         static SecondBullet pv_sb;

@@ -204,17 +204,15 @@ namespace Assets.UnityVS.Script
         #endregion
 
         #region bigboom
-        static AnimatEx bb00 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[0], rect = uv_256x256 };
-        static AnimatEx bb01 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[1], rect = uv_256x256 };
-        static AnimatEx bb02 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[2], rect = uv_256x256 };
-        static AnimatEx bb03 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[3], rect = uv_256x256 };
-        static AnimatEx bb04 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[4], rect = uv_256x256 };
-        static AnimatEx bb05 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[5], rect = uv_256x256 };
-        static AnimatEx bb06 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[6], rect = uv_256x256 };
-        static AnimatEx bb07 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[7], rect = uv_256x256 };
-        static AnimatEx bb08 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[8], rect = uv_256x256 };
-        static AnimatEx bb09 = new AnimatEx() { parentid = -1, uv2 = uv_def_5x2[9], rect = uv_256x256 };
-        public static AnimatBaseEx bigboom = new AnimatBaseEx() { stage=new AniRun[] { Ani_Motion.bb_stage1},ae=new AnimatEx[] { bb00,bb01,bb02,bb03,bb04,bb05,bb06,bb07,bb08,bb09} };
+        static AnimatEx bb00 = new AnimatEx() { parentid = -1, uv2 = uv_def_4x2[0], rect = uv_256x256 };
+        static AnimatEx bb01 = new AnimatEx() { parentid = -1, uv2 = uv_def_4x2[1], rect = uv_256x256 };
+        static AnimatEx bb02 = new AnimatEx() { parentid = -1, uv2 = uv_def_4x2[2], rect = uv_256x256 };
+        static AnimatEx bb03 = new AnimatEx() { parentid = -1, uv2 = uv_def_4x2[3], rect = uv_256x256 };
+        static AnimatEx bb04 = new AnimatEx() { parentid = -1, uv2 = uv_def_4x2[4], rect = uv_256x256 };
+        static AnimatEx bb05 = new AnimatEx() { parentid = -1, uv2 = uv_def_4x2[5], rect = uv_256x256 };
+        static AnimatEx bb06 = new AnimatEx() { parentid = -1, uv2 = uv_def_4x2[6], rect = uv_256x256 };
+        static AnimatEx bb07 = new AnimatEx() { parentid = -1, uv2 = uv_def_4x2[7], rect = uv_256x256 };
+        public static AnimatBaseEx bigboom = new AnimatBaseEx() { stage=new AniRun[] { Ani_Motion.bb_stage1},ae=new AnimatEx[] { bb00,bb01,bb02,bb03,bb04,bb05,bb06,bb07} };
         #endregion
 
         #region wing guan chuan
@@ -230,6 +228,87 @@ namespace Assets.UnityVS.Script
         static AnimatEx wra2l00 = new AnimatEx() {uv2=uv_def_1x1,scale=1,free=true,parentid=-1,rect=w_ra2l_p,location=new Point2(-1,0) };
         static AnimatEx wra2l01 = new AnimatEx() { uv2 = uv_def_1x1, scale = 1, free = true, parentid = -1, rect = w_ra2l_p, location = new Point2(1, 0) };
         public static AnimatBaseEx w_ra2l = new AnimatBaseEx() {stage=new AniRun[] { Ani_Motion.ra2l_stage1}, ae=new AnimatEx[] {wra2l00,wra2l01 } ,tri=tri_def2};
+        #endregion
+
+        #region huijin
+        static Vector2[] huijin0_uv = new Vector2[] { new Vector2(0.734375f, 0.5273438f), new Vector2(0.734375f, 0.8105469f), new Vector2(0.8417969f, 0.8105469f), new Vector2(0.8417969f, 0.5273438f) };
+        static Vector2[] huijin1_uv = new Vector2[] { new Vector2(0.8417969f, 0.5273438f), new Vector2(0.8417969f, 0.8105469f), new Vector2(0.734375f, 0.8105469f), new Vector2(0.734375f, 0.5273438f) };
+        static Vector2[] huijin2_uv = new Vector2[] { new Vector2(0.2597656f, 0.1328125f), new Vector2(0.2597656f, 0.2460938f), new Vector2(0.3730469f, 0.2460938f), new Vector2(0.3730469f, 0.1328125f) };
+        static Vector2[] huijin3_uv = new Vector2[] { new Vector2(0.1015625f, 0.1269531f), new Vector2(0.1015625f, 0.2597656f), new Vector2(0.234375f, 0.2597656f), new Vector2(0.234375f, 0.1269531f) };
+        static Vector2[] huijin4_uv = new Vector2[] { new Vector2(0.3984375f, 0.1425781f), new Vector2(0.3984375f, 0.234375f), new Vector2(0.7539063f, 0.234375f), new Vector2(0.7539063f, 0.1425781f) };
+        static Vector2[] huijin5_uv = new Vector2[] { new Vector2(0.3730469f, 0.1328125f), new Vector2(0.3730469f, 0.2460938f), new Vector2(0.2597656f, 0.2460938f), new Vector2(0.2597656f, 0.1328125f) };
+        static Vector2[] huijin6_uv = new Vector2[] { new Vector2(0.234375f, 0.1269531f), new Vector2(0.234375f, 0.2597656f), new Vector2(0.1015625f, 0.2597656f), new Vector2(0.1015625f, 0.1269531f) };
+        static Vector2[] huijin7_uv = new Vector2[] { new Vector2(0.7539063f, 0.1425781f), new Vector2(0.7539063f, 0.234375f), new Vector2(0.3984375f, 0.234375f), new Vector2(0.3984375f, 0.1425781f) };
+        static Vector2[] huijin8_uv = new Vector2[] { new Vector2(0f, 0.1152344f), new Vector2(0f, 0.5722656f), new Vector2(0.09179688f, 0.5722656f), new Vector2(0.09179688f, 0.1152344f) };
+        static Vector2[] huijin9_uv = new Vector2[] { new Vector2(0.4355469f, 0.2402344f), new Vector2(0.4355469f, 0.5390625f), new Vector2(0.5507813f, 0.5390625f), new Vector2(0.5507813f, 0.2402344f) };
+        static Vector2[] huijin10_uv = new Vector2[] { new Vector2(0.5664063f, 0.2597656f), new Vector2(0.5664063f, 0.8574219f), new Vector2(0.7324219f, 0.8574219f), new Vector2(0.7324219f, 0.2597656f) };
+        static Vector2[] huijin11_uv = new Vector2[] { new Vector2(0.7324219f, 0.2597656f), new Vector2(0.7324219f, 0.8574219f), new Vector2(0.5664063f, 0.8574219f), new Vector2(0.5664063f, 0.2597656f) };
+        static Vector2[] huijin12_uv = new Vector2[] { new Vector2(0.2539063f, 0.3183594f), new Vector2(0.2539063f, 0.4980469f), new Vector2(0.3945313f, 0.4980469f), new Vector2(0.3945313f, 0.3183594f) };
+        static Vector2[] huijin13_uv = new Vector2[] { new Vector2(0.3945313f, 0.3183594f), new Vector2(0.3945313f, 0.4980469f), new Vector2(0.2539063f, 0.4980469f), new Vector2(0.2539063f, 0.3183594f) };
+        static Vector2[] huijin14_uv = new Vector2[] { new Vector2(0.21875f, 0.5605469f), new Vector2(0.21875f, 0.8613281f), new Vector2(0.5605469f, 0.8613281f), new Vector2(0.5605469f, 0.5605469f) };
+        static Vector2[] huijin15_uv = new Vector2[] { new Vector2(0.7949219f, 0.15625f), new Vector2(0.7949219f, 0.296875f), new Vector2(0.8945313f, 0.296875f), new Vector2(0.8945313f, 0.15625f) };
+        static Vector2[] huijin16_uv = new Vector2[] { new Vector2(0.09765625f, 0.2734375f), new Vector2(0.09765625f, 0.5234375f), new Vector2(0.25f, 0.5234375f), new Vector2(0.25f, 0.2734375f) };
+        static Vector2[] huijin17_uv = new Vector2[] { new Vector2(0.1386719f, 0.5976563f), new Vector2(0.1386719f, 0.859375f), new Vector2(0.2148438f, 0.859375f), new Vector2(0.2148438f, 0.5976563f) };
+        static Vector2[] huijin18_uv = new Vector2[] { new Vector2(0.08984375f, 0.6210938f), new Vector2(0.08984375f, 0.8574219f), new Vector2(0.1386719f, 0.8574219f), new Vector2(0.1386719f, 0.6210938f) };
+        static Vector2[] huijin19_uv = new Vector2[] { new Vector2(0.5605469f, 0.5605469f), new Vector2(0.5605469f, 0.8613281f), new Vector2(0.21875f, 0.8613281f), new Vector2(0.21875f, 0.5605469f) };
+        static Vector2[] huijin20_uv = new Vector2[] { new Vector2(0.25f, 0.2734375f), new Vector2(0.25f, 0.5234375f), new Vector2(0.09765625f, 0.5234375f), new Vector2(0.09765625f, 0.2734375f) };
+        static Vector2[] huijin21_uv = new Vector2[] { new Vector2(0.2148438f, 0.5976563f), new Vector2(0.2148438f, 0.859375f), new Vector2(0.1386719f, 0.859375f), new Vector2(0.1386719f, 0.5976563f) };
+        static Vector2[] huijin22_uv = new Vector2[] { new Vector2(0.1386719f, 0.6210938f), new Vector2(0.1386719f, 0.8574219f), new Vector2(0.08984375f, 0.8574219f), new Vector2(0.08984375f, 0.6210938f) };
+        static Point2[] huijin0_r = new Point2[] { new Point2(159f, 0.6007503f), new Point2(20f, 0.6080715f), new Point2(339f, 0.6108256f), new Point2(201f, 0.6035377f) };
+        static Point2[] huijin1_r = new Point2[] { new Point2(159f, 0.6035377f), new Point2(21f, 0.6108256f), new Point2(340f, 0.6080715f), new Point2(201f, 0.6007503f) };
+        static Point2[] huijin2_r = new Point2[] { new Point2(135f, 0.3204077f), new Point2(45f, 0.3204077f), new Point2(315f, 0.3204077f), new Point2(225f, 0.3204077f) };
+        static Point2[] huijin3_r = new Point2[] { new Point2(153f, 0.01746928f), new Point2(1f, 0.5156842f), new Point2(315f, 0.7347489f), new Point2(268f, 0.5236707f) };
+        static Point2[] huijin4_r = new Point2[] { new Point2(137f, 0.2543566f), new Point2(44f, 0.2486536f), new Point2(278f, 1.262849f), new Point2(261f, 1.263984f) };
+        static Point2[] huijin5_r = new Point2[] { new Point2(135f, 0.3204077f), new Point2(45f, 0.3204077f), new Point2(315f, 0.3204077f), new Point2(225f, 0.3204077f) };
+        static Point2[] huijin6_r = new Point2[] { new Point2(92f, 0.5236707f), new Point2(45f, 0.7347489f), new Point2(359f, 0.5156842f), new Point2(207f, 0.01746928f) };
+        static Point2[] huijin7_r = new Point2[] { new Point2(99f, 1.263984f), new Point2(82f, 1.262849f), new Point2(316f, 0.2486536f), new Point2(223f, 0.2543566f) };
+        static Point2[] huijin8_r = new Point2[] { new Point2(169f, 0.9315567f), new Point2(11f, 0.9315567f), new Point2(348f, 0.9330951f), new Point2(192f, 0.9330951f) };
+        static Point2[] huijin9_r = new Point2[] { new Point2(159f, 0.6355074f), new Point2(21f, 0.6428126f), new Point2(339f, 0.6456075f), new Point2(202f, 0.6383343f) };
+        static Point2[] huijin10_r = new Point2[] { new Point2(165f, 1.239531f), new Point2(15f, 1.239531f), new Point2(344f, 1.241622f), new Point2(196f, 1.241622f) };
+        static Point2[] huijin11_r = new Point2[] { new Point2(164f, 1.241622f), new Point2(16f, 1.241622f), new Point2(345f, 1.239531f), new Point2(195f, 1.239531f) };
+        static Point2[] huijin12_r = new Point2[] { new Point2(142f, 0.4563463f), new Point2(38f, 0.4563463f), new Point2(322f, 0.4563463f), new Point2(218f, 0.4563463f) };
+        static Point2[] huijin13_r = new Point2[] { new Point2(142f, 0.4563463f), new Point2(38f, 0.4563463f), new Point2(322f, 0.4563463f), new Point2(218f, 0.4563463f) };
+        static Point2[] huijin14_r = new Point2[] { new Point2(179f, 0.984499f), new Point2(4f, 0.2193073f), new Point2(279f, 1.36915f), new Point2(234f, 1.672039f) };
+        static Point2[] huijin15_r = new Point2[] { new Point2(122f, 0.2211089f), new Point2(23f, 0.4831764f), new Point2(335f, 0.4927452f), new Point2(241f, 0.2413038f) };
+        static Point2[] huijin16_r = new Point2[] { new Point2(169f, 1.003564f), new Point2(85f, 0.1959365f), new Point2(272f, 0.4143572f), new Point2(203f, 1.067915f) };
+        static Point2[] huijin17_r = new Point2[] { new Point2(166f, 1.06112f), new Point2(86f, 0.2504878f), new Point2(286f, 0.05687586f), new Point2(183f, 1.032699f) };
+        static Point2[] huijin18_r = new Point2[] { new Point2(173f, 0.9438586f), new Point2(86f, 0.1096537f), new Point2(275f, 0.08629188f), new Point2(185f, 0.9414306f) };
+        static Point2[] huijin19_r = new Point2[] { new Point2(126f, 1.672039f), new Point2(81f, 1.36915f), new Point2(356f, 0.2193073f), new Point2(181f, 0.984499f) };
+        static Point2[] huijin20_r = new Point2[] { new Point2(157f, 1.067915f), new Point2(88f, 0.4143572f), new Point2(275f, 0.1959365f), new Point2(191f, 1.003564f) };
+        static Point2[] huijin21_r = new Point2[] { new Point2(177f, 1.032699f), new Point2(74f, 0.05687586f), new Point2(274f, 0.2504878f), new Point2(194f, 1.06112f) };
+        static Point2[] huijin22_r = new Point2[] { new Point2(175f, 0.9414306f), new Point2(85f, 0.08629188f), new Point2(274f, 0.1096537f), new Point2(187f, 0.9438586f) };
+
+        static AnimatEx huijin0 = new AnimatEx() { location = new Point2(0.6f, 0f), free = true, uv2 = huijin0_uv, rect = huijin0_r, pivot_p = new Point2(0f, 0f), scale = 1 };
+        static AnimatEx huijin1 = new AnimatEx() { location = new Point2(-0.6f, 0f), free = true, uv2 = huijin1_uv, rect = huijin1_r, pivot_p = new Point2(0f, 0f), scale = 1 };
+        static AnimatEx huijin2 = new AnimatEx() { location = new Point2(0.5f, -0.5f), free = true, uv2 = huijin2_uv, rect = huijin2_r, pivot_p = new Point2(0f, 0f), scale = 1 };
+        static AnimatEx huijin3 = new AnimatEx() { location = new Point2(0.5f, -0.5f), free = true, uv2 = huijin3_uv, rect = huijin3_r, pivot_p = new Point2(180f, 0f), scale = 1 };
+        static AnimatEx huijin4 = new AnimatEx() { angle = 270, parentid = 2, uv2 = huijin4_uv, rect = huijin4_r, pivot_p = new Point2(315f, 0.7181553f), scale = 1 };
+        static AnimatEx huijin5 = new AnimatEx() { location = new Point2(-0.5f, -0.5f), free = true, uv2 = huijin5_uv, rect = huijin5_r, pivot_p = new Point2(0f, 0f), scale = 1 };
+        static AnimatEx huijin6 = new AnimatEx() { location = new Point2(-0.5f, -0.5f), free = true, uv2 = huijin6_uv, rect = huijin6_r, pivot_p = new Point2(180f, 0f), scale = 1 };
+        static AnimatEx huijin7 = new AnimatEx() { angle = 90, parentid = 5, uv2 = huijin7_uv, rect = huijin7_r, pivot_p = new Point2(45f, 0.7181553f), scale = 1 };
+        static AnimatEx huijin8 = new AnimatEx() { free = true, location = new Point2(0f, -1f), uv2 = huijin8_uv, rect = huijin8_r, pivot_p = new Point2(0f, 0f), scale = 1 };
+        static AnimatEx huijin9 = new AnimatEx() { parentid = -1, uv2 = huijin9_uv, rect = huijin9_r, pivot_p = new Point2(0f, 0f), scale = 1 };
+        static AnimatEx huijin10 = new AnimatEx() { free = true, location = new Point2(0.4f, -0.35f), uv2 = huijin10_uv, rect = huijin10_r, pivot_p = new Point2(0f, 3f), scale = 1 };
+        static AnimatEx huijin11 = new AnimatEx() { free = true, location = new Point2(-0.4f, -0.35f), uv2 = huijin11_uv, rect = huijin11_r, pivot_p = new Point2(0f, 3f), scale = 1 };
+        static AnimatEx huijin12 = new AnimatEx() { free = true, location = new Point2(0.25f, 0.7f), uv2 = huijin12_uv, rect = huijin12_r, pivot_p = new Point2(0f, 3f), scale = 1 };
+        static AnimatEx huijin13 = new AnimatEx() { free = true, location = new Point2(-0.25f, 0.7f), uv2 = huijin13_uv, rect = huijin13_r, pivot_p = new Point2(0f, 3f), scale = 1 };
+        static AnimatEx huijin14 = new AnimatEx() { free = true, location = new Point2(0.42f, 0.25f), uv2 = huijin14_uv, rect = huijin14_r, scale = 1 };
+        static AnimatEx huijin15 = new AnimatEx() { parentid = 15, uv2 = huijin15_uv, rect = huijin15_r, pivot_p = new Point2(291f, 0.5934415f), scale = 1 };
+        static AnimatEx huijin16 = new AnimatEx() { parentid = 15, uv2 = huijin16_uv, rect = huijin16_r, pivot_p = new Point2(244f, 0.915397f), scale = 1 };
+        static AnimatEx huijin17 = new AnimatEx() { parentid = 15, uv2 = huijin17_uv, rect = huijin17_r, pivot_p = new Point2(221f, 1.029651f), scale = 1 };
+        static AnimatEx huijin18 = new AnimatEx() { parentid = 17, uv2 = huijin18_uv, rect = huijin18_r, pivot_p = new Point2(108f, 0.2470529f), scale = 1 };
+        static AnimatEx huijin19 = new AnimatEx() { free = true, location = new Point2(-0.42f, 0.25f), uv2 = huijin19_uv, rect = huijin19_r, scale = 1 };
+        static AnimatEx huijin20 = new AnimatEx() { parentid = 20, uv2 = huijin15_uv, rect = huijin15_r, pivot_p = new Point2(69f, 0.5934415f), scale = 1 };
+        static AnimatEx huijin21 = new AnimatEx() { parentid = 20, uv2 = huijin20_uv, rect = huijin20_r, pivot_p = new Point2(116f, 0.915397f), scale = 1 };
+        static AnimatEx huijin22 = new AnimatEx() { parentid = 20, uv2 = huijin21_uv, rect = huijin21_r, pivot_p = new Point2(139f, 1.029651f), scale = 1 };
+        static AnimatEx huijin23 = new AnimatEx() { parentid = 22, uv2 = huijin22_uv, rect = huijin22_r, pivot_p = new Point2(252f, 0.2470529f), scale = 1 };
+        public static AnimatBaseEx huijin = new AnimatBaseEx()
+        {
+            ani_ini=Ani_Motion.huijin_stage0,stage=new AniRun[] {Ani_Motion.huijin_stage1, Ani_Motion.huijin_stage2, Ani_Motion.huijin_stage3},
+            ae = new AnimatEx[] { huijin0, huijin1, huijin3, huijin2,
+            huijin4, huijin6, huijin5, huijin7, huijin8, huijin9, huijin10, huijin11, huijin12, huijin13, huijin15, huijin14,
+            huijin16, huijin17, huijin18,huijin20,  huijin19, huijin21, huijin22, huijin23 }
+        };
         #endregion
     }
 }

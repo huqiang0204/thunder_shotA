@@ -20,6 +20,7 @@ namespace Assets.UnityVS.Script
         static string mat_b_ls01 = "Mat_PC/b_laser01";
         static string mat_b_ls02 = "Mat_PC/b_laser02";
         static string mat_b_ls03 = "Mat_PC/b_laser03";
+        static string mat_b_ls04 = "Mat_PC/b_laser04";
         static string mat_b_ls05 = "Mat_PC/b_laser05";
         static string mat_b_zhihui = "Mat_PC/b_zhihui";
         static string mat_b_zhuji = "Mat_PC/b_zhuji";
@@ -28,8 +29,8 @@ namespace Assets.UnityVS.Script
         static string mat_b_b04 = "Mat_PC/b_b04";
         static string mat_b_tb01 = "Mat_PC/b_tb01";
         static string mat_e_moth = "Mat_PC/e_moth";
-        static string mat_e_a00 = "Mat_PC/t_e_a00";
-        static string mat_e_a10 = "Mat_PC/e-a10";
+        static string mat_e_hj = "Mat_PC/e_huijin";
+        static string mat_e_a00 = "Mat_PC/t_e_a00";        
         static string mat_e_met = "Mat_PC/t_e_met";
         static string mat_e_b00 = "Mat_PC/t_e_b00";
         static string mat_s_s = "Mat_PC/s_shield";
@@ -58,6 +59,11 @@ namespace Assets.UnityVS.Script
         static string mat_e_b00 = "Mat_Phone/t_e_b00";
         static string mat_s_s = "Mat_Phone/s_shield";
 #endif
+        static string mat_e_a10 = "Mat_PC/e-a10";
+        static string mat_e_bee = "Mat_PC/e-bee";
+        static string mat_hit = "Mat_PC/hit";
+        static string mat_missile = "Mat_PC/b_missile";
+        static string mat_missile01 = "Mat_PC/b_missile01";
         static string img_zhihui = "Picture/p-06d";
         static string img_nouhuo = "Picture/p-03c";
         static string img_jifeng = "Picture/p-05d";
@@ -102,15 +108,54 @@ namespace Assets.UnityVS.Script
         {
             new Power() {energy=100 }
         };
-#endregion
+        #endregion
 
-#region bullet
-        public static BulletPropertyEx b_def_laser2 = new BulletPropertyEx()
+        #region bullet
+        public static BulletPropertyEx b_missile = new BulletPropertyEx()
+        {
+            edgepoints = new Point2[] { new Point2(-0.109375f, 0.75f),
+            new Point2(-0.1171875f, -0.2265625f),
+            new Point2(0.1171875f, -0.2265625f),
+            new Point2(0.109375f, 0.75f) },
+            uv_rect = new Point2[] { new Point2(-0.25f, -1f),
+            new Point2(-0.25f, 1f),
+            new Point2(0.25f, 1f),
+            new Point2(0.25f, -1f) },
+            t_uv = uv_def_1x1,
+            offset = true, penetrate = true,
+            mat_name = mat_missile,
+            attack = 1000,
+            move = BulletMoveEx.Missile,
+            collision = GameControl.CollisionCore,
+            maxrange = 2f,minrange=0.02f
+        
+        };
+        public static BulletPropertyEx b_missile01 = new BulletPropertyEx()
+        {
+            edgepoints = p_b_missile01,
+            uv_rect = p_b_missile01,
+            t_uv = uv_def_1x1,
+            mat_name = mat_missile01,
+            attack = 25,
+            move = BulletMoveEx.B_DownWord,
+            collision = GameControl.CollisionCore,
+            maxrange = 1f,
+            minrange = 0.02f,
+            speed = 0.008f
+        };
+        public static BulletPropertyEx b_laser2 = new BulletPropertyEx()
         {
             calcul = ThunderMod.CaculLaser02,
             up_img = ThunderMod.Laser02_update,
             mat_name = mat_b_ls02,
             t_uv = t_uv_laser02,
+            attack = 100,
+        };
+        public static BulletPropertyEx b_laser4 = new BulletPropertyEx()
+        {
+            calcul = ThunderMod.CaculLaser04,
+            up_img = ThunderMod.Laser04_update,
+            mat_name = mat_b_ls04,
             attack = 100,
         };
         public static BulletPropertyEx b_def_b3 = new BulletPropertyEx()
@@ -156,12 +201,17 @@ namespace Assets.UnityVS.Script
             maxrange = 0.2581f,
             minrange = 0.2581f,
             attack = 100,
-            speed = 0.001f,
+            speed = 0.002f,
             mat_name = mat_b_tb01
         };
-#endregion
+        #endregion
 
-#region plane bullet
+        #region plane bullet
+        public static BulletPropertyEx b_hit = new BulletPropertyEx()
+        {
+            mat_name=mat_hit,
+            uv_rect=uv_64x64,calcul=ThunderMod.CalculCollision
+        };
         public static BulletPropertyEx b_chain = new BulletPropertyEx()
         {
             mat_name = mat_b_chain,
@@ -435,13 +485,32 @@ namespace Assets.UnityVS.Script
         static Shiled S_a = new Shiled { gold = 4000, max = 130, defence = 8, resume = 0.36f, imgpath = "Picture/a" };
         static Shiled S_s = new Shiled { gold = 5000, max = 150, defence = 10, resume = 0.4f, imgpath = "Picture/s" };
         public readonly static Shiled[] Shiled_all = new Shiled[] { S_d, S_c, S_b, S_a, S_s };
-#endregion
+        #endregion
 
-#region enemy_a dispose
+        #region enemy_a dispose
+        public static EnemyPropertyEX Boss_Huijin = new EnemyPropertyEX()
+        {
+            enemy = new EnemyBaseEX()
+            {
+                score = 300,
+                boss = true,
+                f_blood = 60000,
+                defance = 10,
+                minrange = 1f,
+                maxrange = 3,points_style=1,
+                points = p_hjA,
+                animat = true,
+                abe = Ani.huijin,
+                mat_name = mat_e_hj,
+                move=ThunderMod.M_huijin
+            }
+        };
         public static EnemyPropertyEX Boss_Moth = new EnemyPropertyEX()
         {
             enemy = new EnemyBaseEX()
             {
+                move=ThunderMod.M_Moth,
+                score=300,
                 boss = true,
                 f_blood = 60000,
                 defance = 10,
@@ -458,8 +527,9 @@ namespace Assets.UnityVS.Script
             //image = new ImageProperty() { scale = def_scale, imagepath = enemy_a10 },
             enemy = new EnemyBaseEX()
             {
+                score=100,
                 mat_name = mat_e_a10,
-                vertexs = new Vector3[] { new Vector3(-1.3f, -0.96f), new Vector3(-1.3f, 0.96f), new Vector3(1.3f, 0.96f), new Vector3(1.3f, -0.96f) },
+                vertexs = new Vector3[] { new Vector3(-1.3f, -1.3f), new Vector3(-1.3f, 1.3f), new Vector3(1.3f, 1.3f), new Vector3(1.3f, -1.3f) },
                 uv = uv_def_1x1,
                 triangle = tri_def,
                 f_blood = 40000,
@@ -467,14 +537,34 @@ namespace Assets.UnityVS.Script
                 defance = 9,
                 minrange = 1f,
                 maxrange = 3,
-                points = new Point2[]{ new Point2(180f,1.15f), new Point2(80f,1.61f),
-                 new Point2 (0f,1.13f) ,new Point2(280f,1.61f)}
+                points = p_a10,
+                move= ThunderMod.M_a10
+            }
+        };
+        public static EnemyPropertyEX e_bee = new EnemyPropertyEX()
+        {
+            //image = new ImageProperty() { scale = def_scale, imagepath = enemy_a10 },
+            enemy = new EnemyBaseEX()
+            {
+                score = 100,
+                mat_name = mat_e_bee,
+                vertexs = new Vector3[] { new Vector3(-1.3f, -1.3f), new Vector3(-1.3f, 1.3f), new Vector3(1.3f, 1.3f), new Vector3(1.3f, -1.3f) },
+                uv = uv_def_1x1,
+                triangle = tri_def,
+                f_blood = 40000,
+                boss = true,
+                defance = 9,
+                minrange = 1f,
+                maxrange = 3,
+                points = p_a10,
+                move= ThunderMod.M_bee
             }
         };
         public static EnemyPropertyEX e_def_a00 = new EnemyPropertyEX()
         {
             enemy = new EnemyBaseEX()
             {
+                score=4,
                 mat_name = mat_e_a00,
                 uv = uv_def_4x2[0],
                 triangle = tri_def,
@@ -491,6 +581,7 @@ namespace Assets.UnityVS.Script
             //image = new ImageProperty() { scale = def_scale, imagepath = "Picture/meteor" },
             enemy = new EnemyBaseEX()
             {
+                score = 5,
                 mat_name = mat_e_met,
                 uv = uv_def_1x1,
                 triangle = tri_def,
@@ -500,7 +591,8 @@ namespace Assets.UnityVS.Script
                 defance = 10,
                 minrange = 0.3f,
                 maxrange = 2, points_style = 1,
-                points = points_meteor
+                points = points_meteor,
+                move=EnemyMove.M_Downward_NoStop
             }
         };
 #endregion
@@ -512,6 +604,7 @@ namespace Assets.UnityVS.Script
             bpe = new BulletPropertyEx[] { b_def_b03b },
             enemy = new EnemyBaseEX()
             {
+                score=3,
                 mat_name = mat_e_b00,
                 uv = uv_def_4x3[0],
                 vertexs = new Vector3[] {new Vector3(-0.666992f,-0.598958f),new Vector3(-0.666992f,0.598958f),
@@ -528,7 +621,7 @@ namespace Assets.UnityVS.Script
 #endregion
 
 #region Battelfiled
-        static Action[] SetLevelModMain = new Action[] { SL_M_1 , SL_M_2 , SL_M_3 , SL_M_4 , SL_M_5 };
+        static Action[] SetLevelModMain = new Action[] { SL_M_1 , SL_M_2 , SL_M_3 , SL_M_4 , SL_M_5,SL_M_6 ,SL_M_7, SL_M_8 };
         static SetBattelField[] SetLevelModSub = new SetBattelField[] { SetLevel1, SetLevel2, SetLevel3, SetLevel4, SetLevel5, SetLevel6, SetLevel7,
         SetLevel8,SetLevel9,SetLevel10,};
         static int index_s;
@@ -540,35 +633,22 @@ namespace Assets.UnityVS.Script
                 GameControl.SetLevel(SetLevelModSub[index_s]);
             });
         }
-        static EnemyPropertyEX InitialEnemy(int level, EnemyPropertyEX enemy)
-        {
-            float d = 1 + (float)level / 10;
-            enemy.enemy.defance *= d;
-            enemy.enemy.f_blood *= d;
-            return enemy;
-        }
         static void SL_M_1()//set level main 01
         {
-            QueueSourceEX.RegMatA(e_meteor.enemy.mat_name, ref e_meteor.enemy.mat_id);
             QueueSourceEX.RegMatA(e_def_b00.enemy.mat_name, ref e_def_b00.enemy.mat_id);
             QueueSourceEX.RegMatA(b_def_b03b.mat_name, ref b_def_b03b.mat_id);
         }
         static void SetLevel1(ref BattelField bf)
         {
-            //bf.bk_groud = new BackGround[] { new BackGround() { dur_wave = 999999, imgpath="Picture/cosmos" } };
-            //b_def_b03b, b_def_b04y, b_def_reddiamond 注册需要的资源让主线程去加载
-            //e_meteor.enemy.mat_id = QueueSourceEX.RegMat(e_meteor.enemy.mat_name);
-            //e_def_b00.enemy.mat_id = QueueSourceEX.RegMat(e_def_b00.enemy.mat_name);
-            //b_def_b03b.mat_id = QueueSourceEX.RegMat(b_def_b03b.mat_name);
-            //
             BulletPropertyEx[] bp1 = new BulletPropertyEx[] { b_def_b03b };
             BulletPropertyEx[] bp2 = new BulletPropertyEx[] { b_def_b03b };
             bp2[0].speed = 0.003f;
             BulletPropertyEx[] bp_diamond = new BulletPropertyEx[] { b_def_b03b };
             bp_diamond[0].move = BulletMoveEx.B_Diamond;
-            EnemyPropertyEX e1 = InitialEnemy(0, e_def_b00);
-            EnemyPropertyEX e2 = InitialEnemy(1, e_meteor);
+            EnemyPropertyEX e1 = e_def_b00;
+            EnemyPropertyEX e2 = e_meteor;
             bf.wave.Clear();
+            bf.level = 1;
             EnemyWave ew = new EnemyWave();
             ew.enemyppt = e1;
             ew.enemyppt.enemy.move = EnemyMove.M_Dock_200;
@@ -687,7 +767,6 @@ namespace Assets.UnityVS.Script
         }
         static void SL_M_2()
         {
-            QueueSourceEX.RegMatA(e_meteor.enemy.mat_name, ref e_meteor.enemy.mat_id);
             QueueSourceEX.RegMatA(e_def_b00.enemy.mat_name, ref e_def_b00.enemy.mat_id);
             QueueSourceEX.RegMatA(b_def_b03b.mat_name, ref b_def_b03b.mat_id);
             QueueSourceEX.RegMatA(e_a10.enemy.mat_name, ref e_a10.enemy.mat_id);
@@ -696,28 +775,20 @@ namespace Assets.UnityVS.Script
         }
         static void SetLevel2(ref BattelField bf)
         {
-            //bf.bk_groud = new BackGround[] { new BackGround() { dur_wave = 999999, imgpath="Picture/cosmos" } };
-            //b_def_b03b, b_def_b04y, b_def_reddiamond 注册需要的资源让主线程去加载
-            //e_meteor.enemy.mat_id = QueueSourceEX.RegMat(e_meteor.enemy.mat_name);
-            //e_def_b00.enemy.mat_id = QueueSourceEX.RegMat(e_def_b00.enemy.mat_name);
-            //e_a10.enemy.mat_id = QueueSourceEX.RegMat(e_a10.enemy.mat_name);
-            //b_def_b04.mat_id = QueueSourceEX.RegMat(b_def_b04.mat_name);
-            //b_def_b03b.mat_id = QueueSourceEX.RegMat(b_def_b03b.mat_name);
-            //b_bigblueboll.mat_id = QueueSourceEX.RegMat(b_bigblueboll.mat_name);
-            //
             BulletPropertyEx[] bp1 = new BulletPropertyEx[] { b_def_b03b };
             BulletPropertyEx[] bp2 = new BulletPropertyEx[] { b_def_b03b };
             BulletPropertyEx[] bp_diamond = new BulletPropertyEx[] { b_def_b03b };
             bp_diamond[0].move = BulletMoveEx.B_Diamond;
             BulletPropertyEx[] bboss = new BulletPropertyEx[] { b_def_b03b, b_def_b03b, b_bigblueboll, b_def_b04 };
-            bboss[0].speed = 0.004f;
-            bboss[1].speed = 0.004f;
-            bp2[0].speed = 0.003f;
+            bboss[0].speed = 0.003f;
+            bboss[1].speed = 0.003f;
+            bp2[0].speed = 0.002f;
 
-            EnemyPropertyEX e1 = InitialEnemy(1, e_def_b00);
-            EnemyPropertyEX e2 = InitialEnemy(1, e_meteor);
-            EnemyPropertyEX e3 = InitialEnemy(1, e_a10);
+            EnemyPropertyEX e1 =  e_def_b00;
+            EnemyPropertyEX e2 =  e_meteor;
+            EnemyPropertyEX e3 =  e_a10;
             bf.wave.Clear();
+            bf.level = 2;
             EnemyWave ew = new EnemyWave();
             ew.enemyppt = e1;
             ew.enemyppt.bpe = bp1;
@@ -825,8 +896,6 @@ namespace Assets.UnityVS.Script
             ew.staytime = 200;
             bf.wave.Add(ew);
             ew.enemyppt = e3;
-            ew.enemyppt.enemy.points = e_a_edge[3];
-            ew.enemyppt.enemy.move = ThunderMod.M_Boss_a10;
             ew.enemyppt.bpe = bboss;
             ew.start = S_Up_3;
             ew.sum = 1;
@@ -836,7 +905,6 @@ namespace Assets.UnityVS.Script
         }
         static void SL_M_3()
         {
-            QueueSourceEX.RegMatA(e_meteor.enemy.mat_name, ref e_meteor.enemy.mat_id);
             QueueSourceEX.RegMatA(e_def_b00.enemy.mat_name, ref e_def_b00.enemy.mat_id);
             QueueSourceEX.RegMatA(b_def_b03b.mat_name, ref b_def_b03b.mat_id);
         }
@@ -854,9 +922,10 @@ namespace Assets.UnityVS.Script
             bp2[0].speed = 0.003f;
             BulletPropertyEx[] bp_diamond = new BulletPropertyEx[] { b_def_b03b };
             bp_diamond[0].move = BulletMoveEx.B_Diamond;
-            EnemyPropertyEX e1 = InitialEnemy(2, e_def_b00);
-            EnemyPropertyEX e2 = InitialEnemy(2, e_meteor);
+            EnemyPropertyEX e1 = e_def_b00;
+            EnemyPropertyEX e2 = e_meteor;
             bf.wave.Clear();
+            bf.level = 3;
             EnemyWave ew = new EnemyWave();
             ew.enemyppt = e1;
             ew.enemyppt.enemy.uv = uv_def_4x3[4];
@@ -981,29 +1050,29 @@ namespace Assets.UnityVS.Script
         static void SL_M_4()
         {
             QueueSourceEX.RegMatA(e_def_a00.enemy.mat_name,ref e_def_a00.enemy.mat_id);
-            QueueSourceEX.RegMatA(e_meteor.enemy.mat_name,ref e_meteor.enemy.mat_id);
             QueueSourceEX.RegMatA(e_def_b00.enemy.mat_name,ref e_def_b00.enemy.mat_id);
             QueueSourceEX.RegMatA(Boss_Moth.enemy.mat_name,ref Boss_Moth.enemy.mat_id);
             QueueSourceEX.RegMatA(b_def_b03b.mat_name,ref b_def_b03b.mat_id);
             QueueSourceEX.RegMatA(b_def_b04.mat_name,ref b_def_b04.mat_id);
             QueueSourceEX.RegMatA(b_def_b3.mat_name,ref b_def_b3.mat_id);
-            QueueSourceEX.RegMatA(b_def_laser2.mat_name,ref b_def_laser2.mat_id);
+            QueueSourceEX.RegMatA(b_laser2.mat_name,ref b_laser2.mat_id);
         }
         static void SetLevel4(ref BattelField bf)
         {
             //bf.bk_groud = new BackGround[] { new BackGround() { dur_wave = 999999, imgpath="Picture/cosmos" } };
             //b_def_b03b, b_def_b04y, b_def_reddiamond, b_def_redlaser 注册需要的资源让主线程去加载
             //
-            EnemyPropertyEX e1 = InitialEnemy(3, e_def_a00);
-            EnemyPropertyEX e2 = InitialEnemy(3, e_meteor);
-            EnemyPropertyEX e3 = InitialEnemy(3, e_def_b00);
+            EnemyPropertyEX e1 =  e_def_a00;
+            EnemyPropertyEX e2 =  e_meteor;
+            EnemyPropertyEX e3 =  e_def_b00;
             e3.enemy.uv = uv_def_4x3[7];
             e3.enemy.points = e_b_edge[3];
-            EnemyPropertyEX e4 = InitialEnemy(3, Boss_Moth);
+            EnemyPropertyEX e4 =  Boss_Moth;
             BulletPropertyEx[] bp1 = new BulletPropertyEx[] { b_def_b03b };
             BulletPropertyEx[] bp2 = new BulletPropertyEx[] { b_def_b03b };
             bp2[0].speed = 0.003f;
             bf.wave.Clear();
+            bf.level = 4;
             EnemyWave ew = new EnemyWave();
 
             ew.enemyppt = e1;
@@ -1122,8 +1191,7 @@ namespace Assets.UnityVS.Script
             ew.staytime = 500;
             bf.wave.Add(ew);
             ew.enemyppt=e4;//
-            ew.enemyppt.bpe = new BulletPropertyEx[] { b_def_b03b, b_def_b03b, b_def_b04, b_def_b04, b_def_b3, b_def_laser2 };
-            ew.enemyppt.enemy.move = ThunderMod.M_Boss_Moth;
+            ew.enemyppt.bpe = new BulletPropertyEx[] { b_def_b03b, b_def_b03b, b_def_b04, b_def_b04, b_def_b3, b_laser2 };
             ew.enemyppt.bpe[0].speed = 0.003f;
             ew.start = S_Up_3;
             ew.sum = 1;
@@ -1132,32 +1200,320 @@ namespace Assets.UnityVS.Script
         }
         static void SL_M_5()
         {
-            QueueSourceEX.RegMatA(e_def_a00.enemy.mat_name,ref e_def_a00.enemy.mat_id);
-            QueueSourceEX.RegMatA(e_meteor.enemy.mat_name,ref e_meteor.enemy.mat_id);
-            QueueSourceEX.RegMatA(e_def_b00.enemy.mat_name,ref e_def_b00.enemy.mat_id);
-            QueueSourceEX.RegMatA(b_def_b03b.mat_name,ref b_def_b03b.mat_id);
-            QueueSourceEX.RegMatA(b_def_b04.mat_name,ref b_def_b04.mat_id);
-            QueueSourceEX.RegMatA(b_def_b3.mat_name,ref b_def_b3.mat_id);
+            QueueSourceEX.RegMatA(e_def_b00.enemy.mat_name, ref e_def_b00.enemy.mat_id);
+            QueueSourceEX.RegMatA(b_def_b03b.mat_name, ref b_def_b03b.mat_id);
         }
         static void SetLevel5(ref BattelField bf)
         {
-            EnemyPropertyEX e1 = InitialEnemy(4, e_def_a00);
-            EnemyPropertyEX e2 = InitialEnemy(4, e_meteor);
-            EnemyPropertyEX e3 = InitialEnemy(4, e_def_b00);
+            BulletPropertyEx[] bp1 = new BulletPropertyEx[] { b_def_b03b };
+            BulletPropertyEx[] bp2 = new BulletPropertyEx[] { b_def_b03b };
+            bp2[0].speed = 0.003f;
+            BulletPropertyEx[] bp_diamond = new BulletPropertyEx[] { b_def_b03b };
+            bp_diamond[0].move = BulletMoveEx.B_Diamond;
+            EnemyPropertyEX e1 = e_def_b00;
+            EnemyPropertyEX e2 =  e_meteor;
+            bf.wave.Clear();
+            bf.level = 5;
+            EnemyWave ew = new EnemyWave();
+            ew.enemyppt = e1;
+            ew.enemyppt.enemy.uv = uv_def_4x3[4];
+            ew.enemyppt.enemy.points = e_b_edge[2];
+            ew.enemyppt.enemy.move = EnemyMove.M_Dock_200;
+            ew.enemyppt.bpe = bp_diamond;
+            ew.enemyppt.enemy.shot = ShotBullet.Diamond;
+            ew.enemyppt.enemy.shotfrequency = 400;
+            ew.enemyppt.bpe[0].move = BulletMoveEx.B_Diamond;
+            ew.start = S_Dwon_2;
+            ew.sum = 2;
+            ew.staytime = 50;
+            bf.wave.Add(ew);
+            ew.enemyppt.bpe = bp1;
+            ew.enemyppt.enemy.move = EnemyMove.M_Dock_180;
+            ew.enemyppt.enemy.shot = ShotBullet.ThreeBeline10;
+            ew.enemyppt.enemy.shotfrequency = 100;
+            ew.start = S_Up_3;
+            ew.sum = 1;
+            ew.staytime = 200;
+            bf.wave.Add(ew);
+            ew.enemyppt.enemy.move = EnemyMove.M_Dock_200;
+            ew.enemyppt.enemy.shot = ShotBullet.Down_Arc3;
+            ew.enemyppt.enemy.shotfrequency = 400;
+            ew.enemyppt.bpe = bp2;
+            bf.wave.Add(ew);
+            ew = bf.wave[0];
+            bf.wave.Add(ew);
+            ew.enemyppt.enemy.uv = uv_def_4x3[5];
+            ew.enemyppt.enemy.points = e_b_edge[2];
+            ew.enemyppt.enemy.shot = ShotBullet.Circle36A;
+            ew.enemyppt.enemy.shotfrequency = 1200;
+            ew.enemyppt.bpe = bp1;
+            ew.start = S_Dwon_3;
+            ew.sum = 3;
+            ew.staytime = 500;
+            bf.wave.Add(ew);
+            ew.enemyppt.bpe = bp2;
+            ew.enemyppt.enemy.shot = ShotBullet.Aim_12;
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.enemyppt.enemy.shotfrequency = 400;
+            ew.staytime = 500;
+            bf.wave.Add(ew);
+            ew.enemyppt = e2;
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.start = S_Up_3;
+            ew.sum = 1;
+            ew.staytime = 0;
+            bf.wave.Add(ew);
+            ew = bf.wave[2];
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.enemyppt.enemy.shot = ShotBullet.Downflowers;
+            ew.enemyppt.bpe = bp2;
+            ew.start = S_RandomDown_1();
+            ew.sum = 1;
+            ew.staytime = 50;
+            bf.wave.Add(ew);
+            ew.start = S_RandomDown_1();
+            bf.wave.Add(ew);
+            ew.start = S_RandomDown_1();
+            bf.wave.Add(ew);
+            ew.start = S_RandomDown_1();
+            bf.wave.Add(ew);
+            ew.enemyppt.enemy.uv = uv_def_4x3[6];
+            ew.enemyppt.enemy.points = e_b_edge[3];
+            ew.enemyppt.enemy.move = EnemyMove.M_LeftArc;
+            ew.start = S_Left_1;
+            ew.sum = 1;
+            ew.staytime = 50;
+            bf.wave.Add(ew);
+            ew.enemyppt.enemy.move = EnemyMove.M_RightArc;
+            ew.start = S_Right_1;
+            ew.sum = 1;
+            ew.staytime = 50;
+            bf.wave.Add(ew);
+            ew.enemyppt = e2;
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.start = S_Dwon_3;
+            ew.sum = 3;
+            ew.staytime = 0;
+            bf.wave.Add(ew);
+            ew = bf.wave[1];
+            ew.enemyppt.bpe = bp2;
+            ew.enemyppt.enemy.uv = uv_def_4x3[7];
+            ew.enemyppt.enemy.points = e_b_edge[3];
+            ew.enemyppt.enemy.move = EnemyMove.M_Dock_180;
+            ew.enemyppt.enemy.shot = ShotBullet.Down_Arc3;
+            ew.start = S_Up_3;
+            ew.sum = 1;
+            ew.staytime = 200;
+            bf.wave.Add(ew);
+            ew.enemyppt = e2;
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.start = S_Up_1;
+            ew.sum = 1;
+            ew.staytime = 300;
+            bf.wave.Add(ew);
+            bf.wave.Add(bf.wave[7]);
+            bf.wave.Add(bf.wave[8]);
+            bf.wave.Add(bf.wave[4]);
+            bf.wave.Add(bf.wave[11]);
+            bf.wave.Add(bf.wave[14]);
+            bf.wave.Add(bf.wave[3]);
+            bf.wave.Add(bf.wave[7]);
+            bf.wave.Add(bf.wave[8]);
+            bf.wave.Add(bf.wave[9]);
+            bf.wave.Add(bf.wave[10]);
+            bf.wave.Add(bf.wave[0]);
+            bf.wave.Add(bf.wave[1]);
+            bf.wave.Add(bf.wave[3]);
+            bf.wave.Add(bf.wave[5]);
+            bf.wave.Add(bf.wave[11]);
+            bf.wave.Add(bf.wave[9]);
+            bf.wave.Add(bf.wave[2]);
+            bf.wave.Add(bf.wave[12]);
+            bf.wave.Add(bf.wave[2]);
+            bf.wave.Add(bf.wave[12]);
+            bf.wave.Add(bf.wave[6]);
+            ew.staytime = 2000;
+            bf.wave.Add(ew);
+        }
+        static void SL_M_6()
+        {
+            QueueSourceEX.RegMatA(e_def_a00.enemy.mat_name, ref e_def_a00.enemy.mat_id);
+            QueueSourceEX.RegMatA(e_def_b00.enemy.mat_name, ref e_def_b00.enemy.mat_id);
+            QueueSourceEX.RegMatA(b_def_b3.mat_name, ref b_def_b3.mat_id);
+            QueueSourceEX.RegMatA(b_def_b03b.mat_name, ref b_def_b03b.mat_id);
+            QueueSourceEX.RegMatA(b_def_b04.mat_name, ref b_def_b04.mat_id);
+            QueueSourceEX.RegMatA(b_bigblueboll.mat_name, ref b_bigblueboll.mat_id);
+            QueueSourceEX.RegMatA(e_bee.enemy.mat_name, ref e_bee.enemy.mat_id);
+
+        }
+        static void SetLevel6(ref BattelField bf)
+        {
+            EnemyPropertyEX e1 = e_def_a00;
+            EnemyPropertyEX e2 = e_meteor;
+            EnemyPropertyEX e3 = e_def_b00;
+            e3.enemy.uv = uv_def_4x3[7];
+            e3.enemy.points = e_b_edge[3];
+            EnemyPropertyEX e4 = Boss_Moth;
+            BulletPropertyEx[] bp1 = new BulletPropertyEx[] { b_def_b03b };
+            BulletPropertyEx[] bp2 = new BulletPropertyEx[] { b_def_b03b };
+            bp2[0].speed = 0.003f;
+            bf.wave.Clear();
+            bf.level = 6;
+            EnemyWave ew = new EnemyWave();
+
+            ew.enemyppt = e1;
+            ew.enemyppt.bpe = new BulletPropertyEx[] { b_def_b03b };
+            ew.enemyppt.enemy.move = EnemyMove.M_Dock_200;
+            ew.enemyppt.enemy.shot = ShotBullet.Diamond;
+            ew.enemyppt.bpe[0].move = BulletMoveEx.B_Diamond;
+            ew.enemyppt.enemy.shotfrequency = 400;
+            ew.start = S_Dwon_2;
+            ew.sum = 2;
+            ew.staytime = 50;
+            bf.wave.Add(ew);
+            ew.enemyppt.bpe = bp1;
+            ew.enemyppt.enemy.move = EnemyMove.M_Dock_180;
+            ew.enemyppt.enemy.shot = ShotBullet.ThreeBeline10;
+            ew.enemyppt.enemy.shotfrequency = 100;
+            ew.start = S_Up_3;
+            ew.sum = 1;
+            ew.staytime = 200;
+            bf.wave.Add(ew);
+            ew.enemyppt.enemy.move = EnemyMove.M_Dock_200;
+            ew.enemyppt.enemy.shot = ShotBullet.Down_Arc3;
+            ew.enemyppt.bpe = bp2;
+            ew.enemyppt.enemy.shotfrequency = 100;
+            bf.wave.Add(ew);
+            ew = bf.wave[1];
+            bf.wave.Add(ew);
+            ew = bf.wave[2];
+            ew.enemyppt.enemy.move = EnemyMove.M_Dock_200;
+            ew.enemyppt.enemy.shot = ShotBullet.Down_Arc3;
+            ew.start = S_Dwon_3;
+            ew.sum = 3;
+            ew.staytime = 500;
+            bf.wave.Add(ew);
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.staytime = 500;
+            bf.wave.Add(ew);
+            ew.enemyppt = e2;
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.start = S_Up_3;
+            ew.sum = 1;
+            ew.staytime = 50;
+            bf.wave.Add(ew);
+            ew.enemyppt = e1;
+            ew.enemyppt.bpe = bp1;
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.enemyppt.enemy.shot = ShotBullet.Angle6_Rotate;
+            ew.enemyppt.enemy.shotfrequency = 100;
+            ew.start = S_RandomDown_1();
+            ew.sum = 1;
+            ew.staytime = 50;
+            bf.wave.Add(ew);
+            ew.start = S_RandomDown_1();
+            bf.wave.Add(ew);
+            ew.start = S_RandomDown_1();
+            bf.wave.Add(ew);
+            ew.start = S_RandomDown_1();
+            bf.wave.Add(ew);
+            ew.enemyppt = e3;
+            ew.enemyppt.bpe = bp2;
+            ew.enemyppt.enemy.move = EnemyMove.M_LeftArc;
+            ew.enemyppt.enemy.shot = ShotBullet.Aim_12;
+            ew.enemyppt.enemy.shotfrequency = 300;
+            ew.start = S_Left_1;
+            ew.sum = 1;
+            ew.staytime = 50;
+            bf.wave.Add(ew);
+            ew.enemyppt.enemy.move = EnemyMove.M_RightArc;
+            ew.enemyppt.enemy.shot = ShotBullet.Aim_12;
+            ew.start = S_Right_1;
+            ew.sum = 1;
+            ew.staytime = 50;
+            bf.wave.Add(ew);
+            ew.enemyppt = e2;
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.start = S_Dwon_3;
+            ew.sum = 3;
+            ew.staytime = 0;
+            bf.wave.Add(ew);
+            ew.enemyppt = e1;
+            ew.enemyppt.bpe = bp2;
+            ew.enemyppt.enemy.move = EnemyMove.M_Dock_180;
+            ew.enemyppt.enemy.shot = ShotBullet.Down_Arc3;
+            ew.enemyppt.enemy.shotfrequency = 100;
+            ew.start = S_Up_3;
+            ew.sum = 1;
+            ew.staytime = 200;
+            bf.wave.Add(ew);
+            ew.enemyppt = e2;
+            ew.enemyppt.enemy.move = EnemyMove.M_Downward_NoStop;
+            ew.start = S_Up_1;
+            ew.sum = 1;
+            ew.staytime = 300;
+            bf.wave.Add(ew);
+            bf.wave.Add(bf.wave[0]);
+            bf.wave.Add(bf.wave[1]);
+            bf.wave.Add(bf.wave[3]);
+            bf.wave.Add(bf.wave[5]);
+            bf.wave.Add(bf.wave[11]);
+            bf.wave.Add(bf.wave[9]);
+            bf.wave.Add(bf.wave[2]);
+            bf.wave.Add(bf.wave[12]);
+            bf.wave.Add(bf.wave[7]);
+            bf.wave.Add(bf.wave[8]);
+            bf.wave.Add(bf.wave[4]);
+            bf.wave.Add(bf.wave[11]);
+            bf.wave.Add(bf.wave[14]);
+            bf.wave.Add(bf.wave[3]);
+            bf.wave.Add(bf.wave[7]);
+            bf.wave.Add(bf.wave[8]);
+            bf.wave.Add(bf.wave[9]);
+            bf.wave.Add(bf.wave[10]);
+            bf.wave.Add(bf.wave[2]);
+            bf.wave.Add(bf.wave[12]);
+            bf.wave.Add(bf.wave[6]);
+            ew.staytime = 500;
+
+            ew.enemyppt = e_bee;
+            BulletPropertyEx[] tp= new BulletPropertyEx[] { b_def_b3, b_def_b03b, b_bigblueboll, b_def_b3 };
+            tp[0].speed = 0.002f;
+            tp[1].speed = 0.003f;
+            tp[3].t_uv = SP.uv_def_4x2[6];
+            tp[3].attack = 40;
+            ew.enemyppt.bpe = tp;
+            ew.start = S_Up_3;
+            ew.sum = 1;
+            ew.staytime = 65536;
+            bf.wave.Add(ew);
+        }
+        static void SL_M_7()
+        {
+            QueueSourceEX.RegMatA(e_def_a00.enemy.mat_name, ref e_def_a00.enemy.mat_id);
+            QueueSourceEX.RegMatA(e_def_b00.enemy.mat_name, ref e_def_b00.enemy.mat_id);
+            QueueSourceEX.RegMatA(b_def_b03b.mat_name, ref b_def_b03b.mat_id);
+            QueueSourceEX.RegMatA(b_def_b04.mat_name, ref b_def_b04.mat_id);
+        }
+        static void SetLevel7(ref BattelField bf)
+        {
+            EnemyPropertyEX e1 =  e_def_a00;
+            EnemyPropertyEX e2 =  e_meteor;
+            EnemyPropertyEX e3 =  e_def_b00;
             //e3.enemy.spt_index = 8;
             BulletPropertyEx[] bp1 = new BulletPropertyEx[] { b_def_b03b };
             BulletPropertyEx[] bp2 = new BulletPropertyEx[] { b_def_b03b };
-            BulletPropertyEx[] bp3 = new BulletPropertyEx[] { b_def_b3};
             BulletPropertyEx[] bp4 = new BulletPropertyEx[] { b_def_b04 };
             bp2[0].speed = 0.003f;
             bf.wave.Clear();
+            bf.level = 7;
             EnemyWave ew = new EnemyWave();
-            ew.enemyppt = e1; 
+            ew.enemyppt = e1;
             ew.sum = 3;
             ew.staytime = 200;
             ew.enemyppt.enemy.move = EnemyMove.M_Dock_200;
             ew.enemyppt.enemy.shot = ShotBullet.Down_Arc3;
-            ew.enemyppt.bpe= bp2;
+            ew.enemyppt.bpe = bp2;
             ew.enemyppt.enemy.shotfrequency = 100;
             ew.start = S_Dwon_3;
             bf.wave.Add(ew);
@@ -1218,7 +1574,7 @@ namespace Assets.UnityVS.Script
             ew.enemyppt = e3;
             ew.enemyppt.bpe = bp4;
             ew.enemyppt.enemy.move = EnemyMove.M_Dock_200;
-            ew.enemyppt.enemy.shot = ShotBullet.Angle6_RotateA;
+            ew.enemyppt.enemy.shot = ShotBullet.Angle6_RotateB;
             ew.enemyppt.enemy.shotfrequency = 60;
             ew.start = S_Up_3;
             ew.sum = 1;
@@ -1242,7 +1598,7 @@ namespace Assets.UnityVS.Script
             ew.enemyppt = e1;
             ew.enemyppt.bpe = bp4;
             ew.enemyppt.enemy.move = EnemyMove.M_Dock_180;
-            ew.enemyppt.enemy.shot = ShotBullet.Angle6_RotateA;
+            ew.enemyppt.enemy.shot = ShotBullet.Angle6_RotateB;
             ew.enemyppt.enemy.shotfrequency = 60;
             ew.start = S_Up_3;
             ew.sum = 1;
@@ -1275,19 +1631,28 @@ namespace Assets.UnityVS.Script
             bf.wave.Add(bf.wave[2]);
             bf.wave.Add(bf.wave[12]);
             bf.wave.Add(bf.wave[6]);
-            ew.staytime = 500;
+            ew.staytime = 20000;
         }
-        static void SetLevel6(ref BattelField bf)
+        static void SL_M_8()
         {
-           
-        }
-        static void SetLevel7(ref BattelField bf)
-        {
-            
+            QueueSourceEX.RegMatA(Boss_Huijin.enemy.mat_name, ref Boss_Huijin.enemy.mat_id);
+            QueueSourceEX.RegMatA(b_def_b04.mat_name, ref b_def_b04.mat_id);
+            QueueSourceEX.RegMatA(b_bigblueboll.mat_name, ref b_bigblueboll.mat_id);
+            QueueSourceEX.RegMatA(b_laser4.mat_name, ref b_laser4.mat_id);
+            QueueSourceEX.RegMatA(b_missile01.mat_name, ref b_missile01.mat_id);
         }
         static void SetLevel8(ref BattelField bf)
         {
-            
+            bf.wave.Clear();
+            SetLevel7(ref bf);
+            bf.level = 8;
+            EnemyWave ew = new EnemyWave();
+            ew.enemyppt = Boss_Huijin;
+            ew.enemyppt.bpe = new BulletPropertyEx[] { b_def_b04, b_def_b04, b_bigblueboll, b_laser4, b_def_b04, b_missile01, b_missile01 };
+            ew.start = S_Up_3;
+            ew.sum = 1;
+            ew.staytime = 65536;
+            bf.wave.Add(ew);
         }
         static void SetLevel9(ref BattelField bf)
         {

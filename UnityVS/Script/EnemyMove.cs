@@ -90,7 +90,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.x < 2.5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;
@@ -110,7 +110,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.x < 2.5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;
@@ -131,7 +131,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.x < 2.5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;
@@ -154,7 +154,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.x > -2.5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;
@@ -174,7 +174,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.x >- 2.5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;
@@ -195,7 +195,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.x >- 2.5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;
@@ -227,7 +227,7 @@ namespace Assets.UnityVS.Script
             {
                 ebe.extra_b = 0;
                 int bid = ebe.bulletid[0];
-                ebe.shot(ref buff_b_ex[bid], ref ebe);
+                ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
             }
             ebe.extra_b+=ts;
             return true;
@@ -245,7 +245,7 @@ namespace Assets.UnityVS.Script
             {
                 ebe.extra_b = 0;
                 int bid = ebe.bulletid[0];
-                ebe.shot(ref buff_b_ex[bid], ref ebe);
+                ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
             }
             ebe.extra_b+=ts;
             return true;
@@ -262,7 +262,7 @@ namespace Assets.UnityVS.Script
             {
                 ebe.extra_b = 0;
                 int bid = ebe.bulletid[0];
-                ebe.shot(ref buff_b_ex[bid],ref ebe);
+                ebe.shot(ref buff_b_ex[bid],ref ebe.location,ref ebe.extra_b);
             }
             ebe.extra_b+=ts;
             return true;
@@ -282,7 +282,7 @@ namespace Assets.UnityVS.Script
                 {
                     ebe.extra_b = 0;
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }                    
                 ebe.extra_b+=ts;
             }                
@@ -302,7 +302,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.y < 5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid],ref ebe);
+                    ebe.shot(ref buff_b_ex[bid],ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;
@@ -330,7 +330,7 @@ namespace Assets.UnityVS.Script
                     if (ebe.location.y < 5f)
                     {
                         int bid = ebe.bulletid[0];
-                        ebe.shot(ref buff_b_ex[bid],ref ebe);
+                        ebe.shot(ref buff_b_ex[bid],ref ebe.location,ref ebe.extra_b);
                     }
                 }
                 ebe.extra_b+=ts;
@@ -354,7 +354,7 @@ namespace Assets.UnityVS.Script
                 {
                     ebe.extra_b = 0;
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }               
                 ebe.extra_b+=ts;
             }
@@ -380,7 +380,7 @@ namespace Assets.UnityVS.Script
                 {
                     ebe.extra_b = 0;
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
                 ebe.extra_b+=ts;
             }
@@ -406,7 +406,7 @@ namespace Assets.UnityVS.Script
                 {
                     ebe.extra_b = 0;
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
                 ebe.extra_b+=ts;
             }
@@ -417,7 +417,7 @@ namespace Assets.UnityVS.Script
             ebe.extra_m++;
             if (ebe.extra_m < 80 | ebe.extra_m > 280)
             {
-                ebe.location.y -= 0.001f*ts;
+                ebe.location.y -= 0.002f*ts;
             }
             else
             {
@@ -425,7 +425,7 @@ namespace Assets.UnityVS.Script
                 {
                     ebe.extra_b = 0;
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
                 ebe.extra_b+=ts;
             }
@@ -441,13 +441,13 @@ namespace Assets.UnityVS.Script
             ebe.extra_m++;
             if (ebe.extra_m < 100 | ebe.extra_m > 300)
             {
-                ebe.location.y -= 0.001f*ts;
+                ebe.location.y -= 0.002f*ts;
             }
             else if(ebe.extra_b > ebe.shotfrequency)
             {
                 ebe.extra_b = 0;
                 int bid = ebe.bulletid[0];
-                ebe.shot(ref buff_b_ex[bid], ref ebe);
+                ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
             }
             ebe.extra_b+=ts;  
             if (ebe.location.y < -5.5f)
@@ -519,7 +519,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.x > -2.5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;
@@ -545,7 +545,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.x <2.5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;
@@ -571,7 +571,7 @@ namespace Assets.UnityVS.Script
                 if (ebe.location.y < 5f)
                 {
                     int bid = ebe.bulletid[0];
-                    ebe.shot(ref buff_b_ex[bid], ref ebe);
+                    ebe.shot(ref buff_b_ex[bid], ref ebe.location,ref ebe.extra_b);
                 }
             }
             ebe.extra_b+=ts;

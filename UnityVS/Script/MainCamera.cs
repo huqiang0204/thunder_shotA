@@ -2,7 +2,8 @@
 #undef Phone
 #define desktop
 //#undef desktop
-
+#define debug
+#undef debug
 using System;
 using UnityEngine;
 using Assets.UnityVS.Script;
@@ -11,6 +12,7 @@ class MainCamera : MonoBehaviour {
     // Use this for initialization
     //720/1280=0.5625
     Transform tf;
+    int tid;
     static void Buff()
     {
 #if desktop
@@ -49,13 +51,21 @@ class MainCamera : MonoBehaviour {
         QueueSourceEX.main_canvas = c.transform;
         c.transform.localScale = new Vector3(1,1);
         update=Buff;
-        
-        
+#if debug
+        TextProperty t = new TextProperty() {text="frame:", color=Color.yellow, scale=new Vector3(0.1f,0.1f),location=new Vector3(2,4.1f,10)};
+        tid = QueueSourceEX.CreateText(null,t);
+#endif    
+
     }
     // Update is called once per frame
     static int clicktime;
     void Update()
     {
+#if debug
+        float fr =1/ Time.deltaTime;
+        int ti = (int)fr;
+        QueueSourceEX.GetTextBase(tid).textmesh.text="frame:"+ti.ToString();
+#endif
 #if desktop
         Vector3 scale = tf.localScale;
         scale.x = (float)Screen.width / (float)Screen.height / 0.5625f;

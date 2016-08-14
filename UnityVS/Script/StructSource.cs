@@ -10,10 +10,10 @@ namespace Assets.UnityVS.Script
     delegate void BulletMoveExA(ref BulletPropertyEx bpe, ref BulletStateEx state);
     delegate void BulletShotEX(Transform parent, ref int count, int id);
     delegate bool EnemyMoveEX(ref EnemyBaseEX ebe);//return false is disappear
-    delegate bool Shot(ref EnemyBaseEX ebe);
+    delegate void Shot(ref BulletPropertyEx bpe,ref Vector3 location,ref int extra_b);
     delegate void ShotW(ref BulletPropertyEx bpe);
     delegate void DamageE(ref EnemyBaseEX ebe);
-    delegate void ShotEx(ref BulletPropertyEx bpe,ref EnemyBaseEX ebe);
+    delegate void DamageW(ref BulletPropertyEx bpe,ref EnemyBaseEX ebe);
     delegate void GenerateProp(int max, Vector3 location);
     delegate void SetBattelField(ref BattelField bf);
     delegate bool CollisionEx(ref BulletPropertyEx bpe,ref BulletStateEx bs);
@@ -57,7 +57,7 @@ namespace Assets.UnityVS.Script
     struct BattelField
     {
         public int mode;
-        //public int time;
+        public int level;
         //public int crt_bkg;
         public List<EnemyWave> wave;
     }
@@ -82,6 +82,7 @@ namespace Assets.UnityVS.Script
         public int max;
         public int s_count;//shot count sub thread
         public int a_count;
+        public int c_style;//collision style
         public int parentid;//enemy id
         public bool offset;
         public Vector2[] t_uv;
@@ -147,7 +148,14 @@ namespace Assets.UnityVS.Script
         //Energy storage weapon 
         //power dispose
     }
-
+    struct Crystal
+    {
+        public bool active;
+        public int style;
+        public Point2 location;
+        public int source;
+        public int extra;
+    }
 
     struct EnemyBaseEX
     {
@@ -164,6 +172,7 @@ namespace Assets.UnityVS.Script
         public int extra_a;
         public int extra_b;//bullet recorder
         public int extra_m;
+        public int score;
         public float radius;
         public float maxrange;
         public float minrange;
@@ -175,7 +184,7 @@ namespace Assets.UnityVS.Script
         public Point2[] offset;
         public int[] bulletid;
         public EnemyMoveEX move;
-        public ShotEx shot;
+        public Shot shot;
         public int shotfrequency;
 
         public DamageE play;//帧动画

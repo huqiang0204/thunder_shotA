@@ -2461,14 +2461,14 @@ namespace Assets.UnityVS.Script
         }
         protected static Material CreateMat(int id)
         {
+            if (buff_mat[id].mat != null)
+                return buff_mat[id].mat;
             if (buff_mat[id].rr == null)
             {
                 //if(buff_mat[id].path!=null)
                 //    buff_mat[id].rr = Resources.LoadAsync(buff_mat[id].path);
                 return null;
             }
-            if (buff_mat[id].mat != null)
-                return buff_mat[id].mat;
             buff_mat[id].mat = buff_mat[id].rr.asset as Material;
             return buff_mat[id].mat;
         }
