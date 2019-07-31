@@ -42,7 +42,7 @@ namespace huqiang.UI
         public static int Size = sizeof(ElementData);
         public static int ElementSize = Size / 4;
     }
-    public class ModelElement : DataConversion
+    public class ModelElement : DataConversion,UITransform
     {
         public static Coordinates GetGlobaInfo(ModelElement rect, bool Includeroot = true)
         {
@@ -542,6 +542,15 @@ namespace huqiang.UI
         #endregion
         bool _active = true;
         public bool activeSelf { get { return _active; } set { if (_active == value) return; IsChanged = true; _active = value; } }
+
+        public Quaternion LocalRotate { get => data.localRotation; set { data.localRotation = value; IsChanged = true; } }
+        public Vector2 SizeDelta { get => data.sizeDelta; set { data.sizeDelta = value; IsChanged = true; } }
+        public Vector3 LocalPosition { get => data.localPosition; set { data.localPosition = value; IsChanged = true; } }
+        public Vector2 LocalScale { get => data.localScale; set { data.localScale = value; IsChanged = true; } }
+        public Vector3 GlobalPosition { get => GetGlobaInfo(this).Postion; }
+        public Vector3 GlobalScale { get => GetGlobaInfo(this).Scale; }
+        public Quaternion GlobalRotate { get => GetGlobaInfo(this).quaternion; }
+
         public EventCallBack baseEvent;
         public void RegEvent<T>() where T : EventCallBack, new()
         {

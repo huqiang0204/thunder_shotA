@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace huqiang.UIComposite
 {
-    public class ShareComponent
+    public class ShareComponent:UITransform
     {
         public ShareComponent(ShareImage image)
         {
@@ -18,11 +18,45 @@ namespace huqiang.UIComposite
         }
         public ShareImage Parent { get; private set; }
         public Vector2 Pivot = new Vector2(0.5f, 0.5f);
-        public Vector2 SizeDelta=new Vector2(100,100);
-        public Vector3 LocalPosition;
-        public Vector2 LocalScale = Vector2.one;
-        public Vector3 Angle { set { LocalQuaternion = Quaternion.Euler(value); } }
-        public Quaternion LocalQuaternion = Quaternion.identity;
+        public Vector2 mSize=new Vector2(100,100);
+        public Vector3 mLocalPosition;
+        public Vector2 mLocalScale = Vector2.one;
+        public Quaternion rotate = Quaternion.identity;
+        Vector3 mPostion;
+        Vector3 mScale;
+        Quaternion mRotate;
+        void GetGlobaInfo()
+        {
+            var coor = ModelElement.GetGlobaInfo(Parent.Model);
+            mPostion.x = mLocalPosition.x * coor.Scale.x;
+            mPostion.y = mLocalPosition.y * coor.Scale.y;
+            mPostion.z = mLocalPosition.z * coor.Scale.z;
+            mPostion += coor.Postion;
+            mScale.x = coor.Scale.x * mLocalScale.x;
+            mScale.y = coor.Scale.y * mLocalScale.y;
+            mRotate = coor.quaternion * rotate;
+        }
+        public Vector3 Angle { set { rotate = Quaternion.Euler(value); } }
+        public Quaternion LocalRotate { get => rotate; set { rotate = value; Changed = true; } }
+        public Vector2 SizeDelta { get => mSize; set { mSize = value; Changed = true; } }
+        public Vector3 LocalPosition { get => mLocalPosition; set { mLocalPosition = value; Changed = true; } }
+        public Vector2 LocalScale { get => mLocalScale; set { mLocalScale = value; Changed = true; } }
+        public Vector3 GlobalPosition { get {
+                if (Changed)
+                    GetGlobaInfo();
+                return mPostion;
+            }
+        }
+        public Vector3 GlobalScale { get {
+                if (Changed)
+                    GetGlobaInfo();
+                return mScale;
+            } }
+        public Quaternion GlobalRotate { get {
+                if (Changed)
+                    GetGlobaInfo();
+                return mRotate;
+            } }
         public Color color = Color.white;
         UIVertex[] buff = new UIVertex[4];
         public void SetSpriteUV(Vector2[] uv)
@@ -45,10 +79,10 @@ namespace huqiang.UIComposite
         }
         static void ReCalcul(ShareComponent image)
         {
-            float w = image.LocalScale.x * image.SizeDelta.x;
-            float h = image.LocalScale.y * image.SizeDelta.y;
+            float w = image.mLocalScale.x * image.mSize.x;
+            float h = image.mLocalScale.y * image.mSize.y;
             var Pivot = image.Pivot;
-            var pos = image.LocalPosition;
+            var pos = image.mLocalPosition;
             float left = -Pivot.x * w;
             float right = (1 - Pivot.x) * w;
             float down =  - Pivot.y * h;
@@ -59,7 +93,7 @@ namespace huqiang.UIComposite
             buff[1].color = color;
             buff[2].color = color;
             buff[3].color = color;
-            var q = image.LocalQuaternion;
+            var q = image.rotate;
             buff[0].position = q * new Vector3(left, down) + pos;
             buff[1].position = q * new Vector3(left, top) + pos;
             buff[2].position = q * new Vector3(right, top) + pos;
@@ -79,6 +113,8 @@ namespace huqiang.UIComposite
         {
             Parent.buff.Remove(this);
         }
+        public huqiang.Math.Collider2D collider { get; set; }
+    
     }
     public class ShareImage: ModelInital
     {
