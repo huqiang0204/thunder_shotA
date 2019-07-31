@@ -230,7 +230,7 @@ namespace Assets.UnityVS.Script
             radius = 0.3f,
             maxrange = 1.2f,
             minrange = 0.1f,
-            attack = 300,
+            attack = 80,
             speed = 0.015f,
             move = BulletMoveEx.B_LockEnemy
         };

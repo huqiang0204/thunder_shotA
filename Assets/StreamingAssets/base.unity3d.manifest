@@ -1,0 +1,88 @@
+ManifestFileVersion: 0
+CRC: 2798383756
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d44acc276473dea577d8ce455e466246
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ea5a42e0fd8ea905efa7aa926a3b8944
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Picture/bloody.png
+- Assets/Resources/Picture/wing-laser03.png
+- Assets/Resources/Picture/meteor.png
+- Assets/Resources/Picture/bossxue03.png
+- Assets/Resources/Picture/p-03c.jpg
+- Assets/Resources/Picture/center.png
+- Assets/Resources/Picture/989-bg-04.png
+- Assets/Resources/Picture/p-02b.jpg
+- Assets/Resources/Picture/a-06b.png
+- Assets/Resources/Picture/corps-001.png
+- Assets/Resources/Picture/crystal.png
+- Assets/Resources/Picture/prop_b.png
+- Assets/Resources/Picture/zhzd.png
+- Assets/Resources/Picture/magic099.png
+- Assets/Resources/Picture/nh.png
+- Assets/Resources/Picture/BigBoom.png
+- Assets/Resources/Picture/laser-01c.png
+- Assets/Resources/Picture/singlemode.jpg
+- Assets/Resources/Picture/laser_red.png
+- Assets/Resources/Picture/enemy_b.png
+- Assets/Resources/Picture/boss-05b.png
+- Assets/Resources/Picture/magic_shiled.png
+- Assets/Resources/Picture/p-05d.jpg
+- Assets/Resources/Picture/hit.png
+- Assets/Resources/Picture/i-p-02b.png
+- Assets/Resources/Picture/d.jpg
+- Assets/Resources/Picture/back_button.png
+- Assets/Resources/Picture/Explode.png
+- Assets/Resources/Picture/p-b04.png
+- Assets/Resources/Picture/bullet-03.png
+- Assets/Resources/Picture/p-06d.jpg
+- Assets/Resources/Picture/bossxue.png
+- Assets/Resources/Picture/bbk.png
+- Assets/Resources/Picture/p-j.png
+- Assets/Resources/Picture/bullet-04.png
+- Assets/Resources/Picture/six_angle.png
+- Assets/Resources/Picture/bullet02.png
+- Assets/Resources/Picture/boll01.png
+- Assets/Resources/Picture/rightgreen.png
+- Assets/Resources/Picture/lock1.png
+- Assets/Resources/Picture/bloodt.png
+- Assets/Resources/Picture/boss-02.png
+- Assets/Resources/Picture/wing-t05.png
+- Assets/Resources/Picture/lock.png
+- Assets/Resources/Picture/thunderboll.png
+- Assets/Resources/Picture/wing-02d.png
+- Assets/Resources/Picture/zhujizidan-07.png
+- Assets/Resources/Picture/prop_u.png
+- Assets/Resources/Picture/enemy_a.png
+- Assets/Resources/Picture/m-04a.jpg
+- Assets/Resources/Picture/laser04.png
+- Assets/Resources/Picture/cosmos.jpg
+- Assets/Resources/Picture/bloodg.png
+- Assets/Resources/Picture/button.png
+- Assets/Resources/Picture/space1.jpg
+- Assets/Resources/Picture/bottom.png
+- Assets/Resources/Picture/c.jpg
+- Assets/Resources/Picture/hp2.png
+- Assets/Resources/Picture/burn.png
+- Assets/Resources/Picture/a-10.png
+- Assets/Resources/Picture/b.jpg
+- Assets/Resources/Picture/bossxue02.png
+- Assets/Resources/Picture/w-02a.jpg
+- Assets/Resources/Picture/s.jpg
+- Assets/Resources/Picture/btn-back3.png
+- Assets/Resources/Picture/missile.png
+- Assets/Resources/Picture/a.jpg
+- Assets/Resources/Picture/989.jpg
+- Assets/Resources/Picture/bloodb.png
+- Assets/Resources/Picture/missile01.png
+- Assets/Resources/Picture/p-07d.png
+Dependencies: []

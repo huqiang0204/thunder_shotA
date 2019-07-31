@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: 266598b6c894b4640b6e09880add20c2
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: GenericBlock1_001
+    100002: GenericBlock1_002
+    100004: GenericBlock2_004
+    100006: GenericBlock2_006
+    100008: Mesh_000
+    100010: Mesh_001
+    100012: Mesh_002
+    100014: Mesh_003
+    100016: Mesh_004
+    100018: Mesh_005
+    100020: Mesh_006
+    100022: Mesh_007
+    100024: Mesh_046
+    100026: Mesh_075
+    100028: Object024_04___Defaul
+    100030: Object04_Material__43_002
+    100032: Object23_05___Default
+    100034: Object23_05___Default_001
+    100036: //RootNode
+    400000: GenericBlock1_001
+    400002: GenericBlock1_002
+    400004: GenericBlock2_004
+    400006: GenericBlock2_006
+    400008: Mesh_000
+    400010: Mesh_001
+    400012: Mesh_002
+    400014: Mesh_003
+    400016: Mesh_004
+    400018: Mesh_005
+    400020: Mesh_006
+    400022: Mesh_007
+    400024: Mesh_046
+    400026: Mesh_075
+    400028: Object024_04___Defaul
+    400030: Object04_Material__43_002
+    400032: Object23_05___Default
+    400034: Object23_05___Default_001
+    400036: //RootNode
+    2300000: GenericBlock1_001
+    2300002: GenericBlock1_002
+    2300004: GenericBlock2_004
+    2300006: GenericBlock2_006
+    2300008: Mesh_000
+    2300010: Mesh_001
+    2300012: Mesh_002
+    2300014: Mesh_003
+    2300016: Mesh_004
+    2300018: Mesh_005
+    2300020: Mesh_006
+    2300022: Mesh_007
+    2300024: Mesh_046
+    2300026: Mesh_075
+    2300028: Object024_04___Defaul
+    2300030: Object04_Material__43_002
+    2300032: Object23_05___Default
+    2300034: Object23_05___Default_001
+    3300000: GenericBlock1_001
+    3300002: GenericBlock1_002
+    3300004: GenericBlock2_004
+    3300006: GenericBlock2_006
+    3300008: Mesh_000
+    3300010: Mesh_001
+    3300012: Mesh_002
+    3300014: Mesh_003
+    3300016: Mesh_004
+    3300018: Mesh_005
+    3300020: Mesh_006
+    3300022: Mesh_007
+    3300024: Mesh_046
+    3300026: Mesh_075
+    3300028: Object024_04___Defaul
+    3300030: Object04_Material__43_002
+    3300032: Object23_05___Default
+    3300034: Object23_05___Default_001
+    4300000: Mesh_007
+    4300002: Mesh_006
+    4300004: Mesh_004
+    4300006: Mesh_003
+    4300008: Mesh_005
+    4300010: Object04_Material__43_002
+    4300012: Object23_05___Default_001
+    4300014: Mesh_002
+    4300016: GenericBlock2_006
+    4300018: GenericBlock2_004
+    4300020: Mesh_001
+    4300022: GenericBlock1_002
+    4300024: GenericBlock1_001
+    4300026: Mesh_000
+    4300028: Mesh_046
+    4300030: Mesh_075
+    4300032: Object23_05___Default
+    4300034: Object024_04___Defaul
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
