@@ -99,14 +99,16 @@ namespace huqiang.UI
         {
             var mod = new ModelElement();
             mod.name = name;
-            mod.data.localScale = Vector3.one;
-            mod.data.localRotation = Quaternion.identity;
             mod.data.anchorMax = mod.data.anchorMin =
             mod.data.pivot = new Vector2(0.5f, 0.5f);
-            mod.data.type |= ModelManagerUI.GetTypeIndex(mod);
             return mod;
         }
-
+        public ModelElement()
+        {
+            data.localScale = Vector3.one;
+            data.localRotation = Quaternion.identity;
+            data.type = ModelManagerUI.GetTypeIndex(this);
+        }
         public Coordinates coordinates { get { return GetGlobaInfo(this); } }
         public Vector3 ScreenToLocal(Vector3 v)
         {
@@ -127,10 +129,13 @@ namespace huqiang.UI
         }
         public RectTransform Context;
         public GameObject Main;
+        public GraphicE graphic;
         public int regIndex;
         public ElementData data;
         public string name;
         public string tag;
+        internal Color _color = Color.white;
+        public virtual Color color { get { return _color; } set { _color = value; if (graphic != null) graphic.color = value; } }
         public ModelElement parent { get; private set; }
         public List<DataConversion> components = new List<DataConversion>();
         public List<ModelElement> child = new List<ModelElement>();
@@ -168,6 +173,7 @@ namespace huqiang.UI
             T t = new T();
             data.type |= ModelManagerUI.GetTypeIndex(t);
             components.Add(t);
+            t.model = this;
             return t;
         }
         public FakeStruct ModData;
@@ -540,7 +546,7 @@ namespace huqiang.UI
             }
         }
         #endregion
-        bool _active = true;
+        protected bool _active = true;
         public bool activeSelf { get { return _active; } set { if (_active == value) return; IsChanged = true; _active = value; } }
 
         public Quaternion LocalRotate { get => data.localRotation; set { data.localRotation = value; IsChanged = true; } }
@@ -564,6 +570,13 @@ namespace huqiang.UI
                 }
             }
             baseEvent = EventCallBack.RegEvent<T>(this);
+        }
+        public void VertexCalculation()
+        {
+            if (graphic != null)
+                graphic.VertexCalculation();
+            for (int i = 0; i < child.Count; i++)
+                child[i].VertexCalculation();
         }
         public override void Apply()
         {

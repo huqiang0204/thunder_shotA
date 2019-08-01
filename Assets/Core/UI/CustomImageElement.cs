@@ -33,4 +33,36 @@ namespace huqiang.UI
             }
         }
     }
+    public class ShareImageElement : CustomImageElement
+    {
+        public bool needCalcul;
+        List<UIVertex> vertices = new List<UIVertex>();
+        List<int> tri = new List<int>();
+        public override void VertexCalculation()
+        {
+            vertices.Clear();
+            tri.Clear();
+            int s = 0;
+            var child = model.child;
+            for (int i = 0; i <child.Count; i++)
+            {
+                var son = child[i] as SonModelElement;
+                if(son!=null)
+                {
+                    if(son.activeSelf)
+                    {
+                        vertices.AddRange(son.GetUVInfo());
+                        tri.Add(s);
+                        tri.Add(s + 1);
+                        tri.Add(s + 2);
+                        tri.Add(s + 2);
+                        tri.Add(s + 3);
+                        tri.Add(s);
+                        s += 4;
+                    }
+                }
+            }
+            UpdateVert(vertices, tri);
+        }
+    }
 }

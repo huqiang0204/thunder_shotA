@@ -137,6 +137,5 @@ namespace huqiang.UI
                 else a.sprite = ElementAsset.FindSprite(assetName, textureName, spriteName);
             }
         }
-  
     }
 }

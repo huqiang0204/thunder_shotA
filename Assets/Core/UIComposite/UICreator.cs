@@ -486,13 +486,5 @@ namespace huqiang.UIComposite
             var et = mod.AddComponent<EmojiElement>();
             return mod;
         }
-        static public ShareImage CreateShareImage(string name)
-        {
-            var mod = ModelElement.CreateNew(name);
-            var cus = mod.AddComponent<CustomImageElement>();
-            ShareImage share = new ShareImage();
-            share.Initial(mod);
-            return share;
-        }
     }
 }

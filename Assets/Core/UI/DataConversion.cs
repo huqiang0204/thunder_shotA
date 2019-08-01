@@ -7,7 +7,7 @@ namespace huqiang.UI
     {
         public string type;
         public GameObject Main;
-        public ModelElement model;
+        public virtual ModelElement model { get; set; }
         public virtual void Load(FakeStruct fake) { }
         public virtual void LoadToObject(Component game) { }
         public bool IsChanged = true;

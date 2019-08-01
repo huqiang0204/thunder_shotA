@@ -2,6 +2,7 @@
 using huqiang.Data;
 using huqiang.UI;
 using huqiang.UIComposite;
+using huqiang.UIEvent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 public partial class UICreateTest : CreateTestHelper
 {
-    ShareImage image;
+
     public TextAsset SpriteInfo;
     SpriteData sd;
     public override void CreateTestPage(ModelElement parent)
@@ -21,42 +22,51 @@ public partial class UICreateTest : CreateTestHelper
 }
 public partial class UICreateTest
 {
-    class View
-    {
-        public ShareImage image;
-    }
-     View view;
+
+
      ModelElement CreateUI()
     {
-        view = new View();
+
         sd = new SpriteData();
         sd.LoadSpriteData(SpriteInfo.bytes);
-        image = UICreator.CreateShareImage("test");
-        image.rawImage.ChangeTexture("enemy_b", "base.unity3d");
 
-        ShareComponent share = new ShareComponent(image);
-        share.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_0", ref share.Pivot));
-        share.Angle = new Vector3(0, 0, 33);
-        share.mSize = new Vector2(300, 300);
-        share.mLocalPosition = new Vector3(-300, 100, 0);
-        share.Changed = true;
+        var mod = ModelElement.CreateNew("test");
+        mod.data.sizeDelta = new Vector2(400, 400);
+        var img = mod.AddComponent<ShareImageElement>();
+        img.ChangeTexture("enemy_b", "base.unity3d");
 
-        share = new ShareComponent(image);
-        share.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_7", ref share.Pivot));
-        share.Angle = new Vector3(0, 0, -44);
-        share.mSize = new Vector2(300, 300);
-        share.mLocalPosition = new Vector3(100, 300, 0);
-        share.Changed = true;
+        SonModelElement son = new SonModelElement();
+        son.SetParent(mod);
+        son.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_0", ref son.data.pivot));
+        son.data.localRotation = Quaternion.Euler(0,0,33);
+        son.data.sizeDelta = new Vector2(300,300);
+        son.data.localPosition = new Vector3(-300,100,0);
+        son.IsChanged = true;
+        //son.RegEvent<EventCallBack>();
+        //son.baseEvent.Click = (o, e) => { Debug.Log("one is ok"); };
 
-        share = new ShareComponent(image);
-        share.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_9", ref share.Pivot));
-        share.Angle = new Vector3(0, 0, 180);
-        share.mSize = new Vector2(300, 300);
-        share.mLocalPosition = new Vector3(0, -300, 0);
-        share.Changed = true;
+        son = new SonModelElement();
+        son.SetParent(mod);
+        son.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_7", ref son.data.pivot));
+        son.data.localRotation = Quaternion.Euler(0, 0, -44);
+        son.data.sizeDelta = new Vector2(300, 300);
+        son.data.localPosition = new Vector3(100, 300, 0);
+        son.IsChanged = true;
+        //son.RegEvent<EventCallBack>();
+        //son.baseEvent.Click = (o, e) => { Debug.Log("tow is ok"); };
 
-        image.Refresh();
-        
-        return image.Model;
+        son = new SonModelElement();
+        son.SetParent(mod);
+        son.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_9", ref son.data.pivot));
+        son.data.localRotation = Quaternion.Euler(0, 0, 180);
+        son.data.sizeDelta = new Vector2(300, 300);
+        son.data.localPosition = new Vector3(0, -300, 0);
+        son.IsChanged = true;
+        //son.RegEvent<EventCallBack>();
+        //son.baseEvent.Click = (o, e) => { Debug.Log("three is ok"); };
+
+        son.Changed();
+
+        return mod;
     }
 }

@@ -40,7 +40,7 @@ namespace Assets.Page
         }
         void ItemUpdate(ItemView item,int level,int index)
         {
-            var img = item.icon.graphic as ImageElement;
+            var img = item.icon.Context.graphic as ImageElement;
             if (level > 1)
             {
                 item.icon.forbid = true;

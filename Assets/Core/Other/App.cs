@@ -95,6 +95,7 @@ namespace huqiang
             UIPage.Refresh(UserAction.TimeSlice);
             UINotify.Refresh(UserAction.TimeSlice);
             UIAnimation.Manage.Update();
+            RenderForm.VertexCalculationAll();
         }
         static void Resize()
         {
