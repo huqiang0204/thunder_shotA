@@ -42,8 +42,8 @@ public partial class UICreateTest
         son.data.sizeDelta = new Vector2(300,300);
         son.data.localPosition = new Vector3(-300,100,0);
         son.IsChanged = true;
-        //son.RegEvent<EventCallBack>();
-        //son.baseEvent.Click = (o, e) => { Debug.Log("one is ok"); };
+        son.RegEvent<EventCallBack>();
+        son.baseEvent.Click = (o, e) => { Debug.Log("one is ok"); };
 
         son = new SonModelElement();
         son.SetParent(mod);
@@ -52,8 +52,8 @@ public partial class UICreateTest
         son.data.sizeDelta = new Vector2(300, 300);
         son.data.localPosition = new Vector3(100, 300, 0);
         son.IsChanged = true;
-        //son.RegEvent<EventCallBack>();
-        //son.baseEvent.Click = (o, e) => { Debug.Log("tow is ok"); };
+        son.RegEvent<EventCallBack>();
+        son.baseEvent.Click = (o, e) => { Debug.Log("tow is ok"); };
 
         son = new SonModelElement();
         son.SetParent(mod);
@@ -62,8 +62,8 @@ public partial class UICreateTest
         son.data.sizeDelta = new Vector2(300, 300);
         son.data.localPosition = new Vector3(0, -300, 0);
         son.IsChanged = true;
-        //son.RegEvent<EventCallBack>();
-        //son.baseEvent.Click = (o, e) => { Debug.Log("three is ok"); };
+        son.RegEvent<EventCallBack>();
+        son.baseEvent.Click = (o, e) => { Debug.Log("three is ok"); };
 
         son.Changed();
 

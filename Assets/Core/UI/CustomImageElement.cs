@@ -7,9 +7,9 @@ namespace huqiang.UI
     public class CustomImageElement:RawImageElement
     {
         public CustomRawImage custom;
-        bool vertChanged;
-        List<UIVertex> vertex;
-        List<int> tris;
+        protected bool vertChanged;
+        protected List<UIVertex> vertex;
+        protected List<int> tris;
         public override void LoadToObject(Component game)
         {
             base.LoadToObject(game);
@@ -36,33 +36,37 @@ namespace huqiang.UI
     public class ShareImageElement : CustomImageElement
     {
         public bool needCalcul;
-        List<UIVertex> vertices = new List<UIVertex>();
-        List<int> tri = new List<int>();
         public override void VertexCalculation()
         {
-            vertices.Clear();
-            tri.Clear();
-            int s = 0;
-            var child = model.child;
-            for (int i = 0; i <child.Count; i++)
+            if(needCalcul)
             {
-                var son = child[i] as SonModelElement;
-                if(son!=null)
+                var vert = new List<UIVertex>();
+                var tri = new List<int>();
+                int s = 0;
+                var child = model.child;
+                for (int i = 0; i < child.Count; i++)
                 {
-                    if(son.activeSelf)
+                    var son = child[i] as SonModelElement;
+                    if (son != null)
                     {
-                        vertices.AddRange(son.GetUVInfo());
-                        tri.Add(s);
-                        tri.Add(s + 1);
-                        tri.Add(s + 2);
-                        tri.Add(s + 2);
-                        tri.Add(s + 3);
-                        tri.Add(s);
-                        s += 4;
+                        if (son.activeSelf)
+                        {
+                            var uv = son.GetUVInfo();
+                            vert.AddRange(uv);
+                            tri.Add(s);
+                            tri.Add(s + 1);
+                            tri.Add(s + 2);
+                            tri.Add(s + 2);
+                            tri.Add(s + 3);
+                            tri.Add(s);
+                            s += 4;
+                        }
                     }
                 }
+                vertex = vert;
+                tris = tri;
+                vertChanged = true;
             }
-            UpdateVert(vertices, tri);
         }
     }
 }
