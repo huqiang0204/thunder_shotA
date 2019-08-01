@@ -128,7 +128,7 @@ namespace huqiang.UI
                 if (shader != null)
                     if (material == null)
                         material = new Material(Shader.Find(shader));
-                Update();
+                UpdateMaterial();
                 LoadToObject(Context, ref data, this);
                 IsChanged = false;
             }
@@ -167,7 +167,7 @@ namespace huqiang.UI
                 material = new Material(es);
                 material.SetTexture("_emoji", Emoji);
             }
-            Update();
+            UpdateMaterial();
             LoadToObject(Context, ref data, this);
             IsChanged = false;
         }

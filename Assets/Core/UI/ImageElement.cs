@@ -123,7 +123,7 @@ namespace huqiang.UI
         {
             if(IsChanged)
             {
-                Update();
+                UpdateMaterial();
                 LoadToObject(Context, ref data, this);
                 IsChanged = false;
             }

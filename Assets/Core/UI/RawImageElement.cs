@@ -90,7 +90,7 @@ namespace huqiang.UI
         {
             if(IsChanged)
             {
-                base.Update();
+                UpdateMaterial();
                 Context.uvRect = data.uvRect;
                 Context.color = _color;
                 IsChanged = false;

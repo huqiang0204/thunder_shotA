@@ -85,7 +85,7 @@ namespace huqiang.UI
             }
             IsChanged = true;
         }
-        protected virtual void Update()
+        protected void UpdateMaterial()
         {
             if(material==null)
             {

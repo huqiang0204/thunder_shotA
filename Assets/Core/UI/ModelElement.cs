@@ -83,7 +83,7 @@ namespace huqiang.UI
                 o.x = p.x * scale.x;
                 o.y = p.y * scale.y;
                 o.z = p.z * scale.z;
-                pos += o;
+                pos +=quate * o;
                 quate *= rt.data.localRotation;
                 Vector3 s = rt.data.localScale;
                 scale.x *= s.x;
