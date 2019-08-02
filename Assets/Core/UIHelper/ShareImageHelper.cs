@@ -8,6 +8,7 @@ using huqiang.UI;
 using UGUI;
 using UnityEngine;
 
+[RequireComponent(typeof(ShareImage))]
 public class ShareImageHelper : UICompositeHelp
 {
     public class TransData

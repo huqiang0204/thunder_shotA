@@ -103,7 +103,8 @@ public class ElementEditor : Editor
         ModelManagerUI.RegComponent(new ComponentType<Image, ImageElement>(ImageElement.LoadFromObject));
         ModelManagerUI.RegComponent(new ComponentType<EmojiText, EmojiElement>(TextElement.LoadFromObject));
         ModelManagerUI.RegComponent(new ComponentType<Text, TextElement>(TextElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<CustomRawImage,CustomImageElement>(CustomImageElement.LoadFromObject));
+        ModelManagerUI.RegComponent(new ComponentType<ShareImage, ShareImageElement>(RawImageElement.LoadFromObject));
+        ModelManagerUI.RegComponent(new ComponentType<CustomRawImage,CustomImageElement>(RawImageElement.LoadFromObject));
         ModelManagerUI.RegComponent(new ComponentType<RawImage, RawImageElement>(RawImageElement.LoadFromObject));
         ModelManagerUI.RegComponent(new ComponentType<RectMask2D, RectMaskElement>(RectMaskElement.LoadFromObject));
         ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));

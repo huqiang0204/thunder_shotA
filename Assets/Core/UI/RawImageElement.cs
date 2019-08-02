@@ -14,7 +14,6 @@ namespace huqiang.UI
         public Int32 shader;
         public Int32 assetName;
         public Int32 textureName;
-        public Int32 ex;
         public static int Size = sizeof(RawImageData);
         public static int ElementSize = Size / 4;
     }
