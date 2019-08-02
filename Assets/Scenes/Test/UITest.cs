@@ -7,8 +7,10 @@ using UnityEngine;
 
 public class UITest : TestHelper
 {
+    public TextAsset SpriteInfo;
     public override void LoadTestPage()
     {
+        ElementAsset.AddSpriteData("baseInfo",SpriteInfo.bytes);
         Application.targetFrameRate = 60;
 #if UNITY_IPHONE || UNITY_ANDROID
         //Scale.DpiScale = true;

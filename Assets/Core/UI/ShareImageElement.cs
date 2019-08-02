@@ -24,11 +24,12 @@ namespace huqiang.UI
                     dat.data.localScale = dp->localScale;
                     dat.data.pivot = dp->pivot;
                     dat.color = dp->color;
-                    var name = fake.GetData(dp->spriteName) as string;
+                    var name = fake.buffer.GetData(dp->spriteName) as string;
                     if (name != null)
                         dat.SetUV(ElementAsset.FindSpriteUV(textureName, name, ref dat.data.pivot));
                     dat.SetParent(model);
                 }
+                needCalcul = true;
             }
         }
         public bool needCalcul;

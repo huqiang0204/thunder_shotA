@@ -63,17 +63,23 @@ public class ShareImageHelper : UICompositeHelp
         }
         public bool foldout;
     }
-    public List<TransData> datas=new List<TransData>();
+    public List<TransData> datas = new List<TransData>();
     public unsafe override object ToFakeStruct(DataBuffer data)
     {
+        datas.Clear();
+        ReadData();
+        return SaveData(data);
+    }
+    unsafe FakeStructArray SaveData(DataBuffer data)
+    {
         FakeStructArray array = new FakeStructArray(data, ShareElementData.ElementSize, datas.Count);
-        for(int i=0;i<datas.Count;i++)
+        for (int i = 0; i < datas.Count; i++)
         {
             var dat = datas[i];
             ShareElementData* dp = (ShareElementData*)array[i];
             dp->localPosition = dat.localPosition;
             dp->localScale = dat.localScale;
-            dp->loaclRotate =Quaternion.Euler(dat.Angle);
+            dp->loaclRotate = Quaternion.Euler(dat.Angle);
             dp->sizeDelta = dat.sizeDelta;
             dp->localScale = dat.localScale;
             dp->pivot = dat.pivot;
@@ -88,7 +94,7 @@ public class ShareImageHelper : UICompositeHelp
         var raw = GetComponent<CustomRawImage>();
         if (raw == null)
             return;
-        var db = new DataBuffer(data);
+        var db = new DataBuffer(buff);
         var array = db.fakeStruct.GetData<FakeStructArray>(0);
         if(array!=null)
         {
@@ -148,8 +154,8 @@ public class ShareImageHelper : UICompositeHelp
             VertexCalculation(raw);
         DataBuffer db = new DataBuffer(32);
         db.fakeStruct = new FakeStruct(db, 1);
-        db.fakeStruct.SetData(0,ToFakeStruct(db));
-        data = db.ToBytes();
+        db.fakeStruct.SetData(0,SaveData(db));
+        buff = db.ToBytes();
     }
     public void AddSon()
     {
@@ -157,17 +163,16 @@ public class ShareImageHelper : UICompositeHelp
         datas.Add(trans);
     }
     [HideInInspector]
-    public byte[] data;
+    public byte[] buff;
     public void ReLoad()
     {
-        if(data!=null)
+        if(buff!=null)
         {
             datas.Clear();
             ReadData();
             var raw = GetComponent<CustomRawImage>();
             if (raw != null)
                 VertexCalculation(raw);
-
         }
     }
 }

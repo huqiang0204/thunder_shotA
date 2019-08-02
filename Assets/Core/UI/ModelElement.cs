@@ -201,6 +201,7 @@ namespace huqiang.UI
         unsafe public override void Load(FakeStruct fake)
         {
             data = *(ElementData*)fake.ip;
+            ModData = fake;
             var buff = fake.buffer;
             Int16[] coms = buff.GetData(data.coms) as Int16[];
             if (coms != null)
@@ -216,8 +217,8 @@ namespace huqiang.UI
                         var dc = ModelManagerUI.Load(type);
                         if (dc != null)
                         {
-                            dc.Load(fs);
                             dc.model = this;
+                            dc.Load(fs);
                             components.Add(dc);
                         }
                     }
@@ -238,7 +239,6 @@ namespace huqiang.UI
                 }
             name = buff.GetData(data.name) as string;
             tag = buff.GetData(data.tag) as string;
-            ModData = fake;
         }
         public override void LoadToObject(Component com)
         {
