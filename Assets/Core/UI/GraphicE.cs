@@ -28,7 +28,7 @@ namespace huqiang.UI
         }
         protected Material material;
         protected Color _color;
-        public override ModelElement model { get => base.model; set { base.model = value; value.graphic = this; value._color = _color; } }
+        public override ModelElement model { get => base.model; set { base.model = value; value.graphic = this;  } }
         public Color color { get { return _color; } set { _color = value;IsChanged = true; } }
         string mShader;
         bool shderChanged;

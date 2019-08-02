@@ -134,8 +134,14 @@ namespace huqiang.UI
         public ElementData data;
         public string name;
         public string tag;
-        internal Color _color = Color.white;
-        public virtual Color color { get { return _color; } set { _color = value; if (graphic != null) graphic.color = value; } }
+        public virtual Color color { get {
+                if (graphic == null)
+                    return Color.white;
+                return graphic.color;
+            } set {
+                if (graphic != null)
+                    graphic.color = value;
+            } }
         public ModelElement parent { get; private set; }
         public List<DataConversion> components = new List<DataConversion>();
         public List<ModelElement> child = new List<ModelElement>();
