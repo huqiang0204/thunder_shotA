@@ -176,5 +176,73 @@ namespace huqiang.Data
                 (o) => { result = FindSprites(bundle, tname, names); }, null,
                 (e) => { if (callBack != null) callBack(result); });
         }
+        class SpriteData
+        {
+            public string name;
+            public DataBuffer buffer;
+        }
+        static List<SpriteData> SpriteDatas=new List<SpriteData>();
+        public static void AddSpriteData(string name, byte[] dat)
+        {
+            if (dat == null)
+                return;
+            RemoveSpriteData(name);
+            DataBuffer db = new DataBuffer(dat);
+            SpriteData data = new SpriteData();
+            data.name = name;
+            data.buffer = db;
+            SpriteDatas.Add(data);
+        }
+        public static void RemoveSpriteData(string name)
+        {
+            for(int i=0;i<SpriteDatas.Count;i++)
+            {
+                if (SpriteDatas[i].name == name)
+                {
+                    SpriteDatas.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+        public static void ClearSpriteData()
+        {
+            SpriteDatas.Clear();
+        }
+        public static Vector2[] FindSpriteUV(string tName, string sName, ref Vector2 pivot)
+        {
+            for(int k=0;k<SpriteDatas.Count;k++)
+            {
+                var fs = SpriteDatas[k].buffer.fakeStruct;
+                if(fs!=null)
+                {
+                    var fsa = fs.GetData<FakeStructArray>(1);
+                    if (fsa != null)
+                    {
+                        for (int i = 0; i < fsa.Length; i++)
+                        {
+                            if (fsa.GetData(i, 0) as string == tName)
+                            {
+                                fsa = fsa.GetData(i, 1) as FakeStructArray;
+                                if (fsa != null)
+                                {
+                                    for (int j = 0; j < fsa.Length; j++)
+                                    {
+                                        if (fsa.GetData(j, 0) as string == sName)
+                                        {
+                                            var v = fsa.buffer.GetArray<Vector2>(fsa[j, 1]);
+                                            pivot.x = fsa.GetFloat(j, 2);
+                                            pivot.y = fsa.GetFloat(j, 3);
+                                            return v;
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

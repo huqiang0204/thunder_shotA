@@ -140,7 +140,7 @@ namespace huqiang.UI
         public List<DataConversion> components = new List<DataConversion>();
         public List<ModelElement> child = new List<ModelElement>();
         bool parentChanged;
-        public void SetParent(ModelElement element)
+        public virtual void SetParent(ModelElement element)
         {
             if (element == this)
                 return;
