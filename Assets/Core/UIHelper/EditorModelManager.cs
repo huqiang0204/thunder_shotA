@@ -1,4 +1,5 @@
-﻿using huqiang;
+﻿#if UNITY_EDITOR
+using huqiang;
 using huqiang.UI;
 using huqiang.UIComposite;
 using System;
@@ -9,8 +10,6 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
-
 public class EditorModelManager
 {
     static List<UnityEngine.Object[]> objects = new List<UnityEngine.Object[]>();
@@ -171,4 +170,4 @@ public class EditorModelManager
         return g;
     }
 }
-
+#endif

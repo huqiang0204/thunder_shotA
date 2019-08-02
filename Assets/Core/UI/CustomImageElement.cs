@@ -46,7 +46,7 @@ namespace huqiang.UI
                 var child = model.child;
                 for (int i = 0; i < child.Count; i++)
                 {
-                    var son = child[i] as SonModelElement;
+                    var son = child[i] as ShareModelElement;
                     if (son != null)
                     {
                         if (son.activeSelf)

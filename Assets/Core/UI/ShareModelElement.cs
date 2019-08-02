@@ -7,9 +7,21 @@ using UnityEngine;
 
 namespace huqiang.UI
 {
-    public class SonModelElement:ModelElement
+    public unsafe struct ShareElementData
     {
-        static void ReCalcul(SonModelElement mod)
+        public Vector3 localPosition;
+        public Vector3 localScale;
+        public Quaternion loaclRotate;
+        public Vector2 sizeDelta;
+        public Vector2 pivot;
+        public Color color;
+        public int spriteName;
+        public static int Size = sizeof(ShareElementData);
+        public static int ElementSize = Size / 4;
+    }
+    public class ShareModelElement:ModelElement
+    {
+        static void ReCalcul(ShareModelElement mod)
         {
             float w = mod.data.localScale.x * mod.data.sizeDelta.x;
             float h = mod.data.localScale.y * mod.data.sizeDelta.y;

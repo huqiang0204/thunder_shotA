@@ -35,7 +35,7 @@ public partial class UICreateTest
         var img = mod.AddComponent<ShareImageElement>();
         img.ChangeTexture("enemy_b", "base.unity3d");
 
-        SonModelElement son = new SonModelElement();
+        ShareModelElement son = new ShareModelElement();
         son.SetParent(mod);
         son.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_0", ref son.data.pivot));
         son.data.localRotation = Quaternion.Euler(0,0,33);
@@ -45,7 +45,7 @@ public partial class UICreateTest
         son.RegEvent<EventCallBack>();
         son.baseEvent.Click = (o, e) => { Debug.Log("one is ok"); };
 
-        son = new SonModelElement();
+        son = new ShareModelElement();
         son.SetParent(mod);
         son.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_7", ref son.data.pivot));
         son.data.localRotation = Quaternion.Euler(0, 0, -44);
@@ -55,7 +55,7 @@ public partial class UICreateTest
         son.RegEvent<EventCallBack>();
         son.baseEvent.Click = (o, e) => { Debug.Log("tow is ok"); };
 
-        son = new SonModelElement();
+        son = new ShareModelElement();
         son.SetParent(mod);
         son.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_9", ref son.data.pivot));
         son.data.localRotation = Quaternion.Euler(0, 0, 180);

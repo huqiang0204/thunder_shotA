@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using huqiang.Data;
+using huqiang.UI;
 using UGUI;
 using UnityEngine;
 
@@ -62,12 +63,59 @@ public class ShareImageHelper : UICompositeHelp
             buff[3].position = q * new Vector3(right, down) + pos;
             return buff;
         }
-        
+        public bool foldout;
     }
     public List<TransData> datas=new List<TransData>();
-    public override FakeStruct ToFakeStruct(DataBuffer data)
+    public unsafe override object ToFakeStruct(DataBuffer data)
     {
-        return base.ToFakeStruct(data);
+        FakeStructArray array = new FakeStructArray(data, ShareElementData.ElementSize, datas.Count);
+        for(int i=0;i<datas.Count;i++)
+        {
+            var dat = datas[i];
+            ShareElementData* dp = (ShareElementData*)array[i];
+            dp->localPosition = dat.localPosition;
+            dp->localScale = dat.localScale;
+            dp->loaclRotate =Quaternion.Euler(dat.Angle);
+            dp->sizeDelta = dat.sizeDelta;
+            dp->localScale = dat.localScale;
+            dp->pivot = dat.pivot;
+            dp->color = dat.color;
+            if (dat.sprite != null)
+                dp->spriteName = data.AddData(dat.sprite.name);
+        }
+        return array;
+    }
+    unsafe void ReadData()
+    {
+        var raw = GetComponent<CustomRawImage>();
+        if (raw == null)
+            return;
+        var db = new DataBuffer(data);
+        var array = db.fakeStruct.GetData<FakeStructArray>(0);
+        if(array!=null)
+        {
+            for(int i=0;i<array.Length;i++)
+            {
+                var dat = new TransData();
+                ShareElementData* dp = (ShareElementData*)array[i];
+                dat.localPosition = dp->localPosition;
+                dat.localScale = dp->localScale;
+                dat.Angle = dp->loaclRotate.eulerAngles;
+                dat.sizeDelta = dp->sizeDelta;
+                dat.localScale = dp->localScale;
+                dat.pivot = dp->pivot;
+                dat.color = dp->color;
+                var name = db.GetData(dp->spriteName) as string;
+                if(name!=null)
+                {
+#if UNITY_EDITOR
+                   var sp= EditorModelManager.FindSprite(raw.texture.name,name);
+                    dat.SetSprite(sp);
+#endif
+                }
+                datas.Add(dat);
+            }
+        }
     }
     void VertexCalculation(CustomRawImage raw)
     {
@@ -100,10 +148,28 @@ public class ShareImageHelper : UICompositeHelp
         var raw = GetComponent<CustomRawImage>();
         if (raw != null)
             VertexCalculation(raw);
+        DataBuffer db = new DataBuffer(32);
+        db.fakeStruct = new FakeStruct(db, 1);
+        db.fakeStruct.SetData(0,ToFakeStruct(db));
+        data = db.ToBytes();
     }
     public void AddSon()
     {
         TransData trans = new TransData();
         datas.Add(trans);
+    }
+    [HideInInspector]
+    public byte[] data;
+    public void ReLoad()
+    {
+        if(data!=null)
+        {
+            datas.Clear();
+            ReadData();
+            var raw = GetComponent<CustomRawImage>();
+            if (raw != null)
+                VertexCalculation(raw);
+
+        }
     }
 }
