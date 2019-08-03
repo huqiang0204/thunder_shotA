@@ -12,11 +12,10 @@ using UnityEngine;
 
 public partial class UICreateTest : CreateTestHelper
 {
-
     public TextAsset SpriteInfo;
-    SpriteData sd;
     public override void CreateTestPage(ModelElement parent)
     {
+        ElementAsset.AddSpriteData("spriteInfo", SpriteInfo.bytes);
         CreateUI().SetParent(parent);
     }
 }
@@ -26,10 +25,6 @@ public partial class UICreateTest
 
      ModelElement CreateUI()
     {
-
-        sd = new SpriteData();
-        sd.LoadSpriteData(SpriteInfo.bytes);
-
         var mod = ModelElement.CreateNew("test");
         mod.data.sizeDelta = new Vector2(400, 400);
         var img = mod.AddComponent<ShareImageElement>();
@@ -37,7 +32,7 @@ public partial class UICreateTest
 
         ShareModelElement son = new ShareModelElement();
         son.SetParent(mod);
-        son.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_0", ref son.data.pivot));
+        son.SetUV(ElementAsset.FindSpriteUV("enemy_b", "enemy_b_0", ref son.data.pivot));
         son.data.localRotation = Quaternion.Euler(0,0,33);
         son.data.sizeDelta = new Vector2(300,300);
         son.data.localPosition = new Vector3(-300,100,0);
@@ -47,7 +42,7 @@ public partial class UICreateTest
 
         son = new ShareModelElement();
         son.SetParent(mod);
-        son.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_7", ref son.data.pivot));
+        son.SetUV(ElementAsset.FindSpriteUV("enemy_b", "enemy_b_7", ref son.data.pivot));
         son.data.localRotation = Quaternion.Euler(0, 0, -44);
         son.data.sizeDelta = new Vector2(300, 300);
         son.data.localPosition = new Vector3(100, 300, 0);
@@ -57,7 +52,7 @@ public partial class UICreateTest
 
         son = new ShareModelElement();
         son.SetParent(mod);
-        son.SetUV(sd.FindSpriteUV("enemy_b", "enemy_b_9", ref son.data.pivot));
+        son.SetUV(ElementAsset.FindSpriteUV("enemy_b", "enemy_b_9", ref son.data.pivot));
         son.data.localRotation = Quaternion.Euler(0, 0, 180);
         son.data.sizeDelta = new Vector2(300, 300);
         son.data.localPosition = new Vector3(0, -300, 0);

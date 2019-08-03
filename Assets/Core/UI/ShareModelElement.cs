@@ -63,7 +63,7 @@ namespace huqiang.UI
             buff[2].uv0 = uv[2];
             buff[3].uv0 = uv[3];
         }
-        Color _color;
+        Color _color=Color.white;
         public override Color color { get => _color;set { _color = value;Changed(); } }
         public UIVertex[] GetUVInfo()
         {

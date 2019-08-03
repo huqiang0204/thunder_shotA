@@ -15,6 +15,7 @@ public class TestHelperEditor : Editor
     }
     public override void OnInspectorGUI()
     {
+        base.OnInspectorGUI();
         if (GUILayout.Button("Refresh"))
         {
             (target as CreateTestHelper).Build();

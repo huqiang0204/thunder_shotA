@@ -27,7 +27,7 @@ namespace huqiang.UI
             public string t2dName;
         }
         protected Material material;
-        protected Color _color;
+        protected Color _color=Color.white;
         public override ModelElement model { get => base.model; set { base.model = value; value.graphic = this;  } }
         public Color color { get { return _color; } set { _color = value;IsChanged = true; } }
         string mShader;

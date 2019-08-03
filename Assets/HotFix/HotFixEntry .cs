@@ -11,29 +11,29 @@ using UnityEngine;
 
 namespace HotFix
 {
-    public class HotFixEntry
-    {
-        static IlRuntime runtime;
-        public static void Initial(Transform parent, object dat = null)
-        {
-            runtime = new IlRuntime(dat as byte[], parent as RectTransform);
-        }
-        public static void Cmd(DataBuffer dat)
-        {
-            runtime.RuntimeCmd(dat);
-        }
-        public void ReSize()
-        {
-            runtime.RuntimeReSize();
-        }
-        public  void Dispose()
-        {
-        }
-        public  void Update(float time)
-        {
-            runtime.RuntimeUpdate(time);
-        }
-    }
+    //public class HotFixEntry
+    //{
+    //    static IlRuntime runtime;
+    //    public static void Initial(Transform parent, object dat = null)
+    //    {
+    //        runtime = new IlRuntime(dat as byte[], parent as RectTransform);
+    //    }
+    //    public static void Cmd(DataBuffer dat)
+    //    {
+    //        runtime.RuntimeCmd(dat);
+    //    }
+    //    public void ReSize()
+    //    {
+    //        runtime.RuntimeReSize();
+    //    }
+    //    public  void Dispose()
+    //    {
+    //    }
+    //    public  void Update(float time)
+    //    {
+    //        runtime.RuntimeUpdate(time);
+    //    }
+    //}
     public class IlRuntime
     {
         ILRuntime.Runtime.Enviorment.AppDomain _app;
@@ -41,7 +41,7 @@ namespace HotFix
         IMethod Update;
         IMethod Cmd;
         IMethod Resize;
-        public IlRuntime(byte[] dat, RectTransform uiRoot)
+        public IlRuntime(byte[] dat, ModelElement uiRoot)
         {
             _app = new ILRuntime.Runtime.Enviorment.AppDomain();
             RegDelegate();
