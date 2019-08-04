@@ -129,18 +129,19 @@ namespace huqiang.UI
         }
         public RectTransform Context;
         public GameObject Main;
-        public Coloring graphic;
+        public Coloring ColorController;
+        public GraphicE graphic;
         public int regIndex;
         public ElementData data;
         public string name;
         public string tag;
         public virtual Color color { get {
-                if (graphic == null)
+                if (ColorController == null)
                     return Color.white;
-                return graphic.color;
+                return ColorController.color;
             } set {
-                if (graphic != null)
-                    graphic.color = value;
+                if (ColorController != null)
+                    ColorController.color = value;
             } }
         public ModelElement parent { get; private set; }
         public List<DataConversion> components = new List<DataConversion>();
