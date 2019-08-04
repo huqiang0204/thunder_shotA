@@ -129,7 +129,7 @@ namespace huqiang.UI
         }
         public RectTransform Context;
         public GameObject Main;
-        public GraphicE graphic;
+        public Coloring graphic;
         public int regIndex;
         public ElementData data;
         public string name;
@@ -552,6 +552,10 @@ namespace huqiang.UI
             }
         }
         #endregion
+        /// <summary>
+        /// 当此物体为非实体时,不予创建GameObject
+        /// </summary>
+        public bool Entity = true;
         protected bool _active = true;
         public bool activeSelf { get { return _active; } set { if (_active == value) return; IsChanged = true; _active = value; } }
 
@@ -586,55 +590,58 @@ namespace huqiang.UI
         }
         public override void Apply()
         {
-            if (activeSelf)
+            if(Entity)
             {
-                if (Context == null)
+                if (activeSelf)
                 {
-                    var obj = ModelManagerUI.CreateNew(data.type);
-                    if (obj != null)
-                        LoadToObject(obj.transform);
+                    if (Context == null)
+                    {
+                        var obj = ModelManagerUI.CreateNew(data.type);
+                        if (obj != null)
+                            LoadToObject(obj.transform);
+                    }
+                    else
+                    {
+                        if (parentChanged)
+                        {
+                            if (parent != null)
+                            {
+                                Context.SetParent(parent.Context);
+                                Context.SetSiblingIndex(parent.child.IndexOf(this));
+                            }
+                            else Context.SetParent(null);
+                        }
+                        if (IsChanged)
+                        {
+                            IsChanged = false;
+                            LoadToObject(Context, ref data, this);
+                        }
+                    }
+                    if (mIndex > -1)
+                    {
+                        if (mIndex > Context.childCount)
+                            Context.SetAsLastSibling();
+                        else Context.SetSiblingIndex(mIndex);
+                        mIndex = -1;
+                    }
+                    for (int i = 0; i < components.Count; i++)
+                    {
+                        var com = components[i];
+                        if (com != null)
+                        {
+                            com.Apply();
+                        }
+                    }
+                    for (int i = 0; i < child.Count; i++)
+                        child[i].Apply();
+                    Context.gameObject.SetActive(true);
                 }
                 else
                 {
-                    if (parentChanged)
+                    if (Context != null)
                     {
-                        if (parent != null)
-                        {
-                            Context.SetParent(parent.Context);
-                            Context.SetSiblingIndex(parent.child.IndexOf(this));
-                        }
-                        else Context.SetParent(null);
+                        Context.gameObject.SetActive(false);
                     }
-                    if (IsChanged)
-                    {
-                        IsChanged = false;
-                        LoadToObject(Context, ref data, this);
-                    }
-                }
-                if (mIndex > -1)
-                {
-                    if (mIndex > Context.childCount)
-                        Context.SetAsLastSibling();
-                    else Context.SetSiblingIndex(mIndex);
-                    mIndex = -1;
-                }
-                for (int i = 0; i < components.Count; i++)
-                {
-                    var com = components[i];
-                    if (com != null)
-                    {
-                        com.Apply();
-                    }
-                }
-                for (int i = 0; i < child.Count; i++)
-                    child[i].Apply();
-                Context.gameObject.SetActive(true);
-            }
-            else
-            {
-                if (Context != null)
-                {
-                    Context.gameObject.SetActive(false);
                 }
             }
         }

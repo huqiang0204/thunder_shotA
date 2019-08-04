@@ -25,7 +25,6 @@ public class ShareElementHelper:UICompositeHelp
         float h = sprite.rect.height;
         float r = x + w / tx;
         float t = y + h / ty;
-        Vector2 p = sprite.pivot;
         uvs[0].x = x;
         uvs[0].y = y;
         uvs[1].x = x;
@@ -37,7 +36,6 @@ public class ShareElementHelper:UICompositeHelp
     }
     public void GetUVInfo(List<UIVertex> vertices,List<int> tri,Vector3 position, Quaternion quate,Vector3 scale)
     {
-       
         var rect = transform as RectTransform;
         float w = rect.localScale.x * rect.sizeDelta.x;
         float h = rect.localScale.y * rect.sizeDelta.y;

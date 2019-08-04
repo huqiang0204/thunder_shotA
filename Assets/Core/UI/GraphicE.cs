@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace huqiang.UI
 {
-    public class GraphicE : DataConversion
+    public class GraphicE : DataConversion,Coloring
     {
         struct FloatValue
         {

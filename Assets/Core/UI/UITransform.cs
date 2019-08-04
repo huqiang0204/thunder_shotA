@@ -22,4 +22,8 @@ namespace huqiang.UI
     {
         FakeStruct ToFakeStructData(DataBuffer buffer);
     }
+    public interface Coloring
+    {
+        Color color { get; set; }
+    }
 }

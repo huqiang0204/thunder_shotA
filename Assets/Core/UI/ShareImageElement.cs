@@ -39,27 +39,35 @@ namespace huqiang.UI
             {
                 var vert = new List<UIVertex>();
                 var tri = new List<int>();
-                int s = 0;
-                var child = model.child;
-                for (int i = 0; i < child.Count; i++)
+                for (int i = 0; i < model.child.Count; i++)
                 {
-                    var son = child[i] as ShareModelElement;
-                    if (son != null)
-                    {
-                        if (son.activeSelf)
-                        {
-                            var uv = son.GetUVInfo();
-                            vert.AddRange(uv);
-                            tri.Add(s);
-                            tri.Add(s + 1);
-                            tri.Add(s + 2);
-                            tri.Add(s + 2);
-                            tri.Add(s + 3);
-                            tri.Add(s);
-                            s += 4;
-                        }
-                    }
+                    var c = model.child[i];
+                    var help = c.GetComponent<ShareChildElement>();
+                    if (help != null)
+                        help.GetUVInfo(vert, tri, Vector3.zero, Quaternion.identity, Vector3.one);
                 }
+
+                //int s = 0;
+                //var child = model.child;
+                //for (int i = 0; i < child.Count; i++)
+                //{
+                //    var son = child[i] as ShareModelElement;
+                //    if (son != null)
+                //    {
+                //        if (son.activeSelf)
+                //        {
+                //            var uv = son.GetUVInfo();
+                //            vert.AddRange(uv);
+                //            tri.Add(s);
+                //            tri.Add(s + 1);
+                //            tri.Add(s + 2);
+                //            tri.Add(s + 2);
+                //            tri.Add(s + 3);
+                //            tri.Add(s);
+                //            s += 4;
+                //        }
+                //    }
+                //}
                 vertex = vert;
                 tris = tri;
                 vertChanged = true;
