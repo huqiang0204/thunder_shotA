@@ -113,7 +113,7 @@ namespace huqiang.UIEvent
             }
             if (!ui.activeSelf)
                 return false;
-            Vector3 p =quate* ui.data.localPosition;
+            Vector3 p = quate* ui.data.localPosition;
             Vector3 o = Vector3.zero;
             o.x = p.x * scale.x;
             o.y = p.y * scale.y;

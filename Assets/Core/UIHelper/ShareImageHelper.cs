@@ -14,10 +14,12 @@ public class ShareImageHelper : UICompositeHelp
         public Vector3 localScale=Vector3.one;
         public Vector3 Angle;
         public Vector2 sizeDelta=new Vector2(100,100);
-        public Vector2 pivot=new Vector2(0.5f,0.5f);
+        public Vector2 pivot =new Vector2(0.5f,0.5f);
         public Color color = Color.white;
+        public float fillAmount=1;
         UIVertex[] buff = new UIVertex[4];
         public Sprite sprite;
+        Vector2[] uvs = new Vector2[4];
         public void SetSprite(Sprite sp)
         {
             if (sp == null)
@@ -32,14 +34,14 @@ public class ShareImageHelper : UICompositeHelp
             float r = x + w / tx;
             float t = y + h / ty;
             Vector2 p = sprite.pivot;
-            buff[0].uv0.x = x;
-            buff[0].uv0.y = y;
-            buff[1].uv0.x = x;
-            buff[1].uv0.y = t;
-            buff[2].uv0.x = r;
-            buff[2].uv0.y = t;
-            buff[3].uv0.x = r;
-            buff[3].uv0.y = y;
+            uvs[0].x = x;
+            uvs[0].y = y;
+            uvs[1].x = x;
+            uvs[1].y = t;
+            uvs[2].x = r;
+            uvs[2].y = t;
+            uvs[3].x = r;
+            uvs[3].y = y;
         }
         public UIVertex[] GetUVInfo()
         {
@@ -47,9 +49,9 @@ public class ShareImageHelper : UICompositeHelp
             float h = localScale.y * sizeDelta.y;
             var pos = localPosition;
             float left = -pivot.x * w;
-            float right = (1 - pivot.x) * w;
+            float right = left+w * fillAmount;
             float down = -pivot.y * h;
-            float top = (1 - pivot.y) * h;
+            float top = down+h;
             buff[0].color = color;
             buff[1].color = color;
             buff[2].color = color;
@@ -59,6 +61,14 @@ public class ShareImageHelper : UICompositeHelp
             buff[1].position = q * new Vector3(left, top) + pos;
             buff[2].position = q * new Vector3(right, top) + pos;
             buff[3].position = q * new Vector3(right, down) + pos;
+            float uw = uvs[2].x - uvs[1].x;
+            float ur = uvs[1].x + uw * fillAmount;
+            buff[0].uv0 = uvs[0];
+            buff[1].uv0 = uvs[1];
+            buff[2].uv0 = uvs[2];
+            buff[2].uv0.x = ur;
+            buff[3].uv0 = uvs[3];
+            buff[3].uv0.x = ur;
             return buff;
         }
         public bool foldout;
@@ -66,6 +76,7 @@ public class ShareImageHelper : UICompositeHelp
     public List<TransData> datas = new List<TransData>();
     public unsafe override object ToFakeStruct(DataBuffer data)
     {
+        ForbidChild = true;
         datas.Clear();
         ReadData();
         return SaveData(data);
@@ -125,24 +136,30 @@ public class ShareImageHelper : UICompositeHelp
     {
         var vert = new List<UIVertex>();
         var tri = new List<int>();
-        int s = 0;
-        for (int i = 0; i < datas.Count; i++)
+        //int s = 0;
+        //for (int i = 0; i < datas.Count; i++)
+        //{
+        //    var son =datas[i];
+        //    if (son != null)
+        //    {
+        //        var uv = son.GetUVInfo();
+        //        vert.AddRange(uv);
+        //        tri.Add(s);
+        //        tri.Add(s + 1);
+        //        tri.Add(s + 2);
+        //        tri.Add(s + 2);
+        //        tri.Add(s + 3);
+        //        tri.Add(s);
+        //        s += 4;
+        //    }
+        //}
+        for (int i = 0; i < transform.childCount; i++)
         {
-            var son =datas[i];
-            if (son != null)
-            {
-                var uv = son.GetUVInfo();
-                vert.AddRange(uv);
-                tri.Add(s);
-                tri.Add(s + 1);
-                tri.Add(s + 2);
-                tri.Add(s + 2);
-                tri.Add(s + 3);
-                tri.Add(s);
-                s += 4;
-            }
+            var c= transform.GetChild(i);
+            var help = c.GetComponent<ShareElementHelper>();
+            if (help != null)
+                help.GetUVInfo(vert,tri,Vector3.zero,Quaternion.identity,Vector3.one);
         }
-       
         raw.uIVertices = vert;
         raw.triangle = tri;
         raw.SetVerticesDirty();
@@ -166,13 +183,13 @@ public class ShareImageHelper : UICompositeHelp
     public byte[] buff;
     public void ReLoad()
     {
-        if(buff!=null)
-        {
-            datas.Clear();
-            ReadData();
-            var raw = GetComponent<CustomRawImage>();
-            if (raw != null)
-                VertexCalculation(raw);
-        }
+        //if(buff!=null)
+        //{
+        //    datas.Clear();
+        //    ReadData();
+        //    var raw = GetComponent<CustomRawImage>();
+        //    if (raw != null)
+        //        VertexCalculation(raw);
+        //}
     }
 }

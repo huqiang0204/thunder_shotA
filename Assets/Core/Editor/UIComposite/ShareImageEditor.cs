@@ -24,25 +24,21 @@ public class ShareImageEditor : Editor
                 dat[i].foldout = EditorGUILayout.Foldout(dat[i].foldout, "child"+index);
                 if(dat[i].foldout)
                 {
-                    var v = EditorGUILayout.Vector3Field("LocalPosition", dat[i].localPosition);
-                    dat[i].localPosition = v;
-                    var a = EditorGUILayout.Vector3Field("LocalAngle", dat[i].Angle);
-                    dat[i].Angle = a;
-                    var s = EditorGUILayout.Vector3Field("LocalScale", dat[i].localScale);
-                    dat[i].localScale = s;
-                    var sd = EditorGUILayout.Vector2Field("SizeDelta", dat[i].sizeDelta);
-                    dat[i].sizeDelta = sd;
-                    var p = EditorGUILayout.Vector2Field("Pivot", dat[i].pivot);
-                    dat[i].pivot = p;
-                    var c = EditorGUILayout.ColorField(dat[i].color);
-                    dat[i].color = c;
+                    dat[i].localPosition = EditorGUILayout.Vector3Field("LocalPosition", dat[i].localPosition);
+                    dat[i].Angle = EditorGUILayout.Vector3Field("LocalAngle", dat[i].Angle);
+                    dat[i].localScale = EditorGUILayout.Vector3Field("LocalScale", dat[i].localScale);
+                    dat[i].sizeDelta = EditorGUILayout.Vector2Field("SizeDelta", dat[i].sizeDelta);
+                    dat[i].pivot = EditorGUILayout.Vector2Field("Pivot", dat[i].pivot);
+                    dat[i].color = EditorGUILayout.ColorField(dat[i].color);
                     var o = EditorGUILayout.ObjectField(dat[i].sprite, typeof(Sprite), true);
                     dat[i].SetSprite(o as Sprite);
+                    dat[i].fillAmount = EditorGUILayout.Slider(dat[i].fillAmount, 0, 1);
                     if (GUILayout.Button("Remove"))
                     {
                         dat.RemoveAt(i);
                         break;
                     }
+                   
                 }
             }
             help.Refresh();

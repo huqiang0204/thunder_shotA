@@ -53,13 +53,13 @@ public partial class UICreateTest
         son = new ShareModelElement();
         son.SetParent(mod);
         son.SetUV(ElementAsset.FindSpriteUV("enemy_b", "enemy_b_9", ref son.data.pivot));
-        son.data.localRotation = Quaternion.Euler(0, 0, 180);
+        //son.data.localRotation = Quaternion.Euler(0, 0, 180);
         son.data.sizeDelta = new Vector2(300, 300);
-        son.data.localPosition = new Vector3(0, -300, 0);
+        //son.data.localPosition = new Vector3(0, -300, 0);
         son.IsChanged = true;
         son.RegEvent<EventCallBack>();
         son.baseEvent.Click = (o, e) => { Debug.Log("three is ok"); };
-
+        son.FillAmount = 0.66f;
         son.Changed();
 
         return mod;
