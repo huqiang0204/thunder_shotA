@@ -11,7 +11,7 @@ using UnityEngine;
 public class ScrollHelper: UICompositeHelp
 {
     public Vector2 minBox;
-    public unsafe override object ToFakeStruct(DataBuffer data)
+    public unsafe override object ToBufferData(DataBuffer data)
     {
         FakeStruct fake = new FakeStruct(data, ScrollInfo.ElementSize);
         ScrollInfo* info = (ScrollInfo*)fake.ip;

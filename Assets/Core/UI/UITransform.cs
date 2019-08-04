@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,9 @@ namespace huqiang.UI
         Vector3 GlobalPosition { get; }
         Vector3 GlobalScale { get; }
         Quaternion GlobalRotate { get; }
+    }
+    public interface UIComponentData
+    {
+        FakeStruct ToFakeStructData(DataBuffer buffer);
     }
 }

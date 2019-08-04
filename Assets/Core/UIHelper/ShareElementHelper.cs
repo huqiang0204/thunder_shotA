@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using huqiang.Data;
 using UnityEngine;
 
 public class ShareElementHelper:UICompositeHelp

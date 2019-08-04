@@ -319,7 +319,7 @@ namespace huqiang.UI
                     }
                     else if (coms[i] is UICompositeHelp)
                     {
-                        ed->ex = buffer.AddData((coms[i] as UICompositeHelp).ToFakeStruct(buffer));
+                        ed->ex = buffer.AddData((coms[i] as UICompositeHelp).ToBufferData(buffer));
                     }
                     else if (!(coms[i] is CanvasRenderer))
                     {

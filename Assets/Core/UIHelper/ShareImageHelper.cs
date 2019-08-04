@@ -74,7 +74,7 @@ public class ShareImageHelper : UICompositeHelp
         public bool foldout;
     }
     public List<TransData> datas = new List<TransData>();
-    public unsafe override object ToFakeStruct(DataBuffer data)
+    public unsafe override object ToBufferData(DataBuffer data)
     {
         ForbidChild = true;
         datas.Clear();
