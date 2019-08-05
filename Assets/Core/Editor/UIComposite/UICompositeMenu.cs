@@ -760,6 +760,6 @@ public static class UICompositeMenu
             rect.SetParent(parent.transform);
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
-        ss.AddComponent<ShareElementHelper>();
+        ss.AddComponent<ShareElement>();
     }
 }

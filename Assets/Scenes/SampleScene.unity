@@ -158,11 +158,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 71171493}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf4e7dc68424484c82b4a83d1f23501, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d8053406e0d88746a4c8bb8f9f302a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForbidChild: 0
-  fillAmount: 1
+  fillAmountX: 1
+  fillAmountY: 1
   color: {r: 1, g: 1, b: 1, a: 1}
   sprite: {fileID: 21300026, guid: 9b81ec78145e1ad489565dc0016ff5f6, type: 3}
 --- !u!1 &134209231
@@ -957,11 +957,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 675635876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf4e7dc68424484c82b4a83d1f23501, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d8053406e0d88746a4c8bb8f9f302a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForbidChild: 0
-  fillAmount: 1
+  fillAmountX: 1
+  fillAmountY: 1
   color: {r: 1, g: 1, b: 1, a: 1}
   sprite: {fileID: 21300076, guid: 9b81ec78145e1ad489565dc0016ff5f6, type: 3}
 --- !u!1 &824770868
@@ -1009,11 +1009,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 824770868}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf4e7dc68424484c82b4a83d1f23501, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d8053406e0d88746a4c8bb8f9f302a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForbidChild: 0
-  fillAmount: 1
+  fillAmountX: 1
+  fillAmountY: 1
   color: {r: 1, g: 1, b: 1, a: 1}
   sprite: {fileID: 21300076, guid: 9b81ec78145e1ad489565dc0016ff5f6, type: 3}
 --- !u!1 &833197162
@@ -1410,7 +1410,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 113, y: 597}
-  m_SizeDelta: {x: 165, y: 124}
+  m_SizeDelta: {x: 125, y: 91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1406210572
 MonoBehaviour:
@@ -1421,13 +1421,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1406210570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf4e7dc68424484c82b4a83d1f23501, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d8053406e0d88746a4c8bb8f9f302a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ForbidChild: 0
-  fillAmount: 1
+  fillAmountX: 1
+  fillAmountY: 1
   color: {r: 1, g: 1, b: 1, a: 1}
-  sprite: {fileID: 21300026, guid: 9b81ec78145e1ad489565dc0016ff5f6, type: 3}
+  sprite: {fileID: 21300030, guid: 9b81ec78145e1ad489565dc0016ff5f6, type: 3}
 --- !u!1 &1670182283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,7 +1538,6 @@ GameObject:
   - component: {fileID: 1678646159}
   - component: {fileID: 1678646162}
   - component: {fileID: 1678646161}
-  - component: {fileID: 1678646160}
   m_Layer: 5
   m_Name: raw
   m_TagString: Untagged
@@ -1565,22 +1564,8 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 101, y: 100}
+  m_SizeDelta: {x: 1024, y: 1024}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1678646160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1678646158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ce89d5328a72cb4380b63d774dc59a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ForbidChild: 0
-  buff: 0400000001000000020000000001000000000000000000000100020013000000040000000000000000000000
 --- !u!114 &1678646161
 MonoBehaviour:
   m_ObjectHideFlags: 0

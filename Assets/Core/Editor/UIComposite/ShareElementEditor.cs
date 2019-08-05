@@ -4,10 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using UGUI;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ShareElementHelper), true)]
+[CustomEditor(typeof(ShareElement), true)]
 [CanEditMultipleObjects]
 public class ShareElementEditor:Editor
 {
@@ -18,7 +19,7 @@ public class ShareElementEditor:Editor
     private Editor editor;
     private void OnEnable()
     {
-        var trans = (target as ShareElementHelper).transform as RectTransform;
+        var trans = (target as ShareElement).transform as RectTransform;
         pos = trans.localPosition;
         angle = trans.localEulerAngles;
         size = trans.sizeDelta;
@@ -26,14 +27,14 @@ public class ShareElementEditor:Editor
     }
     public override void OnInspectorGUI()
     {
-        var help = target as ShareElementHelper;
+        var help = target as ShareElement;
         if(help!=null)
         {
             var col = help.color;
             help.color= EditorGUILayout.ColorField(col);
             var o = EditorGUILayout.ObjectField(help.sprite, typeof(Sprite), true);
             help.SetSprite(o as Sprite);
-            help.fillAmount = EditorGUILayout.Slider(help.fillAmount, 0, 1);
+            help.fillAmountX = EditorGUILayout.Slider(help.fillAmountX, 0, 1);
         }
         bool changed = GUI.changed;
         if (GUILayout.Button("SetNativeSize"))

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using huqiang.Data;
 using UnityEngine;
+using huqiang.UI;
+using huqiang.Data;
 
-public class ShareElementHelper:UICompositeHelp
+public class ShareElement : MonoBehaviour,UIComponentData
 {
-    public float fillAmount = 1;
+    public float fillAmountX = 1;
+    public float fillAmountY = 1;
     public Color color = Color.white;
     UIVertex[] buff = new UIVertex[4];
     public Sprite sprite;
@@ -34,7 +34,7 @@ public class ShareElementHelper:UICompositeHelp
         uvs[3].x = r;
         uvs[3].y = y;
     }
-    public void GetUVInfo(List<UIVertex> vertices,List<int> tri,Vector3 position, Quaternion quate,Vector3 scale)
+    public void GetUVInfo(List<UIVertex> vertices, List<int> tri, Vector3 position, Quaternion quate, Vector3 scale)
     {
         var rect = transform as RectTransform;
         float w = rect.localScale.x * rect.sizeDelta.x;
@@ -42,9 +42,9 @@ public class ShareElementHelper:UICompositeHelp
         var pos = rect.localPosition;
         pos = quate * pos + position;
         float left = -rect.pivot.x * w;
-        float right = left + w * fillAmount;
+        float right = left + w * fillAmountX;
         float down = -rect.pivot.y * h;
-        float top = down + h;
+        float top = down + h*fillAmountY;
         Vector3 ls = rect.localScale;
         ls.x *= scale.x;
         ls.y *= scale.y;
@@ -56,20 +56,23 @@ public class ShareElementHelper:UICompositeHelp
         buff[1].color = color;
         buff[2].color = color;
         buff[3].color = color;
-    
-        var q = rect.localRotation*quate;
+
+        var q = rect.localRotation * quate;
         buff[0].position = q * new Vector3(left, down) + pos;
         buff[1].position = q * new Vector3(left, top) + pos;
         buff[2].position = q * new Vector3(right, top) + pos;
         buff[3].position = q * new Vector3(right, down) + pos;
         float uw = uvs[2].x - uvs[1].x;
-        float ur = uvs[1].x + uw * fillAmount;
+        float ux = uvs[1].x + uw * fillAmountX;
+        float uh= uvs[2].y - uvs[1].y;
+        float uy = uvs[1].y + uh * fillAmountY;
         buff[0].uv0 = uvs[0];
         buff[1].uv0 = uvs[1];
-        buff[2].uv0 = uvs[2];
-        buff[2].uv0.x = ur;
+        buff[1].uv0.y = uy;
+        buff[2].uv0.y = uy;
+        buff[2].uv0.x = ux;
         buff[3].uv0 = uvs[3];
-        buff[3].uv0.x = ur;
+        buff[3].uv0.x = ux;
         int s = vertices.Count;
         vertices.AddRange(buff);
         tri.Add(s);
@@ -80,20 +83,25 @@ public class ShareElementHelper:UICompositeHelp
         tri.Add(s);
         for (int i = 0; i < rect.childCount; i++)
         {
-            var help = rect.GetChild(i).GetComponent<ShareElementHelper>();
+            var help = rect.GetChild(i).GetComponent<ShareElement>();
             if (help != null)
             {
-                help.GetUVInfo(vertices, tri,pos,q,ls);
+                help.GetUVInfo(vertices, tri, pos, q, ls);
             }
         }
     }
     public void SetNactiveSize()
     {
-        if(sprite!=null)
+        if (sprite != null)
         {
             float w = sprite.rect.width;
             float h = sprite.rect.height;
-            (transform as RectTransform).sizeDelta = new Vector2(w,h);
+            (transform as RectTransform).sizeDelta = new Vector2(w, h);
         }
+    }
+
+    public FakeStruct ToFakeStructData(DataBuffer buffer)
+    {
+        return null;
     }
 }
