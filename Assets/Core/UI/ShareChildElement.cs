@@ -28,6 +28,13 @@ namespace huqiang.UI
         public Color color { get => data.color; set => data.color = value; }
         UIVertex[] buff = new UIVertex[4];
         Vector2[] uvs = new Vector2[4];
+        public override void Reset()
+        {
+            model.Entity = false;
+            data.fillAmountX = 1;
+            data.fillAmountY = 1;
+            data.color = Color.white;
+        }
         public override unsafe void Load(FakeStruct fake)
         {
             data = *(ShareChildData*)fake.ip;
@@ -79,14 +86,20 @@ namespace huqiang.UI
             buff[1].position = q * new Vector3(left, top) + pos;
             buff[2].position = q * new Vector3(right, top) + pos;
             buff[3].position = q * new Vector3(right, down) + pos;
-            float uw = uvs[2].x - uvs[1].x;
-            float ur = uvs[1].x + uw * data.fillAmountX;
-            buff[0].uv0 = uvs[0];
-            buff[1].uv0 = uvs[1];
-            buff[2].uv0 = uvs[2];
-            buff[2].uv0.x = ur;
-            buff[3].uv0 = uvs[3];
-            buff[3].uv0.x = ur;
+            float tx = data.txtSize.x;
+            float ty = data.txtSize.y;
+            float l = data.rect.x / tx;
+            float d = data.rect.y / ty;
+            float r = l + data.rect.width / tx*data.fillAmountX;
+            float t = d + data.rect.height / ty;
+            buff[0].uv0.x = l;
+            buff[0].uv0.y = d;
+            buff[1].uv0.x = l;
+            buff[1].uv0.y = t;
+            buff[2].uv0.x = r;
+            buff[2].uv0.y = t;
+            buff[3].uv0.x = r;
+            buff[3].uv0.y = d;
             int s = vertices.Count;
             vertices.AddRange(buff);
             tri.Add(s);

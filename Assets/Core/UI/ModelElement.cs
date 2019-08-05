@@ -99,8 +99,7 @@ namespace huqiang.UI
         {
             var mod = new ModelElement();
             mod.name = name;
-            mod.data.anchorMax = mod.data.anchorMin =
-            mod.data.pivot = new Vector2(0.5f, 0.5f);
+       
             return mod;
         }
         public ModelElement()
@@ -108,6 +107,7 @@ namespace huqiang.UI
             data.localScale = Vector3.one;
             data.localRotation = Quaternion.identity;
             data.type = ModelManagerUI.GetTypeIndex(this);
+            data.anchorMax = data.anchorMin = data.pivot = new Vector2(0.5f, 0.5f);
         }
         public Coordinates coordinates { get { return GetGlobaInfo(this); } }
         public Vector3 ScreenToLocal(Vector3 v)
@@ -181,6 +181,7 @@ namespace huqiang.UI
             data.type |= ModelManagerUI.GetTypeIndex(t);
             components.Add(t);
             t.model = this;
+            t.Reset();
             return t;
         }
         public FakeStruct ModData;

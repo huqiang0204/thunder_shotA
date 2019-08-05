@@ -5,6 +5,7 @@ namespace huqiang.UI
 {
     public class DataConversion
     {
+        public virtual void Reset() { }
         public string type;
         public GameObject Main;
         public virtual ModelElement model { get; set; }

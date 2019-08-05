@@ -208,7 +208,7 @@ namespace huqiang.Data
         {
             SpriteDatas.Clear();
         }
-        public static Vector2[] FindSpriteUV(string tName, string sName, ref Vector2 pivot)
+        public static void FindSpriteUV(string tName, string sName,ref Rect rect, ref Vector2 txtSize)
         {
             for(int k=0;k<SpriteDatas.Count;k++)
             {
@@ -229,10 +229,12 @@ namespace huqiang.Data
                                     {
                                         if (fsa.GetData(j, 0) as string == sName)
                                         {
-                                            var v = fsa.buffer.GetArray<Vector2>(fsa[j, 1]);
-                                            pivot.x = fsa.GetFloat(j, 2);
-                                            pivot.y = fsa.GetFloat(j, 3);
-                                            return v;
+                                            unsafe
+                                            {
+                                                Data.SpriteData.SpriteDataS* sp = (Data.SpriteData.SpriteDataS*)fsa[j];
+                                                txtSize = sp->txtSize;
+                                                rect= sp->rect;
+                                            }
                                         }
                                     }
                                 }
@@ -242,7 +244,6 @@ namespace huqiang.Data
                     }
                 }
             }
-            return null;
         }
     }
 }
