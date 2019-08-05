@@ -41,6 +41,8 @@ namespace Assets.Page
         void ItemUpdate(ItemView item,int level,int index)
         {
             var img = item.icon.Context.ColorController as ImageElement;
+            item.icon.DataContext = index;
+            item.icon.Click = ItemClick;
             if (level > 1)
             {
                 item.icon.forbid = true;
@@ -52,5 +54,10 @@ namespace Assets.Page
                 img.SetSprite("lock", "lock");
             }
         }
+        void ItemClick(EventCallBack eve,UserAction action)
+        {
+            LoadPage<GamePage>(eve.DataContext);
+        }
+
     }
 }

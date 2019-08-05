@@ -12,5 +12,9 @@ namespace Assets.Game
         {
 
         }
+        static void LoadLevelData()
+        {
+
+        }
     }
 }

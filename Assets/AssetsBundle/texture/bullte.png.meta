@@ -624,7 +624,7 @@ TextureImporter:
         serializedVersion: 2
         x: 1941
         y: 1365
-        width: 80
+        width: 39
         height: 89
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -764,7 +764,7 @@ TextureImporter:
         serializedVersion: 2
         x: 1941
         y: 1227
-        width: 62
+        width: 31
         height: 71
       alignment: 9
       pivot: {x: 0.5, y: 0.471831}
@@ -3874,6 +3874,66 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 41c8cc7ef63171e4fbb965ea410bdc34
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bullte_48
+      rect:
+        serializedVersion: 2
+        x: 1982
+        y: 1366
+        width: 36
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 947f68b1250e253409679bc2d8677eff
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bullte_58
+      rect:
+        serializedVersion: 2
+        x: 1974
+        y: 1229
+        width: 29
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4449f2e09b6199448d9015cb0a023b0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bullte_59
+      rect:
+        serializedVersion: 2
+        x: 1464
+        y: 1302
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e27a5e77995c6c24b923c4c5f3568cf4
       vertices: []
       indices: 
       edges: []

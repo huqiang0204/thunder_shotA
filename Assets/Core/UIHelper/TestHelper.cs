@@ -4,9 +4,8 @@ using huqiang.Data;
 using huqiang.UI;
 using huqiang.UIEvent;
 using System.IO;
-using UGUI;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 /// <summary>
 /// 挂载在Canvas下

@@ -7,18 +7,18 @@ using UnityEngine;
 
 public class CreateTestHelper: UICompositeHelp
 {
-    public void Awake()
-    {
-        Build();
-    }
-    private void Update()
-    {
-        App.Update();
-    }
-    private void OnApplicationQuit()
-    {
-        App.Dispose();
-    }
+    //public void Awake()
+    //{
+    //    Build();
+    //}
+    //private void Update()
+    //{
+    //    App.Update();
+    //}
+    //private void OnApplicationQuit()
+    //{
+    //    App.Dispose();
+    //}
     public virtual void LoadBundle()
     {
 #if UNITY_EDITOR
