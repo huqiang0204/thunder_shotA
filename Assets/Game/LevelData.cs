@@ -32,7 +32,6 @@ namespace Assets.Game
     {
         public List<EnemyData> enemies = new List<EnemyData>();
         public float time;//持续时间
-
     }
     public class LevelData
     {
