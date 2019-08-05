@@ -18,10 +18,6 @@ namespace huqiang.UI
         Vector3 GlobalScale { get; }
         Quaternion GlobalRotate { get; }
     }
-    public interface UIComponentData
-    {
-        FakeStruct ToFakeStructData(DataBuffer buffer);
-    }
     public interface Coloring
     {
         Color color { get; set; }

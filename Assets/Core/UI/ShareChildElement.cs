@@ -110,5 +110,27 @@ namespace huqiang.UI
             float h = data.rect.height;
             model.data.sizeDelta = new Vector2(w, h);
         }
+
+        public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
+        {
+            var share = com as ShareChild;
+            if (share == null)
+                return null;
+            FakeStruct fake = new FakeStruct(buffer, ShareChildData.ElementSize);
+            ShareChildData* sp = (ShareChildData*)fake.ip;
+            sp->color =share.color;
+            sp->fillAmountX = share.fillAmountX;
+            sp->fillAmountY = share.fillAmountY;
+            var sprite = share.sprite;
+            if (sprite != null)
+            {
+                sp->rect = sprite.rect;
+                sp->txtSize.x = sprite.texture.width;
+                sp->txtSize.y = sprite.texture.height;
+                sp->spritePivot = sprite.pivot;
+                sp->spriteName = buffer.AddData(sprite.name);
+            }
+            return fake;
+        }
     }
 }

@@ -15,16 +15,7 @@ public class TestHelper:UICompositeHelp
 {
     public static void InitialUI()
     {
-        ModelManagerUI.RegComponent(new ComponentType<RectTransform, ModelElement>(ModelElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<Image, ImageElement>(ImageElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<EmojiText, EmojiElement>(TextElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<Text, TextElement>(TextElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<ShareImage, ShareImageElement>(RawImageElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<CustomRawImage, CustomImageElement>(RawImageElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<RawImage, RawImageElement>(RawImageElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<RectMask2D, RectMaskElement>(RectMaskElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
-        ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(OutLineElement.LoadFromObject));
+        App.RegUI();
     }
     public virtual void LoadBundle()
     {

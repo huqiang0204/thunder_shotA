@@ -15,12 +15,13 @@ namespace huqiang
             IME.Initial();
 #endif     
         }
-        static void InitialUI()
+       public static void RegUI()
         {
             ModelManagerUI.RegComponent(new ComponentType<RectTransform, ModelElement>(ModelElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Image, ImageElement>(ImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<EmojiText, EmojiElement>(TextElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Text, TextElement>(TextElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<ShareChild, ShareChildElement>(ShareChildElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<ShareImage, ShareImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<CustomRawImage, RawImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<RawImage, RawImageElement>(RawImageElement.LoadFromObject));
@@ -59,7 +60,7 @@ namespace huqiang
             ThreadMission.SetMianId();
             Scale.Initial();
             InitialInput();
-            InitialUI();
+            RegUI();
             UIRoot = uiRoot as RectTransform;
             if (UIRoot == null)
             {
