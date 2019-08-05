@@ -100,4 +100,11 @@ public class ShareChild : MonoBehaviour
             (transform as RectTransform).sizeDelta = new Vector2(w, h);
         }
     }
+    public void SetSpritePivot()
+    {
+        if(sprite!=null)
+        {
+            (transform as RectTransform).pivot = new Vector2(sprite.pivot.x/ sprite.rect.width,sprite.pivot.y/ sprite.rect.height);
+        }
+    }
 }

@@ -20,6 +20,7 @@ namespace huqiang.Data
             public Int32 name;
             public Vector2 txtSize;
             public Rect rect;
+            public Vector2 pivot;
             public static int Size = sizeof(SpriteDataS);
             public static int ElementSize = Size / 4;
         }
@@ -66,6 +67,7 @@ namespace huqiang.Data
                 sp->txtSize.x = tx;
                 sp->txtSize.y = ty;
                 sp->rect = sprite.rect;
+                sp->pivot = sprite.pivot;
             }
             return array;
         }

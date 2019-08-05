@@ -42,7 +42,12 @@ public class ShareElementEditor:Editor
             changed = true;
             help.SetNactiveSize();
         }
-    
+        if (GUILayout.Button("SetSpritePivot"))
+        {
+            changed = true;
+            help.SetSpritePivot();
+        }
+
         var trans = help.transform as RectTransform;
         if(trans.localPosition!=pos)
         {

@@ -25,9 +25,10 @@ public partial class UICreateTest
         ModelElement son = new ModelElement();
         son.SetParent(mod);
         var child = son.AddComponent<ShareChildElement>();
-        ElementAsset.FindSpriteUV("enemy", "a-01", ref child.data.rect, ref child.data.txtSize);
+        ElementAsset.FindSpriteUV("enemy", "a-01", ref child.data.rect, ref child.data.txtSize,ref child.data.pivot);
+        child.SetNactiveSize();
         son.data.localRotation = Quaternion.Euler(0, 0, 33);
-        son.data.sizeDelta = new Vector2(300, 300);
+        //son.data.sizeDelta = new Vector2(300, 300);
         son.data.localPosition = new Vector3(-300, 100, 0);
         son.IsChanged = true;
         son.RegEvent<EventCallBack>();
@@ -36,9 +37,10 @@ public partial class UICreateTest
         son = new ModelElement();
         son.SetParent(mod);
         child = son.AddComponent<ShareChildElement>();
-        ElementAsset.FindSpriteUV("enemy", "a-05", ref child.data.rect, ref child.data.txtSize);
+        ElementAsset.FindSpriteUV("enemy", "a-05", ref child.data.rect, ref child.data.txtSize, ref child.data.pivot);
+        child.SetNactiveSize();
         son.data.localRotation = Quaternion.Euler(0, 0, -44);
-        son.data.sizeDelta = new Vector2(300, 300);
+        //son.data.sizeDelta = new Vector2(300, 300);
         son.data.localPosition = new Vector3(100, 300, 0);
         son.IsChanged = true;
         son.RegEvent<EventCallBack>();
@@ -47,9 +49,10 @@ public partial class UICreateTest
         son = new ModelElement();
         son.SetParent(mod);
         child = son.AddComponent<ShareChildElement>();
-        ElementAsset.FindSpriteUV("enemy", "b-03", ref child.data.rect, ref child.data.txtSize);
+        ElementAsset.FindSpriteUV("enemy", "b-03", ref child.data.rect, ref child.data.txtSize, ref child.data.pivot);
+        child.SetNactiveSize();
         son.data.localRotation = Quaternion.Euler(0, 0, 180);
-        son.data.sizeDelta = new Vector2(300, 300);
+        //son.data.sizeDelta = new Vector2(300, 300);
         son.data.localPosition = new Vector3(0, -300, 0);
         son.IsChanged = true;
         son.RegEvent<EventCallBack>();

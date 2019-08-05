@@ -13,7 +13,7 @@ namespace huqiang.UI
         public Color color;
         public Vector2 txtSize;
         public Rect rect;
-        public Vector2 spritePivot;
+        public Vector2 pivot;
         public float fillAmountX;
         public float fillAmountY;
         public int spriteName;
@@ -34,6 +34,7 @@ namespace huqiang.UI
             data.fillAmountX = 1;
             data.fillAmountY = 1;
             data.color = Color.white;
+            model.ColorController = this;
         }
         public override unsafe void Load(FakeStruct fake)
         {
@@ -123,7 +124,10 @@ namespace huqiang.UI
             float h = data.rect.height;
             model.data.sizeDelta = new Vector2(w, h);
         }
-
+        public void SetSpritePivot()
+        {
+           model.data.pivot = new Vector2(data.pivot.x / data.rect.width, data.pivot.y / data.rect.height);
+        }
         public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
         {
             var share = com as ShareChild;
@@ -140,7 +144,7 @@ namespace huqiang.UI
                 sp->rect = sprite.rect;
                 sp->txtSize.x = sprite.texture.width;
                 sp->txtSize.y = sprite.texture.height;
-                sp->spritePivot = sprite.pivot;
+                sp->pivot = sprite.pivot;
                 sp->spriteName = buffer.AddData(sprite.name);
             }
             return fake;
