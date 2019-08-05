@@ -15,7 +15,7 @@ public class ShareImageHelper : UICompositeHelp
         for (int i = 0; i < transform.childCount; i++)
         {
             var c= transform.GetChild(i);
-            var help = c.GetComponent<ShareElement>();
+            var help = c.GetComponent<ShareChild>();
             if (help != null)
                 help.GetUVInfo(vert,tri,Vector3.zero,Quaternion.identity,Vector3.one);
         }

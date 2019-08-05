@@ -8,7 +8,7 @@ using UGUI;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(ShareElement), true)]
+[CustomEditor(typeof(ShareChild), true)]
 [CanEditMultipleObjects]
 public class ShareElementEditor:Editor
 {
@@ -19,7 +19,7 @@ public class ShareElementEditor:Editor
     private Editor editor;
     private void OnEnable()
     {
-        var trans = (target as ShareElement).transform as RectTransform;
+        var trans = (target as ShareChild).transform as RectTransform;
         pos = trans.localPosition;
         angle = trans.localEulerAngles;
         size = trans.sizeDelta;
@@ -27,7 +27,7 @@ public class ShareElementEditor:Editor
     }
     public override void OnInspectorGUI()
     {
-        var help = target as ShareElement;
+        var help = target as ShareChild;
         if(help!=null)
         {
             var col = help.color;

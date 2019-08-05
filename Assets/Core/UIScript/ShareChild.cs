@@ -4,7 +4,7 @@ using UnityEngine;
 using huqiang.UI;
 using huqiang.Data;
 
-public class ShareElement : MonoBehaviour,UIComponentData
+public class ShareChild : MonoBehaviour,UIComponentData
 {
     public float fillAmountX = 1;
     public float fillAmountY = 1;
@@ -83,7 +83,7 @@ public class ShareElement : MonoBehaviour,UIComponentData
         tri.Add(s);
         for (int i = 0; i < rect.childCount; i++)
         {
-            var help = rect.GetChild(i).GetComponent<ShareElement>();
+            var help = rect.GetChild(i).GetComponent<ShareChild>();
             if (help != null)
             {
                 help.GetUVInfo(vertices, tri, pos, q, ls);
@@ -100,8 +100,21 @@ public class ShareElement : MonoBehaviour,UIComponentData
         }
     }
 
-    public FakeStruct ToFakeStructData(DataBuffer buffer)
+    public unsafe FakeStruct ToFakeStructData(DataBuffer buffer)
     {
-        return null;
+        FakeStruct fake = new FakeStruct(buffer, ShareChildData.ElementSize);
+        ShareChildData* sp = (ShareChildData*)fake.ip;
+        sp->color = color;
+        sp->fillAmountX = fillAmountX;
+        sp->fillAmountY = fillAmountY;
+        if(sprite!=null)
+        {
+            sp->rect = sprite.rect;
+            sp->txtSize.x = sprite.texture.width;
+            sp->txtSize.y = sprite.texture.height;
+            sp->spritePivot = sprite.pivot;
+            sp->spriteName = buffer.AddData(sprite.name);
+        }
+        return fake;
     }
 }
