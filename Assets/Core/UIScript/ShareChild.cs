@@ -36,6 +36,7 @@ public class ShareChild : MonoBehaviour
     }
     public void GetUVInfo(List<UIVertex> vertices, List<int> tri, Vector3 position, Quaternion quate, Vector3 scale)
     {
+        SetSprite(sprite);
         var rect = transform as RectTransform;
         float w = rect.localScale.x * rect.sizeDelta.x;
         float h = rect.localScale.y * rect.sizeDelta.y;

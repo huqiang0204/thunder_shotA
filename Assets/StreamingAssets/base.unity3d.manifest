@@ -1,88 +1,119 @@
 ManifestFileVersion: 0
-CRC: 2798383756
+CRC: 4186457563
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d44acc276473dea577d8ce455e466246
+    Hash: 03ee5dbff8128bd35f8e927fa2ffe768
   TypeTreeHash:
     serializedVersion: 2
-    Hash: ea5a42e0fd8ea905efa7aa926a3b8944
+    Hash: f513be345acd2a9f90231f6f9a0d58a0
 HashAppended: 0
 ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
 - Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 83
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Resources/Picture/bloody.png
-- Assets/Resources/Picture/wing-laser03.png
-- Assets/Resources/Picture/meteor.png
-- Assets/Resources/Picture/bossxue03.png
-- Assets/Resources/Picture/p-03c.jpg
-- Assets/Resources/Picture/center.png
-- Assets/Resources/Picture/989-bg-04.png
-- Assets/Resources/Picture/p-02b.jpg
-- Assets/Resources/Picture/a-06b.png
-- Assets/Resources/Picture/corps-001.png
-- Assets/Resources/Picture/crystal.png
-- Assets/Resources/Picture/prop_b.png
-- Assets/Resources/Picture/zhzd.png
-- Assets/Resources/Picture/magic099.png
-- Assets/Resources/Picture/nh.png
-- Assets/Resources/Picture/BigBoom.png
-- Assets/Resources/Picture/laser-01c.png
-- Assets/Resources/Picture/singlemode.jpg
-- Assets/Resources/Picture/laser_red.png
-- Assets/Resources/Picture/enemy_b.png
-- Assets/Resources/Picture/boss-05b.png
-- Assets/Resources/Picture/magic_shiled.png
-- Assets/Resources/Picture/p-05d.jpg
-- Assets/Resources/Picture/hit.png
-- Assets/Resources/Picture/i-p-02b.png
-- Assets/Resources/Picture/d.jpg
-- Assets/Resources/Picture/back_button.png
-- Assets/Resources/Picture/Explode.png
-- Assets/Resources/Picture/p-b04.png
-- Assets/Resources/Picture/bullet-03.png
-- Assets/Resources/Picture/p-06d.jpg
-- Assets/Resources/Picture/bossxue.png
-- Assets/Resources/Picture/bbk.png
-- Assets/Resources/Picture/p-j.png
-- Assets/Resources/Picture/bullet-04.png
-- Assets/Resources/Picture/six_angle.png
-- Assets/Resources/Picture/bullet02.png
-- Assets/Resources/Picture/boll01.png
-- Assets/Resources/Picture/rightgreen.png
-- Assets/Resources/Picture/lock1.png
-- Assets/Resources/Picture/bloodt.png
-- Assets/Resources/Picture/boss-02.png
-- Assets/Resources/Picture/wing-t05.png
-- Assets/Resources/Picture/lock.png
-- Assets/Resources/Picture/thunderboll.png
-- Assets/Resources/Picture/wing-02d.png
-- Assets/Resources/Picture/zhujizidan-07.png
-- Assets/Resources/Picture/prop_u.png
-- Assets/Resources/Picture/enemy_a.png
-- Assets/Resources/Picture/m-04a.jpg
-- Assets/Resources/Picture/laser04.png
-- Assets/Resources/Picture/cosmos.jpg
-- Assets/Resources/Picture/bloodg.png
-- Assets/Resources/Picture/button.png
-- Assets/Resources/Picture/space1.jpg
-- Assets/Resources/Picture/bottom.png
-- Assets/Resources/Picture/c.jpg
-- Assets/Resources/Picture/hp2.png
-- Assets/Resources/Picture/burn.png
-- Assets/Resources/Picture/a-10.png
-- Assets/Resources/Picture/b.jpg
-- Assets/Resources/Picture/bossxue02.png
-- Assets/Resources/Picture/w-02a.jpg
-- Assets/Resources/Picture/s.jpg
-- Assets/Resources/Picture/btn-back3.png
-- Assets/Resources/Picture/missile.png
-- Assets/Resources/Picture/a.jpg
-- Assets/Resources/Picture/989.jpg
-- Assets/Resources/Picture/bloodb.png
-- Assets/Resources/Picture/missile01.png
-- Assets/Resources/Picture/p-07d.png
+- Assets/AssetsBundle/Picture/bloody.png
+- Assets/AssetsBundle/Picture/wing-laser03.png
+- Assets/AssetsBundle/Sound/ding.wav
+- Assets/AssetsBundle/Picture/meteor.png
+- Assets/AssetsBundle/Picture/bossxue03.png
+- Assets/AssetsBundle/Picture/p-03c.jpg
+- Assets/AssetsBundle/Picture/center.png
+- Assets/AssetsBundle/Picture/989-bg-04.png
+- Assets/AssetsBundle/Picture/p-02b.jpg
+- Assets/AssetsBundle/Picture/a-06b.png
+- Assets/AssetsBundle/Picture/corps-001.png
+- Assets/AssetsBundle/Picture/crystal.png
+- Assets/AssetsBundle/baseUI.bytes
+- Assets/AssetsBundle/Picture/prop_b.png
+- Assets/AssetsBundle/Picture/zhzd.png
+- Assets/AssetsBundle/Shader/Disappear.shader
+- Assets/AssetsBundle/Picture/magic099.png
+- Assets/AssetsBundle/Picture/nh.png
+- Assets/AssetsBundle/Shader/bloodsh.shader
+- Assets/AssetsBundle/Picture/BigBoom.png
+- Assets/AssetsBundle/Shader/default.shader
+- Assets/AssetsBundle/Shader/flash.shader
+- Assets/AssetsBundle/Picture/laser-01c.png
+- Assets/AssetsBundle/Picture/singlemode.jpg
+- Assets/AssetsBundle/Picture/laser_red.png
+- Assets/AssetsBundle/Picture/enemy_b.png
+- Assets/AssetsBundle/Shader/StreamEffect.shader
+- Assets/AssetsBundle/Picture/boss-05b.png
+- Assets/AssetsBundle/SpriteInfo.bytes
+- Assets/AssetsBundle/Shader/def_vert.mat
+- Assets/AssetsBundle/Picture/magic_shiled.png
+- Assets/AssetsBundle/Picture/p-05d.jpg
+- Assets/AssetsBundle/Picture/hit.png
+- Assets/AssetsBundle/Picture/i-p-02b.png
+- Assets/AssetsBundle/Picture/d.jpg
+- Assets/AssetsBundle/Picture/back_button.png
+- Assets/AssetsBundle/Picture/Explode.png
+- Assets/AssetsBundle/Picture/p-b04.png
+- Assets/AssetsBundle/Picture/bullet-03.png
+- Assets/AssetsBundle/Shader/bc01.shader
+- Assets/AssetsBundle/texture/fall.png
+- Assets/AssetsBundle/Shader/def_surf.shader
+- Assets/AssetsBundle/Shader/blood2.shader
+- Assets/AssetsBundle/Shader/BlendColor.shader
+- Assets/AssetsBundle/Picture/p-06d.jpg
+- Assets/AssetsBundle/Picture/bossxue.png
+- Assets/AssetsBundle/Picture/bbk.png
+- Assets/AssetsBundle/Picture/p-j.png
+- Assets/AssetsBundle/Picture/bullet-04.png
+- Assets/AssetsBundle/texture/enemy.png
+- Assets/AssetsBundle/Picture/six_angle.png
+- Assets/AssetsBundle/Shader/circle1.png
+- Assets/AssetsBundle/Picture/bullet02.png
+- Assets/AssetsBundle/Picture/boll01.png
+- Assets/AssetsBundle/Shader/bkc.shader
+- Assets/AssetsBundle/Picture/rightgreen.png
+- Assets/AssetsBundle/Picture/lock1.png
+- Assets/AssetsBundle/Picture/bloodt.png
+- Assets/AssetsBundle/Picture/boss-02.png
+- Assets/AssetsBundle/Shader/light2.shader
+- Assets/AssetsBundle/texture/bullte.png
+- Assets/AssetsBundle/Picture/wing-t05.png
+- Assets/AssetsBundle/Picture/lock.png
+- Assets/AssetsBundle/Picture/thunderboll.png
+- Assets/AssetsBundle/Picture/wing-02d.png
+- Assets/AssetsBundle/Picture/zhujizidan-07.png
+- Assets/AssetsBundle/Picture/prop_u.png
+- Assets/AssetsBundle/Picture/enemy_a.png
+- Assets/AssetsBundle/Picture/m-04a.jpg
+- Assets/AssetsBundle/Shader/blood.mat
+- Assets/AssetsBundle/Picture/laser04.png
+- Assets/AssetsBundle/Picture/cosmos.jpg
+- Assets/AssetsBundle/Picture/bloodg.png
+- Assets/AssetsBundle/Picture/button.png
+- Assets/AssetsBundle/Shader/fan_per.mat
+- Assets/AssetsBundle/Picture/space1.jpg
+- Assets/AssetsBundle/Picture/bottom.png
+- Assets/AssetsBundle/Shader/light1.shader
+- Assets/AssetsBundle/Picture/c.jpg
+- Assets/AssetsBundle/Picture/hp2.png
+- Assets/AssetsBundle/Picture/burn.png
+- Assets/AssetsBundle/Picture/a-10.png
+- Assets/AssetsBundle/Picture/b.jpg
+- Assets/AssetsBundle/Picture/bossxue02.png
+- Assets/AssetsBundle/Picture/w-02a.jpg
+- Assets/AssetsBundle/Picture/s.jpg
+- Assets/AssetsBundle/Picture/btn-back3.png
+- Assets/AssetsBundle/Picture/missile.png
+- Assets/AssetsBundle/Picture/a.jpg
+- Assets/AssetsBundle/Picture/989.jpg
+- Assets/AssetsBundle/Picture/bloodb.png
+- Assets/AssetsBundle/Shader/CircleAlphaMask.shader
+- Assets/AssetsBundle/Picture/missile01.png
+- Assets/AssetsBundle/Picture/p-07d.png
 Dependencies: []

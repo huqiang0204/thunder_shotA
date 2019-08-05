@@ -7,7 +7,7 @@ namespace huqiang.UI
 {
     public class ShareImageElement : CustomImageElement
     {
-        public bool needCalcul;
+        public bool needCalcul = true;
         public override void VertexCalculation()
         {
             if (needCalcul)
