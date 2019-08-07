@@ -78,54 +78,26 @@ namespace huqiang.Math
             return bezierPoint(map(t));
         }
     }
-    public class LTBezierPath
+    public class BezierPathC
     {
-        public Vector3[] pts;
-        public float length;
-        public bool orientToPath;
-        public bool orientToPath2d;
-
         private LTBezier[] beziers;
+        public float length;
         private float[] lengthRatio;
-        private int currentBezier = 0, previousBezier = 0;
-
-        public LTBezierPath() { }
-        public LTBezierPath(Vector3[] pts_)
+        public BezierPathC(Vector3[] points)
         {
-            setPoints(pts_);
-        }
-
-        public void setPoints(Vector3[] pts_)
-        {
-            if (pts_.Length < 4)
-                LeanTween.logError("LeanTween - When passing values for a vector path, you must pass four or more values!");
-            if (pts_.Length % 4 != 0)
-                LeanTween.logError("LeanTween - When passing values for a vector path, they must be in sets of four: controlPoint1, controlPoint2, endPoint2, controlPoint2, controlPoint2...");
-
-            pts = pts_;
-
-            int k = 0;
-            beziers = new LTBezier[pts.Length / 4];
-            lengthRatio = new float[beziers.Length];
-            int i;
             length = 0;
-            for (i = 0; i < pts.Length; i += 4)
+            int len = points.Length / 3 - 1;
+            beziers = new LTBezier[len];
+            lengthRatio = new float[len];
+            for (int i = 0; i < len; i++)
             {
-                beziers[k] = new LTBezier(pts[i + 0], pts[i + 2], pts[i + 1], pts[i + 3], 0.05f);
-                length += beziers[k].length;
-                k++;
+                int s = i * 3;
+                beziers[i] = new LTBezier(points[s], points[s + 2], points[s + 4], points[s + 3], 0.05f);
+                length += beziers[i].length;
             }
-            for (i = 0; i < beziers.Length; i++)
+            for (int i = 0; i < len; i++)
             {
                 lengthRatio[i] = beziers[i].length / length;
-            }
-        }
-
-        public float distance
-        {
-            get
-            {
-                return length;
             }
         }
         public Vector3 point(float ratio)
@@ -139,7 +111,6 @@ namespace huqiang.Math
             }
             return beziers[lengthRatio.Length - 1].point(1.0f);
         }
-
         public Vector3 place2d(float ratio, ref Vector3 angle)
         {
             var pos = point(ratio);
@@ -152,23 +123,6 @@ namespace huqiang.Math
                 angle.z = Mathf.Atan2(v3Dir.y, v3Dir.x) * Mathf.Rad2Deg;
             }
             return pos;
-        }
-        public float ratioAtPoint(Vector3 pt, float precision = 0.01f)
-        {
-            float closestDist = float.MaxValue;
-            int closestI = 0;
-            int maxIndex = Mathf.RoundToInt(1f / precision);
-            for (int i = 0; i < maxIndex; i++)
-            {
-                float ratio = (float)i / (float)maxIndex;
-                float dist = Vector3.Distance(pt, point(ratio));
-                if (dist < closestDist)
-                {
-                    closestDist = dist;
-                    closestI = i;
-                }
-            }
-            return (float)closestI / (float)(maxIndex);
         }
     }
 }
