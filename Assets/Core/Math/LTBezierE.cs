@@ -8,7 +8,6 @@ namespace huqiang.Math
     public class LTBezier
     {
         public float length;
-
         private Vector3 a;
         private Vector3 aa;
         private Vector3 bb;
@@ -108,6 +107,52 @@ namespace huqiang.Math
                     return beziers[i].point((ratio - (added - lengthRatio[i])) / lengthRatio[i]);
             }
             return beziers[lengthRatio.Length - 1].point(1.0f);
+        }
+        public Vector3 place2d(float ratio, ref Vector3 angle)
+        {
+            var pos = point(ratio);
+            ratio += 0.001f;
+            if (ratio <= 1.0f)
+            {
+                Vector3 v3Dir = point(ratio) - pos;
+                angle.x = 0;
+                angle.y = 0;
+                angle.z = Mathf.Atan2(v3Dir.y, v3Dir.x) * Mathf.Rad2Deg;
+            }
+            return pos;
+        }
+    }
+    public class LinePath
+    {
+        private float[] lengthRatio;
+        public float length;
+        Vector3[] buff;
+        public LinePath(Vector3[] points)
+        {
+            length = 0;
+            buff = points;
+            int len = buff.Length - 1;
+            lengthRatio = new float[len];
+            for (int i = 0; i < len; i++)
+            {
+                var dir = buff[i + 1] - buff[i];
+                lengthRatio[i] = dir.magnitude;
+                length += lengthRatio[i];
+            }
+        }
+        public Vector3 point(float ratio)
+        {
+            float added = 0.0f;
+            for (int i = 0; i < lengthRatio.Length; i++)
+            {
+                added += lengthRatio[i];
+                if (added >= ratio)
+                {
+                    var r = (ratio - (added - lengthRatio[i])) / lengthRatio[i];
+                    return buff[i] + (buff[i + 1] - buff[i]) * r;
+                }
+            }
+            return buff[lengthRatio.Length];
         }
         public Vector3 place2d(float ratio, ref Vector3 angle)
         {
