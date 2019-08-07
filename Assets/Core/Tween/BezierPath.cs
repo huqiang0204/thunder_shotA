@@ -68,8 +68,8 @@ public class BezierPath : MonoBehaviour
             }
         }
     }
-
-    List<BezierPathNode> nodes = new List<BezierPathNode>();
+    [HideInInspector]
+    public List<BezierPathNode> nodes = new List<BezierPathNode>();
     public void Initial()
     {
         nodes.Clear();
