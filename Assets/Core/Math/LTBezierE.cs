@@ -80,7 +80,7 @@ namespace huqiang.Math
         private LTBezier[] beziers;
         public float length;
         private float[] lengthRatio;
-        public BezierPathC(Vector3[] points)
+        public void SetPoints(Vector3[] points)
         {
             length = 0;
             int len = points.Length / 3 - 1;
@@ -97,7 +97,7 @@ namespace huqiang.Math
                 lengthRatio[i] = beziers[i].length / length;
             }
         }
-        public Vector3 point(float ratio)
+        public Vector3 Point(float ratio)
         {
             float added = 0.0f;
             for (int i = 0; i < lengthRatio.Length; i++)
@@ -108,13 +108,13 @@ namespace huqiang.Math
             }
             return beziers[lengthRatio.Length - 1].point(1.0f);
         }
-        public Vector3 place2d(float ratio, ref Vector3 angle)
+        public Vector3 Place2d(float ratio, ref Vector3 angle)
         {
-            var pos = point(ratio);
+            var pos = Point(ratio);
             ratio += 0.001f;
             if (ratio <= 1.0f)
             {
-                Vector3 v3Dir = point(ratio) - pos;
+                Vector3 v3Dir = Point(ratio) - pos;
                 angle.x = 0;
                 angle.y = 0;
                 angle.z = Mathf.Atan2(v3Dir.y, v3Dir.x) * Mathf.Rad2Deg;
@@ -127,7 +127,7 @@ namespace huqiang.Math
         private float[] lengthRatio;
         public float length;
         Vector3[] buff;
-        public LinePath(Vector3[] points)
+        public void SetPoints(Vector3[] points)
         {
             length = 0;
             buff = points;
@@ -139,8 +139,20 @@ namespace huqiang.Math
                 lengthRatio[i] = dir.magnitude;
                 length += lengthRatio[i];
             }
+            for (int i = 0; i < len; i++)
+            {
+                lengthRatio[i] = lengthRatio[i] / length;
+            }
         }
-        public Vector3 point(float ratio)
+        public void SetBezierPoints(Vector3[] points)
+        {
+            int c = points.Length / 3;
+            Vector3[] tmp = new Vector3[c];
+            for (int i = 0; i < c; i++)
+                tmp[i] = points[i * 3];
+            SetPoints(tmp);
+        }
+        public Vector3 Point(float ratio)
         {
             float added = 0.0f;
             for (int i = 0; i < lengthRatio.Length; i++)
@@ -154,13 +166,13 @@ namespace huqiang.Math
             }
             return buff[lengthRatio.Length];
         }
-        public Vector3 place2d(float ratio, ref Vector3 angle)
+        public Vector3 Place2d(float ratio, ref Vector3 angle)
         {
-            var pos = point(ratio);
+            var pos = Point(ratio);
             ratio += 0.001f;
             if (ratio <= 1.0f)
             {
-                Vector3 v3Dir = point(ratio) - pos;
+                Vector3 v3Dir = Point(ratio) - pos;
                 angle.x = 0;
                 angle.y = 0;
                 angle.z = Mathf.Atan2(v3Dir.y, v3Dir.x) * Mathf.Rad2Deg;
