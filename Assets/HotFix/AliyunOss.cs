@@ -138,6 +138,7 @@ namespace HotFix
                          File.Delete(bp);
                      var fs = File.Create(bp);
                      oss = new OssFileProgress(fs);
+                     oss.length = meta.ContentLength;
                      oss.Info = obj;
                  }
                  catch (Exception ex)
