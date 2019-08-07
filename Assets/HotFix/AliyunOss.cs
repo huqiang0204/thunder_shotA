@@ -1,11 +1,13 @@
 ﻿using Aliyun.OSS;
 using huqiang;
+using huqiang.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace HotFix
 {
@@ -26,6 +28,25 @@ namespace HotFix
         public OssClient client;
         public int time;
         public string folder;
+    }
+    public class ObjectInfo
+    {
+        /// <summary>
+        /// 存储桶
+        /// </summary>
+        public string bucket;
+        /// <summary>
+        /// 先对路径
+        /// </summary>
+        public string dic;
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public string type;
+        /// <summary>
+        /// 文件名
+        /// </summary>
+        public string name;
     }
     public class AliyunOss
     {
@@ -77,33 +98,88 @@ namespace HotFix
             }
             return false;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type">上传的文件类型</param>
-        /// <param name="name">上传的文件名</param>
-        /// <param name="data">要上传的数据</param>
-        public static async void UpdateOssData(string type,string name,Stream data,Action<int> callback)
+
+        public static async void PutObject(ObjectInfo info, Stream data, Action<OssFileProgress> start, Action<OssFileProgress> done)
         {
-            var oss = GetOssClient(type);
-            if (oss== null)
-                return;
-            try
-            {
-                string key = oss.folder + name;
-                PutObjectResult result = await PutObject(type,"",name,data);
-            }
-            catch (Exception ex)
-            {
-               
-            }
-        }
-        static async Task<PutObjectResult> PutObject(string type, string bu, string key, Stream data)
-        {
-            var oss = GetOssClient(type);
-            return await Task.Run<PutObjectResult>(() => {
-                return oss.client.PutObject("weark", key, data);
+            var oss = GetOssClient(info.type);
+            OssFileProgress progress = new OssFileProgress(data);
+            if (start != null)
+                start(progress);
+            string key = info.dic + "/" + info.type + "/" + info.name;
+            var result = await Task.Run<PutObjectResult>(() => {
+                try
+                {
+                    return oss.client.PutObject("weark", key, data);
+                }catch (Exception ex)
+                {
+                    Debug.Log(ex.StackTrace);
+                    return null;
+                }
             });
+            progress.result = result;
+            if (done != null)
+                done(progress);
+        }
+        public static async void GetObject(ObjectInfo obj, Action<OssFileProgress> start, Action<OssFileProgress> done)
+        {
+            var info = GetOssClient(obj.type);
+            var client = info.client;
+             string key =obj.dic + "/" + obj.type + "/" + obj.name;
+             OssFileProgress oss = null;
+             await Task.Run(()=>{
+                string bp = GetDownLoadPath(obj.bucket, obj.name);
+                var request = new GetObjectRequest(obj.bucket, key);
+                 try
+                 {
+                     var meta = client.GetObjectMetadata(obj.bucket, key);
+                     if (File.Exists(bp))
+                         File.Delete(bp);
+                     var fs = File.Create(bp);
+                     oss = new OssFileProgress(fs);
+                 }
+                 catch (Exception ex)
+                 {
+                     Debug.Log(ex.StackTrace);
+                 }
+            });
+            if (oss != null)
+            {
+                if (start != null)
+                    start(oss);
+            }
+            else return;   
+            await Task.Run(()=> {
+                try
+                {
+                    client.GetObject(obj.bucket, key);
+                }catch (Exception ex)
+                {
+                    Debug.Log(ex.StackTrace);
+                }
+            });
+            if (done != null)
+                done(oss);
+            oss.Dispose();
+        }
+        /// <summary>
+        /// 获取一个本地可写入的路径
+        /// </summary>
+        /// <param name="bucket"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        static string GetDownLoadPath(string bucket,string name)
+        {
+            var dic = LocalFileManager.persistentDataPath + "/oss";
+            if (!Directory.Exists(dic))
+                Directory.CreateDirectory(dic);
+            dic += "/download";
+            if (!Directory.Exists(dic))
+                Directory.CreateDirectory(dic);
+            dic += "/"+bucket;
+            if (!Directory.Exists(dic))
+                Directory.CreateDirectory(dic);
+            dic += "/" + name;
+            return dic;
         }
     }
 }
