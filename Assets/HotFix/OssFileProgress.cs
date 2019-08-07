@@ -10,6 +10,7 @@ namespace HotFix
 {
     public class OssFileProgress
     {
+        public ObjectInfo Info;
         public float Progress { get { return ((float)data.Position / (float)length) * 100; } }
         internal long length;
         public Stream data;
@@ -17,6 +18,7 @@ namespace HotFix
         {
             data = stream;
             length = data.Length;
+            progresses.Add(this);
         }
         public PutObjectResult result;
         public void Dispose()
@@ -26,6 +28,7 @@ namespace HotFix
                 data.Dispose();
                 data = null;
             }
+            progresses.Remove(this);
         }
         ~OssFileProgress()
         {
@@ -35,5 +38,6 @@ namespace HotFix
                 data = null;
             }
         }
+        public static List<OssFileProgress> progresses = new List<OssFileProgress>();
     }
 }

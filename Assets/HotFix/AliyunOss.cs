@@ -103,6 +103,7 @@ namespace HotFix
         {
             var oss = GetOssClient(info.type);
             OssFileProgress progress = new OssFileProgress(data);
+            progress.Info = info;
             if (start != null)
                 start(progress);
             string key = info.dic + "/" + info.type + "/" + info.name;
@@ -119,6 +120,7 @@ namespace HotFix
             progress.result = result;
             if (done != null)
                 done(progress);
+            progress.Dispose();
         }
         public static async void GetObject(ObjectInfo obj, Action<OssFileProgress> start, Action<OssFileProgress> done)
         {
@@ -136,6 +138,7 @@ namespace HotFix
                          File.Delete(bp);
                      var fs = File.Create(bp);
                      oss = new OssFileProgress(fs);
+                     oss.Info = obj;
                  }
                  catch (Exception ex)
                  {
