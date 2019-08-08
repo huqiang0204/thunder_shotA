@@ -26,24 +26,26 @@ namespace huqiang.Http
         public HttpResponseMessage responseMessage;
         public Stream responseStream;
         public ResultCode Code;
-        public long Length;
+        public long Length ;
         public MethodType Type;
         public float Percentage { get {
                if(Type==MethodType.Get)
                 {
-                    if(responseStream!=null)
+                    if (Length == 0)
+                        return 0;
+                    if (responseStream!=null)
                     {
                         float p = responseStream.Length;
                         float l = Length;
                         return p / l ;
                     }
                 }
-                else
+                else if(Type==MethodType.Post)
                 {
                     if(responseStream!=null)
                     {
                         float p = responseStream.Position;
-                        float l = Length;
+                        float l = responseStream.Length;
                         return p / l;
                     }
                 }
