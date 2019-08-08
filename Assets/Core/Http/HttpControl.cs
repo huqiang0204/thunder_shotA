@@ -86,6 +86,15 @@ namespace huqiang.Http
             FileStream fs = null;
             try
             {
+                long totalBytes = 0;
+                await Task.Run(()=> {
+                    HttpWebRequest Myrq = (HttpWebRequest)HttpWebRequest.Create(url);
+                    //向服务器请求，获得服务器的回应数据流
+                    Myrq.Method = "GET";
+                    HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
+                    //获取文件的大小
+                    totalBytes = myrp.ContentLength;
+                });
                 if (handler != null)
                     client = new HttpClient(handler);
                 else client = new HttpClient();
@@ -94,6 +103,7 @@ namespace huqiang.Http
                     var task = client.GetStreamAsync(url);
                     HttpResult hr = new HttpResult();
                     hr.Type = MethodType.Get;
+                    hr.Length = totalBytes;
                     if (File.Exists(filePath))
                         File.Delete(filePath);
                     fs = File.Create(filePath);
@@ -167,6 +177,15 @@ namespace huqiang.Http
             }
             if (client != null)
                 client.Dispose();
+        }
+        static void GetFileSize(string url)
+        {
+            HttpWebRequest Myrq = (HttpWebRequest)HttpWebRequest.Create(url);
+            //向服务器请求，获得服务器的回应数据流
+            Myrq.Method = "GET";
+            HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
+            //获取文件的大小
+            long totalBytes = myrp.ContentLength;
         }
     }
 }
