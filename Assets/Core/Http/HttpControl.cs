@@ -178,14 +178,5 @@ namespace huqiang.Http
             if (client != null)
                 client.Dispose();
         }
-        static void GetFileSize(string url)
-        {
-            HttpWebRequest Myrq = (HttpWebRequest)HttpWebRequest.Create(url);
-            //向服务器请求，获得服务器的回应数据流
-            Myrq.Method = "GET";
-            HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
-            //获取文件的大小
-            long totalBytes = myrp.ContentLength;
-        }
     }
 }
