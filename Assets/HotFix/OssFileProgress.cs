@@ -21,6 +21,7 @@ namespace HotFix
             progresses.Add(this);
         }
         public PutObjectResult result;
+        public OssObject ossObject;
         public void Dispose()
         {
             if (data != null)
@@ -28,6 +29,7 @@ namespace HotFix
                 data.Dispose();
                 data = null;
             }
+            ossObject = null;
             progresses.Remove(this);
         }
         ~OssFileProgress()

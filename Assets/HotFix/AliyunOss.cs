@@ -155,7 +155,8 @@ namespace HotFix
             await Task.Run(()=> {
                 try
                 {
-                    client.GetObject(obj.bucket, key);
+                    var result = client.GetObject(obj.bucket, key);
+                    oss.ossObject = result;
                 }catch (Exception ex)
                 {
                     Debug.Log(ex.StackTrace);
