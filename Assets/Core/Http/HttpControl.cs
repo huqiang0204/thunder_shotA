@@ -23,6 +23,7 @@ namespace huqiang.Http
     }
     public class HttpResult
     {
+        public object Context;
         public HttpResponseMessage responseMessage;
         public Stream responseStream;
         public ResultCode Code;
@@ -80,7 +81,7 @@ namespace huqiang.Http
                 }
             }
         }
-        public static async void DownloadAsync(string url, string filePath, Action<HttpResult> start,Action<HttpResult> done, HttpMessageHandler handler = null)
+        public static async void DownloadAsync(string url, string filePath, Action<HttpResult> start,Action<HttpResult> done,object context = null, HttpMessageHandler handler = null)
         {
             HttpClient client=null;
             FileStream fs = null;
@@ -102,6 +103,7 @@ namespace huqiang.Http
                 {
                     var task = client.GetStreamAsync(url);
                     HttpResult hr = new HttpResult();
+                    hr.Context = context;
                     hr.Type = MethodType.Get;
                     hr.Length = totalBytes;
                     if (File.Exists(filePath))
@@ -140,7 +142,7 @@ namespace huqiang.Http
             if (fs != null)
                 fs.Dispose();
         }
-        public static async void UploadAsync(string url, Stream stream, Action<HttpResult> start, Action<HttpResult> done, HttpMessageHandler handler = null)
+        public static async void UploadAsync(string url, Stream stream, Action<HttpResult> start, Action<HttpResult> done,object context=null, HttpMessageHandler handler = null)
         {
             HttpClient client = null;
             try
@@ -149,6 +151,7 @@ namespace huqiang.Http
                     client = new HttpClient(handler);
                 else client = new HttpClient();
                 HttpResult hr = new HttpResult();
+                hr.Context = context;
                 hr.Type = MethodType.Post;
                 hr.responseStream = stream;
                 try
