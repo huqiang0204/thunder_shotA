@@ -1,4 +1,6 @@
-﻿using huqiang.Data;
+﻿using huqiang;
+using huqiang.Data;
+using huqiang.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,6 @@ namespace Assets.Game
         public float ShotTime;
         public Vector3 shotPos;
         public Vector3 shotAngle;
-        public Vector2 Position;
         public float Angle;
         public float Speed;
         public Vector3[] vertex;
@@ -29,7 +30,11 @@ namespace Assets.Game
         public int MoveType;
         public Enemy enemy;
         public BulletCarrier carrier;
-        public virtual void Update() { }
+        public ModelElement render;
+        public virtual void Update()
+        {
+            MoveManager.MoveBullet(this);
+        }
     }
     public class CircleBullet : Bullet
     {

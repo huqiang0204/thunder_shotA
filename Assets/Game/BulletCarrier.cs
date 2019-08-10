@@ -1,4 +1,6 @@
-﻿using System;
+﻿using huqiang.UI;
+using huqiang.UIComposite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +13,16 @@ namespace Assets.Game
     {
         public int Code;
         Func<Bullet> Func;
+        public ModelElement model;
         public BulletCarrier(int code,Func<Bullet> func)
         {
             Code = code;
             Func = func;
+            var mod = ModelElement.CreateNew(code.ToString());
+            mod.data.sizeDelta = new Vector2(400, 400);
+            var img = mod.AddComponent<ShareImageElement>();
+            img.ChangeTexture("enemy", "base.unity3d");
+
         }
         List<Bullet> buffer=new List<Bullet>();
         public Bullet CreateBullet()
@@ -39,7 +47,7 @@ namespace Assets.Game
         /// </summary>
         public void MeshComplete()
         {
-
+            model.VertexCalculation();
         }
         /// <summary>
         /// 应用网格
