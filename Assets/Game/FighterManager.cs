@@ -8,5 +8,9 @@ namespace Assets.Game
 {
     public class FighterManager
     {
+        public void LoadFigher(string code)
+        {
+
+        }
     }
 }

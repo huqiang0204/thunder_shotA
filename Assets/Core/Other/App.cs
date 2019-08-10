@@ -31,7 +31,7 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<Shadow, ShadowElement>(ShadowElement.LoadFromObject));
         }
         public static RenderForm uiroot;
-        static void CreateUI()
+        static void CreateUI() 
         {
             uiroot = new RenderForm("Root");
             if (Application.platform == RuntimePlatform.Android | Application.platform == RuntimePlatform.IPhonePlayer)

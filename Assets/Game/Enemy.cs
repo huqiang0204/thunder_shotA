@@ -17,7 +17,7 @@ namespace Assets.Game
         /// </summary>
         public int[] BulletCodes;
     }
-    public class Enemy
+    public class Enemy:Carrier
     {
         public int[] BulletCodes;
         public string assetName;

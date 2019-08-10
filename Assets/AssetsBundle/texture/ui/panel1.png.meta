@@ -1,0 +1,613 @@
+fileFormatVersion: 2
+guid: e0022602bcf4dd5479c407c1f0dee837
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: bg_BuyCoins
+    21300002: bg_Login
+    21300004: bg_map
+    21300006: bg_Map2
+    21300008: bg_Time
+    21300010: small panel01
+    21300012: small panel01_Opaque
+    21300014: small panel02
+    21300016: small panel02_Opaque
+    21300018: small panel03
+    21300020: small panel03_Opaque
+    21300022: small panel04 _Opaque
+    21300024: small panel04
+    21300026: small panel05
+    21300028: small panel05_Opaque
+    21300030: textbox01
+    21300032: textbox01_Opaque
+    21300034: textbox02
+    21300036: textbox02_Opaque
+    21300038: textbox03
+    21300040: textbox03_Opaque
+    21300042: textbox04
+    21300044: textbox04_Opaque
+    21300046: textbox05
+    21300048: textbox05_Opaque
+  externalObjects: {}
+  serializedVersion: 9
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bg_BuyCoins
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 787
+        width: 348
+        height: 398
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 24, y: 24, z: 25, w: 24}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85436d3a23969604292bb4f15687bfad
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bg_Login
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1683
+        width: 586
+        height: 364
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 27, y: 27, z: 29, w: 26}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d0123b512e2e8147a097e5ab7165eed
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bg_map
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 596
+        width: 314
+        height: 254
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 97, y: 66, z: 100, w: 114}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4667c81d3969a4a4bbf80aa440ad3f5e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bg_Map2
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 852
+        width: 360
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 25, y: 20, z: 27, w: 19}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d90a867f144f21f4faabd72d7ec07046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bg_Time
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 718
+        width: 259
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 940ffa62ed9333c4cb8ac2c4d5c4caf9
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel01
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 490
+        width: 440
+        height: 303
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 43, y: 44, z: 41, w: 42}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61e88f23204a992478e57951d30d8407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel01_Opaque
+      rect:
+        serializedVersion: 2
+        x: 1582
+        y: 353
+        width: 440
+        height: 303
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 44, y: 37, z: 40, w: 41}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d214234cf61a2544fbd34b313cfc43ef
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel02
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 9
+        width: 442
+        height: 289
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 51, y: 38, z: 51, w: 45}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 318d1e3400b8d1c4a888fac40330f393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel02_Opaque
+      rect:
+        serializedVersion: 2
+        x: 1047
+        y: 199
+        width: 442
+        height: 289
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 52, y: 48, z: 53, w: 40}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9651ecd4f2abdd41b5c448b7232bc9c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel03
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 795
+        width: 463
+        height: 301
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 212, y: 152, z: 140, w: 75}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d10d4a8c2af29f94eae5c90ae56ef35b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel03_Opaque
+      rect:
+        serializedVersion: 2
+        x: 1194
+        y: 795
+        width: 463
+        height: 301
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 210, y: 151, z: 139, w: 75}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28528e19842015d4989249efbef44663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel04 _Opaque
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 499
+        width: 471
+        height: 294
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 31, y: 30, z: 34, w: 31}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ddaac7b15ee50240b08b50c6680d27f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel04
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 300
+        width: 471
+        height: 294
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 34, y: 32, z: 35, w: 34}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a6d852b605f9ef4d8e1434d48cb6783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel05
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 273
+        width: 571
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 35, y: 30, z: 32, w: 32}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74ba9370a95c908438ffcb14f28d7b72
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: small panel05_Opaque
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 47
+        width: 571
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 30, z: 30, w: 30}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9623b462567ff0438b0744d100e9131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox01
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 1553
+        width: 372
+        height: 494
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 188, y: 42, z: 45, w: 46}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8a287c0d60a9eb4bb3f91ccd0626408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox01_Opaque
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1187
+        width: 372
+        height: 494
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 186, y: 40, z: 41, w: 43}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a236981608ae86146a5cdfe72a7c4260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox02
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 1564
+        width: 366
+        height: 483
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 49, y: 45, z: 48, w: 43}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d90af2b6984123c4b8e6612777e6de71
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox02_Opaque
+      rect:
+        serializedVersion: 2
+        x: 1331
+        y: 1564
+        width: 366
+        height: 483
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 43, y: 43, z: 46, w: 42}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e03b72f30c8ed9f41ba4e91290a93cc8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox03
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 1098
+        width: 362
+        height: 464
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 91, y: 200, z: 181, w: 72}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db3e0e32716caf748aea0aa242a6caf6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox03_Opaque
+      rect:
+        serializedVersion: 2
+        x: 1327
+        y: 1098
+        width: 362
+        height: 464
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 91, y: 203, z: 182, w: 72}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bb72b561098ea44aae7c1730c55af10
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox04
+      rect:
+        serializedVersion: 2
+        x: 1691
+        y: 658
+        width: 352
+        height: 461
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 40, y: 41, z: 41, w: 37}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a41091ff7321ed949ac598242ec3c948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox04_Opaque
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 1090
+        width: 352
+        height: 461
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 37, y: 115, z: 39, w: 34}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c89fdae14aa69534ba70c7974e32c5c0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox05
+      rect:
+        serializedVersion: 2
+        x: 1699
+        y: 1585
+        width: 346
+        height: 462
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 55, y: 37, z: 100, w: 51}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdd6d4c6d53d5a14091994e735fa9e42
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: textbox05_Opaque
+      rect:
+        serializedVersion: 2
+        x: 1699
+        y: 1121
+        width: 346
+        height: 462
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 51, y: 199, z: 101, w: 159}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e69404fba1c8b944b67a32ead599825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 836770b96a19ffb4bb630b888f9f521e
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

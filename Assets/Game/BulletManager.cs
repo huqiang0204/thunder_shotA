@@ -10,7 +10,7 @@ namespace Assets.Game
     public class BulletManager
     {
         static List<BulletCarrier> carriers;
-        public static void Shot(Enemy enemy, Vector3 position,float angle,int code)
+        public static void Shot(Carrier car, Vector3 position,float angle,int code)
         {
             BulletCarrier carrier;
             if (carriers == null)
@@ -35,6 +35,35 @@ namespace Assets.Game
             var bullet = carrier.CreateBullet();
             bullet.shotPos = position;
             bullet.shotAngle.z = angle;
+        }
+        public static void Shot(Carrier car, ShotPoint[] shots, int code)
+        {
+            BulletCarrier carrier;
+            if (carriers == null)
+            {
+                carriers = new List<BulletCarrier>();
+                carrier = CreateCarrier(code);
+                goto label;
+            }
+            else
+            {
+                for (int i = 0; i < carriers.Count; i++)
+                {
+                    if (carriers[i].Code == code)
+                    {
+                        carrier = carriers[i];
+                        goto label;
+                    }
+                }
+            }
+            carrier = CreateCarrier(code);
+        label:;
+            for(int i=0;i<shots.Length;i++)
+            {
+                var bullet = carrier.CreateBullet();
+                bullet.shotPos =shots[i].Offset;
+                bullet.shotAngle.z = shots[i].angle;
+            }
         }
         static BulletCarrier CreateCarrier(int code)
         {
