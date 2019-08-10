@@ -10,6 +10,14 @@ using UnityEngine;
 
 namespace Assets.Game
 {
+    public enum BallisticType
+    {
+        None, Line, Bezier, Lock, Aim
+    }
+    public enum TargetType
+    {
+        Enemy, Fight
+    }
     public class Bullet
     {
         public int Code;
@@ -23,17 +31,19 @@ namespace Assets.Game
         public float ShotTime;
         public Vector3 shotPos;
         public Vector3 shotAngle;
+        public Vector2 direction;
         public float Angle;
         public float Speed;
         public Vector3[] vertex;
         public Vector2[] uv;
         public int MoveType;
-        public Enemy enemy;
-        public BulletCarrier carrier;
+        public BallisticType ballistic;
+        public Carrier carrier;
+        public BulletCarrier container;
         public ModelElement render;
-        public virtual void Update()
+        public virtual void Update(float time)
         {
-            MoveManager.MoveBullet(this);
+            MoveManager.MoveBullet(this,time);
         }
     }
     public class CircleBullet : Bullet

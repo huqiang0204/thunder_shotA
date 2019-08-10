@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,7 @@ namespace Assets.Game
             var bullet = carrier.CreateBullet();
             bullet.shotPos = position;
             bullet.shotAngle.z = angle;
+            bullet.direction = MathH.Tan2(angle);
         }
         public static void Shot(Carrier car, ShotPoint[] shots, int code)
         {
@@ -63,6 +65,7 @@ namespace Assets.Game
                 var bullet = carrier.CreateBullet();
                 bullet.shotPos =shots[i].Offset;
                 bullet.shotAngle.z = shots[i].angle;
+                bullet.direction = MathH.Tan2(shots[i].angle);
             }
         }
         static BulletCarrier CreateCarrier(int code)
@@ -83,6 +86,10 @@ namespace Assets.Game
                 default:
                     return () => { return new Bullet(); };
             }
+        }
+        public static void Update(float time)
+        {
+
         }
     }
 }

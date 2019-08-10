@@ -1,10 +1,8 @@
-﻿using huqiang.UI;
+﻿using huqiang.Data;
+using huqiang.UI;
 using huqiang.UIComposite;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Game
@@ -14,6 +12,8 @@ namespace Assets.Game
         public int Code;
         Func<Bullet> Func;
         public ModelElement model;
+        public string txtName;
+        public string spName;
         public BulletCarrier(int code,Func<Bullet> func)
         {
             Code = code;
@@ -28,19 +28,23 @@ namespace Assets.Game
         public Bullet CreateBullet()
         {
             var t = Func();
-            t.carrier = this;
+            t.container = this;
             buffer.Add(t);
+            t.render = new ModelElement();
+            var se = t.render.AddComponent<ShareChildElement>();
+            ElementAsset.FindSpriteUV(txtName, spName, ref se.data.rect, ref se.data.txtSize, ref se.data.pivot);
             return t;
         }
         public void ReleaseBullet(Bullet bullet)
         {
             buffer.Remove(bullet);
+            bullet.render.SetParent(null);
         }
-        public void Update()
+        public void Update(float time)
         {
             int c = buffer.Count - 1;
             for (; c >= 0; c--)
-                buffer[c].Update();
+                buffer[c].Update(time);
         }
         /// <summary>
         /// 合成网格

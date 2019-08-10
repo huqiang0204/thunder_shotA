@@ -12,5 +12,9 @@ namespace Assets.Game
         {
 
         }
+        public static void Update(float time)
+        {
+
+        }
     }
 }

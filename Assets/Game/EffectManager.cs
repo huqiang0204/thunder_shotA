@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assets.Game
 {
-    public class EnemyManager
+    public class EffectManager
     {
-        public static void CreateEnemy(int code)
-        {
-
-        }
         public static void Update(float time)
         {
 
