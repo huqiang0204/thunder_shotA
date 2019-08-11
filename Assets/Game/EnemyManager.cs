@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,15 @@ namespace Assets.Game
 {
     public class EnemyManager
     {
+        public static void Initial(ModelElement parent)
+        {
+
+        }
         public static void CreateEnemy(int code)
+        {
+
+        }
+        public static void CreateEnemy(string code)
         {
 
         }

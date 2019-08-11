@@ -1,4 +1,5 @@
 ﻿using huqiang;
+using huqiang.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,12 @@ namespace Assets.Game
 {
     public class BulletManager
     {
+        static ModelElement root;
+        public static void Initial(ModelElement parent)
+        {
+            root = ModelElement.CreateNew("bullet");
+            root.SetParent(parent);
+        }
         static List<BulletCarrier> carriers;
         public static void Shot(Carrier car, Vector3 position,float angle,int code)
         {
@@ -70,7 +77,7 @@ namespace Assets.Game
         }
         static BulletCarrier CreateCarrier(int code)
         {
-            BulletCarrier carrier = new BulletCarrier(code,FindFunc(code));
+            BulletCarrier carrier = new BulletCarrier(root, code,FindFunc(code));
             carriers.Add(carrier);
             return carrier;
         }

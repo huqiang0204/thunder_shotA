@@ -14,11 +14,12 @@ namespace Assets.Game
         public ModelElement model;
         public string txtName;
         public string spName;
-        public BulletCarrier(int code,Func<Bullet> func)
+        public BulletCarrier(ModelElement parent, int code,Func<Bullet> func)
         {
             Code = code;
             Func = func;
             var mod = ModelElement.CreateNew(code.ToString());
+            mod.SetParent(parent);
             mod.data.sizeDelta = new Vector2(400, 400);
             var img = mod.AddComponent<ShareImageElement>();
             img.ChangeTexture("enemy", "base.unity3d");

@@ -28,6 +28,11 @@ namespace Assets.Game
             root = ModelElement.CreateNew("root");
             root.Apply();
             root.Context.SetParent(UIRoot);
+            FighterManager.Initial(root);
+            EnemyManager.Initial(root);
+            BulletManager.Initial(root);
+            EffectManager.Initial(root);
+            PropsManager.Initial(root);
         }
         public static void Update()
         {
@@ -51,6 +56,10 @@ namespace Assets.Game
             EffectManager.Update(delta);
             PropsManager.Update(delta);
             root.VertexCalculation();
+        }
+        public static void Dispose()
+        {
+
         }
     }
 }

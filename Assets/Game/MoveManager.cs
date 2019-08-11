@@ -19,7 +19,6 @@ namespace Assets.Game
                     bullet.render.data.localPosition.y += v.y;
                     break;
             }
-
         }
     }
 }

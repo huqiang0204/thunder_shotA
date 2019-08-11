@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,10 @@ namespace Assets.Game
 {
     public class PropsManager
     {
+        public static void Initial(ModelElement parent)
+        {
+        
+        }
         public static void Update(float time)
         {
 

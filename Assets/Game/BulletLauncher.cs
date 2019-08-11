@@ -34,7 +34,6 @@ namespace Assets.Game
         /// 子弹发射点
         /// </summary>
         public ShotPoint[] shots;
-
         public float cd;
         public virtual void Update(float time)
         {
