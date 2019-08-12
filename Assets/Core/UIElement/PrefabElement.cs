@@ -15,8 +15,18 @@ namespace huqiang.UI
         public static int Size = sizeof(PrefabData);
         public static int ElementSize = Size / 4;
     }
+    public class PrefabScript
+    {
+        public virtual void Start()
+        {
+        }
+        public virtual void Update()
+        {
+        }
+    }
     public class PrefabElement:DataConversion
     {
+        public PrefabScript script;
         public string AssetsName;
         public string PrefabName;
         PrefabData data;
@@ -41,8 +51,13 @@ namespace huqiang.UI
                     {
                         Context = GameObject.Instantiate(ins);
                         model.Context = Context.transform as RectTransform;
+                        if (script != null)
+                            script.Start();
                     }
                 }
+            }else if(script!=null)
+            {
+                script.Update();
             }
         }
     }
