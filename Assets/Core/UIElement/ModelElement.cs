@@ -558,6 +558,10 @@ namespace huqiang.UI
         /// 当此物体为非实体时,不予创建GameObject
         /// </summary>
         public bool Entity = true;
+        /// <summary>
+        /// 自动回收
+        /// </summary>
+        public bool AutoRecycle = true;
         protected bool _active = true;
         public bool activeSelf { get { return _active; } set { if (_active == value) return; IsChanged = true; _active = value; } }
 

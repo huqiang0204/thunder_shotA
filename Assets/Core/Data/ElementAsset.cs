@@ -246,5 +246,23 @@ namespace huqiang.Data
                 }
             }
         }
+        public static T LoadAssets<T>(string bundle, string name) where T : UnityEngine.Object
+        {
+            if (bundle == null)
+            {
+                return UnityEngine.Resources.Load<T>(name);
+            }
+            if (bundles == null)
+                return null;
+            for (int i = 0; i < bundles.Count; i++)
+            {
+                var tmp = bundles[i];
+                if (bundle == tmp.name)
+                {
+                    return tmp.LoadAsset<T>(name);
+                }
+            }
+            return null;
+        }
     }
 }
