@@ -220,15 +220,13 @@ namespace huqiang.UI
                     i++;
                     int type = coms[i];
                     var fs = buff.GetData(index) as FakeStruct;
-                    if (fs != null)
+                    var dc = ModelManagerUI.Load(type);
+                    if (dc != null)
                     {
-                        var dc = ModelManagerUI.Load(type);
-                        if (dc != null)
-                        {
-                            dc.model = this;
+                        dc.model = this;
+                        if (fs != null)
                             dc.Load(fs);
-                            components.Add(dc);
-                        }
+                        components.Add(dc);
                     }
                 }
             }
@@ -262,7 +260,7 @@ namespace huqiang.UI
             }
             LoadToObject(Context, ref data, this);
         }
-        static void LoadToObject(RectTransform com, ref ElementData data, ModelElement ui)
+        public static void LoadToObject(RectTransform com, ref ElementData data, ModelElement ui)
         {
             var trans = com as RectTransform;
             trans.anchoredPosition = data.anchoredPosition;
