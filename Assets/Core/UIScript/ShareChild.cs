@@ -61,7 +61,7 @@ public class ShareChild : MonoBehaviour
         buff[3].color = color;
 
         var q = rect.localRotation * quate;
-        if (sprite != null)
+        if (gameObject.activeSelf & sprite != null)
         {
             buff[0].position = q * new Vector3(left, down) + pos;
             buff[1].position = q * new Vector3(left, top) + pos;
