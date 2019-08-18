@@ -59,8 +59,8 @@ public class ShareChild : MonoBehaviour
         buff[1].color = color;
         buff[2].color = color;
         buff[3].color = color;
-
-        var q = rect.localRotation * quate;
+        ///注意顺序quate要放前面
+        var q = quate * rect.localRotation;
         if (gameObject.activeSelf & sprite != null)
         {
             buff[0].position = q * new Vector3(left, down) + pos;
