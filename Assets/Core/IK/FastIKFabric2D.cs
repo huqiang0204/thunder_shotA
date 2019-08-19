@@ -115,10 +115,14 @@ namespace Assets.Core.IK
                 return;
             Target = transform as RectTransform;
 
+            if (Bones == null)
+                Init();
+            else
             if (BonesLength.Length != ChainLength)
                 Init();
-
-            Root = End;
+            if (Root == null)
+                return;
+            //Root = End;
             //Fabric
 
             //  root
