@@ -14,10 +14,11 @@ namespace Assets.Core.IK
         /// </summary>
         public int ChainLength = 2;
 
+        public RectTransform End;
         /// <summary>
         /// Target the chain should bent to
         /// </summary>
-        public RectTransform Target;
+        RectTransform Target;
         public RectTransform Pole;
 
         /// <summary>
@@ -51,6 +52,7 @@ namespace Assets.Core.IK
         // Start is called before the first frame update
         void Awake()
         {
+            Target = transform as RectTransform;
             Init();
         }
 
@@ -64,7 +66,7 @@ namespace Assets.Core.IK
             StartRotationBone = new Quaternion[ChainLength + 1];
 
             //find root
-            Root = transform as RectTransform;
+            Root = End;
             for (var i = 0; i <= ChainLength; i++)
             {
                 if (Root == null)
@@ -73,16 +75,11 @@ namespace Assets.Core.IK
             }
 
             //init target
-            if (Target == null)
-            {
-                Target = new GameObject(gameObject.name + " Target",typeof(RectTransform)).transform as RectTransform;
-                SetPositionRootSpace(Target, GetPositionRootSpace(transform as RectTransform));
-            }
             StartRotationTarget = GetRotationRootSpace(Target);
 
 
             //init data
-            var current = transform as RectTransform;
+            var current = End;
             CompleteLength = 0;
             for (var i = Bones.Length - 1; i >= 0; i--)
             {
@@ -112,14 +109,16 @@ namespace Assets.Core.IK
             ResolveIK();
         }
 
-        private void ResolveIK()
+        public void ResolveIK()
         {
-            if (Target == null)
+            if (End == null)
                 return;
+            Target = transform as RectTransform;
 
             if (BonesLength.Length != ChainLength)
                 Init();
 
+            Root = End;
             //Fabric
 
             //  root
@@ -232,14 +231,14 @@ namespace Assets.Core.IK
         void OnDrawGizmos()
         {
 #if UNITY_EDITOR
-            var current = this.transform;
+            var current = End;
             for (int i = 0; i < ChainLength && current != null && current.parent != null; i++)
             {
                 var scale = Vector3.Distance(current.position, current.parent.position) * 0.1f;
                 Handles.matrix = Matrix4x4.TRS(current.position, Quaternion.FromToRotation(Vector3.up, current.parent.position - current.position), new Vector3(scale, Vector3.Distance(current.parent.position, current.position), scale));
                 Handles.color = Color.green;
                 Handles.DrawWireCube(Vector3.up * 0.5f, Vector3.one);
-                current = current.parent;
+                current = current.parent as RectTransform;
             }
         }
 #endif
