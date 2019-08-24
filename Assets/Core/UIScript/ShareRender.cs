@@ -15,23 +15,26 @@ public class ShareRender:MonoBehaviour
     public List<ShareElement> elements = new List<ShareElement>();
     public Texture2D texture;
     public string textureName;
-    private void Awake()
+    private void Initial()
     {
         filter = GetComponent<MeshFilter>();
         render = GetComponent<MeshRenderer>();
         mesh = filter.mesh;
         render.material = new Material(Shader.Find("UI/Default"));
-        if(texture!=null)
+        if (texture != null)
         {
             textureName = texture.name;
             render.material.mainTexture = texture;
         }
-       
     }
-    List<Vector3> Vertex = new List<Vector3>();
-    List<Vector2> UV = new List<Vector2>();
-    List<Color> Colors = new List<Color>();
-    List<int> Tri = new List<int>();
+    private void Awake()
+    {
+        Initial();
+    }
+    public List<Vector3> Vertex = new List<Vector3>();
+    public List<Vector2> UV = new List<Vector2>();
+    public List<Color> Colors = new List<Color>();
+    public List<int> Tri = new List<int>();
     public Vector3 Position;
     public void VertexCalculation()
     {
@@ -62,6 +65,8 @@ public class ShareRender:MonoBehaviour
     }
     public void Aplly()
     {
+        if (mesh == null)
+            Initial();
         mesh.triangles = null;
         if (Vertex == null)
             return;

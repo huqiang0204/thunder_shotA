@@ -7,6 +7,7 @@ namespace UGUI
 {
     public class ShareImage : CustomRawImage
     {
+        
     }
 }
 
