@@ -52,7 +52,7 @@ namespace Assets.Game
         /// </summary>
         public void MeshComplete()
         {
-            model.VertexCalculation();
+            
         }
         /// <summary>
         /// 应用网格

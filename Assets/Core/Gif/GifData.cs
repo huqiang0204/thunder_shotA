@@ -1,16 +1,4 @@
-﻿/*  Copyright © 2016 Graeme Collins. All Rights Reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-3. The name of the author may not be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY GRAEME COLLINS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class GifData
@@ -24,7 +12,7 @@ public class GifData
     public int globalColorTableSize;
     public int backgroundColorIndex;
     public int pixelAspectRatio;
-    public GifColor[] globalColorTable;
+    public Color[] globalColorTable;
 
     public List<GifGraphicsControlExtension> graphicsControlExtensions;
     public List<GifImageDescriptor> imageDescriptors;
@@ -35,5 +23,99 @@ public class GifData
         graphicsControlExtensions = new List<GifGraphicsControlExtension>();
         imageDescriptors = new List<GifImageDescriptor>();
         imageDatas = new List<GifImageData>();
+    }
+    public Color[] previousFrame;
+    public Color[] currentFrame;
+    public Color[] transparentFrame;
+    static void CalculColors(GifData gifData,int index)
+    {
+        Color[] previousFrame = gifData.previousFrame;
+        if (previousFrame == null)
+            previousFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
+        Color[] currentFrame = gifData.currentFrame;
+        if (currentFrame == null)
+            currentFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
+        Color[] transparentFrame = gifData.transparentFrame;
+        if (transparentFrame == null)
+            transparentFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
+
+        GifGraphicsControlExtension graphicsControlExt = gifData.graphicsControlExtensions[index];
+        GifImageDescriptor imageDescriptor = graphicsControlExt.imageDescriptor;
+        GifImageData imageData = imageDescriptor.imageData;
+        int top = imageDescriptor.imageTop;
+        int left = imageDescriptor.imageLeft;
+        int disposalMethod = graphicsControlExt.disposalMethod;
+
+        int transparencyIndex = graphicsControlExt.transparentColorFlag ? graphicsControlExt.transparentColorIndex : -1;
+        Color[] colorTabel = imageData.imageDescriptor.localColorTableFlag ? imageData.imageDescriptor.localColorTable : gifData.globalColorTable;
+
+        for (int j = 0; j < imageDescriptor.imageWidth; j++)
+        {
+            for (int k = 0; k < imageDescriptor.imageHeight; k++)
+            {
+                int x = left + j;
+                int y = (gifData.canvasHeight - 1) - (top + k);
+                int colorIndex = imageData.colorIndices[j + k * imageDescriptor.imageWidth];
+                int pixelOffset = x + y * gifData.canvasWidth;
+
+                if (colorIndex != transparencyIndex)
+                {
+                    currentFrame[pixelOffset] = colorTabel[colorIndex];
+                }
+            }
+        }
+
+        currentFrame.CopyTo(previousFrame, 0);
+        if (disposalMethod == 0 || disposalMethod == 2)
+        {
+            currentFrame = new Color[currentFrame.Length];
+            imageData.colors = currentFrame;
+        }
+        else
+        {
+            imageData.colors = new Color[currentFrame.Length];
+            currentFrame.CopyTo(imageData.colors, 0);
+        }
+        gifData.previousFrame = previousFrame;
+        gifData.currentFrame = currentFrame;
+        gifData.transparentFrame = transparentFrame;
+    }
+    void Decode(int index)
+    {
+        var dat = graphicsControlExtensions[index].imageData;
+        dat.decode();
+        CalculColors(this, index);
+    }
+    int decodeCount = 0;
+    public bool DecodeNext()
+    {
+        if(decodeCount<graphicsControlExtensions.Count)
+        {
+            Decode(decodeCount);
+            decodeCount++;
+            return true;
+        }
+        return false;
+    }
+    public List<Texture2D> textures;
+    int createCount = 0;
+    public void CreateNextTexture()
+    {
+        if (textures == null)
+            textures = new List<Texture2D>();
+        int c = decodeCount;
+        for (int i = createCount; i < c; i++)
+        {
+            GifGraphicsControlExtension graphicsControlExt = graphicsControlExtensions[i];
+            GifImageDescriptor imageDescriptor = graphicsControlExt.imageDescriptor;
+            GifImageData imageData = imageDescriptor.imageData;
+
+            Texture2D texture = new Texture2D(canvasWidth, canvasHeight);
+            texture.SetPixels(imageData.colors);
+            texture.Apply();
+            texture.filterMode = FilterMode.Point;
+            textures.Add(texture);
+        }
+        createCount = c;
     }
 }

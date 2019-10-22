@@ -393,7 +393,7 @@ public static class UICompositeMenu
         txt.alignment = TextAnchor.MiddleLeft;
         txt.fontSize = 24;
     }
-    [MenuItem("GameObject/UIComposite/DropDownEx", false, 9)]
+    [MenuItem("GameObject/UIComposite/DropDown", false, 9)]
     static public void AddDropDown(MenuCommand menuCommand)
     {
         GameObject parent = menuCommand.context as GameObject;
@@ -691,7 +691,9 @@ public static class UICompositeMenu
         (Items.transform as RectTransform).sizeDelta = new Vector2(100,50);
         ss = Items.AddComponent<SizeScaleEx>();
         ss.marginType = MarginType.MarginX;
+        Items.AddComponent<UILayout>().type = huqiang.UI.LayoutType.StackPanelH;
         Items.AddComponent<RectMask2D>();
+       
 
         var Item = new GameObject("Item",typeof(RectTransform));
         Item.transform.SetParent(Head.transform);
@@ -760,6 +762,6 @@ public static class UICompositeMenu
             rect.SetParent(parent.transform);
         rect.localPosition = Vector3.zero;
         rect.localScale = Vector3.one;
-        ss.AddComponent<ShareChild>();
+        ss.AddComponent<ShareImageChild>();
     }
 }

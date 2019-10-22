@@ -349,5 +349,67 @@ namespace huqiang
             fs.Write(buf, 0, buf.Length);
             fs.Dispose();
         }
+        public static string ReadObject(string str, ref int start)
+        {
+            int ss = start;
+            int a = 0;
+            int b = 0;
+            for (int i = start; i < str.Length; i++)
+            {
+                if (str[i] == '{')
+                {
+                    if (a == 0)
+                    {
+                        ss = i;
+                    }
+                    a++;
+                }
+                else if (str[i] == '}')
+                {
+                    b++;
+                    if (b == a)
+                    {
+                        start = i + 1;
+                        return str.Substring(ss, start - ss);
+                    }
+                }
+            }
+            return "";
+        }
+        public static List<T> ReadJsonList<T>(string str) where T : class, new()
+        {
+            List<T> list = new List<T>();
+            int s = 0;
+            string t = ReadObject(str, ref s);
+            while (t != "")
+            {
+                list.Add(JsonUtility.FromJson<T>(t));
+                t = ReadObject(str, ref s);
+            }
+            return list;
+        }
+        private static char[] HexChar = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+        /// <summary>
+        /// 字节数组转16进制字符串
+        /// </summary>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static String bytesToHexString(byte[] b)
+        {
+            int len = b.Length;
+            char[] result = new char[len * 2];
+            int s = 0;
+            for (int i = 0; i < len; i++)
+            {
+                int a = b[i];
+                int h = a >> 4;
+                int l = a & 0xf;
+                result[s] = HexChar[h];
+                s++;
+                result[s] = HexChar[l];
+                s++;
+            }
+            return new string(result);
+        }
     }
 }

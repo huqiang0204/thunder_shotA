@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -225,30 +226,6 @@ namespace huqiang
                 else ani.PlayOver = over;
             }
             ani.Play();
-        }
-        public static GifAnimat Findt2dsAni(this RawImage raw)
-        {
-            if (raw == null)
-                return null;
-            raw.gameObject.SetActive(true);
-           return AnimationManage.Manage.FindAni<GifAnimat>((o) => { return o.image == raw ? true : false; });
-        }
-        public static void Play(this RawImage raw, List<Texture2D> t2ds,float inter, Action<GifAnimat> over = null,bool hide=true,bool cover=true)
-        {
-            if (raw == null)
-                return;
-            raw.gameObject.SetActive(true);
-            var ani = AnimationManage.Manage.FindAni<GifAnimat>((o) => { return o.image == raw ? true : false; });
-            if (ani == null)
-            {
-                ani = new GifAnimat(raw);
-                if (over == null)
-                    ani.PlayOver = (o) => { o.Dispose(); };
-                else ani.PlayOver = over;
-            }
-            else if (!cover)
-                return;
-            ani.Play(t2ds);
         }
     }
 }

@@ -84,12 +84,16 @@ namespace huqiang.UI
         }
         public static FakeStruct LoadFromObject(Component com, DataBuffer buffer, ref Int16 type)
         {
+            if (com == null)
+                return null;
             string name = com.GetType().Name;
             for (int i = 0; i < point; i++)
             {
                 if (types[i].name==name)
                 {
                     type = (Int16)i;
+                    if (com is DataStorage)
+                        return (com as DataStorage).ToBufferData(buffer);
                     if (types[i].Load != null)
                         return types[i].Load(com, buffer);
                     return null;
@@ -167,14 +171,25 @@ namespace huqiang.UI
                     var mod= models.Find(name);
                     if(mod!=null)
                     {
+                        List<AssociatedInstance> table = new List<AssociatedInstance>();
                         ModelElement model = new ModelElement();
-                        model.Load(mod.ModData);
+                        model.Clone(mod.ModData,table);
+                        RestoringRelationships(model,table);
                         return model;
                     }
                     return null;
                 }
             }
             return null;
+        }
+        static void RestoringRelationships(ModelElement model,List<AssociatedInstance> table)
+        {
+            var coms = model.components;
+            for (int i = 0; i < coms.Count; i++)
+                coms[i].RestoringRelationships(table);
+            var child = model.child;
+            for (int i = 0; i < child.Count; i++)
+                RestoringRelationships(child[i], table);
         }
         static ModelBuffer CreateModelBuffer(Int64 type, Int32 size = 32)
         {
@@ -340,7 +355,7 @@ namespace huqiang.UI
                     {
                         if(mod.AutoRecycle)
                         {
-                            long type = mod.data.type;
+                            long type = mod.EnityType;
                             for (int i = 0; i < models.Count; i++)
                             {
                                 if (models[i].type == type)
@@ -389,7 +404,7 @@ namespace huqiang.UI
     public abstract class ModelInital
     {
         public ModelElement Model;
-        public virtual void Initial(ModelElement mod) { }
+        public virtual void Initial(ModelElement mod) { Model = mod; }
     }
     public class TypeContext
     {

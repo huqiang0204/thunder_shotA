@@ -1,13 +1,23 @@
-﻿using huqiang.UI;
+﻿using huqiang.Data;
+using huqiang.UI;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using UGUI;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace huqiang.UIEvent
 {
+    public unsafe struct TextInputData
+    {
+        public Color inputColor;
+        public Color tipColor;
+        public Color pointColor;
+        public Color selectColor;
+        public Int32 inputString;
+        public Int32 tipString;
+        public static int Size = sizeof(TextInputData);
+        public static int ElementSize = Size / 4;
+    }
     public partial class TextInput:EventCallBack
     {
         public enum ContentType
@@ -54,7 +64,11 @@ namespace huqiang.UIEvent
                 value = ValidateString(value);
                 textInfo.buffer.FullString = value;
                 textInfo.text = value;
+                textInfo.startSelect = 0;
+                textInfo.endSelect = -1;
                 SetShowText();
+                textChanged = true;
+                selectChanged = true;
             } }
         public string TipString
         {
@@ -65,27 +79,31 @@ namespace huqiang.UIEvent
                 SetShowText();
             }
         }
+        public EmojiString emojiString { get { return textInfo.buffer; } }
         void SetShowText()
         {
             if (textInfo.text == ""|textInfo.text==null)
             {
+                TextCom.color = TipColor;
                 TextCom.text = m_TipString;
-                TextCom.data.color = TipColor;
             }
             else
             {
-                TextCom.text = textInfo.text;
-                TextCom.data.color = textColor;
+                TextCom.color = textColor;
+                TextCom.text = textInfo.ShowString.FullString;
             }
         }
         public bool ReadOnly;
         Color textColor=Color.black;
         Color m_tipColor = new Color(0, 0, 0, 0.8f);
         public Color TipColor { get { return m_tipColor; } set { m_tipColor = value;} }
-        public Color SelectionColor = new Color(0.65882f, 0.8078f, 1, 0.4f);
+        public Color PointColor = Color.white;
+        public Color SelectionColor = new Color(0.65882f, 0.8078f, 1, 0.2f);
         public Func<TextInput, int, char, char> ValidateChar;
         public Action<TextInput> OnValueChanged;
         public Action<TextInput> OnSubmit;
+        public Action<TextInput> OnDone;
+        public Action<TextInput> LineChanged;
         public Action<TextInput, UserAction> OnSelectChanged;
         public Action<TextInput, UserAction> OnSelectEnd;
         public InputType inputType = InputType.Standard;
@@ -189,6 +207,8 @@ namespace huqiang.UIEvent
         public CharacterValidation characterValidation = CharacterValidation.None;
         public TouchScreenKeyboardType touchType = TouchScreenKeyboardType.Default;
         public int CharacterLimit = 0;
+        float overDistance = 500;
+        float overTime = 0;
         public TextInput()
         {
             Click = OnClick;
@@ -196,47 +216,111 @@ namespace huqiang.UIEvent
         }
         protected override void Initial()
         {
-            var txt= TextCom = Context.GetComponent<TextElement>();
+            var txt = TextCom = Context.GetComponent<TextElement>();
             InputString = txt.text;
             textColor = txt.data.color;
+            var fake = txt.model.GetExtand() as FakeStruct;
+            if(fake!=null)
+            {
+                unsafe
+                {
+                    TextInputData* tp = (TextInputData*)fake.ip;
+                    textColor = tp->inputColor;
+                    m_tipColor = tp->tipColor;
+                    InputString =fake.buffer.GetData(tp->inputString)as string;
+                    TipString = fake.buffer.GetData(tp->tipString)as string;
+                    PointColor = tp->pointColor;
+                    SelectionColor = tp->selectColor;
+                }
+            }
+            AutoColor = false;
         }
         public TextElement TextCom { get; private set; }
         public override void OnMouseDown(UserAction action)
         {
+            overTime = 0;
             if (TextCom != null)
             {
-                textInfo.startSelect = GetPressIndex(textInfo, this, action,ref textInfo.startDock);
+                textInfo.startSelect = GetPressIndex(textInfo, this, action,ref textInfo.startDock)+textInfo.StartIndex;
                 Editing = true;
+                selectChanged = true;
+                textInfo.CaretStyle = 0;
             }
             base.OnMouseDown(action);
         }
-        int a = 0;
         protected override void OnDrag(UserAction action)
         {
-            a++;
-            if (a < 2)
-                return;
-            a = 0;
             if (Pressed)
                 if (TextCom != null)
                 {
-                    if (entry)
+                    if (action.Motion != Vector2.zero)
                     {
-                        if (action.Motion != Vector2.zero)
+                        textInfo.CaretStyle = 2;
+                        int end = textInfo.endSelect;
+                        textInfo.endSelect = GetPressIndex(textInfo, this, action, ref textInfo.endDock)+textInfo.StartIndex;
+                        if (end != textInfo.endSelect)
                         {
-                            textInfo.CaretStyle = 2;
+                            Selected();
+                            if (OnSelectChanged != null)
+                                OnSelectChanged(this, action);
+                            selectChanged = true;
+                        }
+                    }else if(!entry)
+                    {
+                        float oy = action.CanPosition.y - GlobalPosition.y;
+                        float py = GlobalScale.y * TextCom.model.data.sizeDelta.y * 0.5f;
+                        if (oy > 0)
+                            oy -= py;
+                        else oy += py;
+                        if (oy > overDistance)
+                            oy = overDistance;
+                        float per = 50000 / oy;
+                        if (per < 0)
+                            per = -per;
+                        overTime += UserAction.TimeSlice;
+                        if (overTime >= per)
+                        {
+                            overTime -= per;
+                            if(oy>0)
+                            {
+                                textInfo.StartLine--;
+                            }
+                            else
+                            {
+                                textInfo.StartLine++;
+                            }
                             int end = textInfo.endSelect;
-                            textInfo.endSelect = GetPressIndex(textInfo, this,  action,ref textInfo.endDock);
-                            if (end !=textInfo.endSelect)
+                            textInfo.endSelect = GetPressIndex(textInfo, this, action, ref textInfo.endDock) + textInfo.StartIndex;
+                            if (end != textInfo.endSelect)
                             {
                                 Selected();
                                 if (OnSelectChanged != null)
                                     OnSelectChanged(this, action);
-                                ThreadMission.InvokeToMain((o)=> { InputCaret.ChangeCaret(textInfo); },null);
+                                selectChanged = true;
                             }
+                            lineChanged = true;
+                            if (LineChanged != null)
+                                LineChanged(this);
                         }
                     }
                 }
+            base.OnDrag(action);
+        }
+        internal override void OnMouseWheel(UserAction action)
+        {
+            float oy = action.MouseWheelDelta;
+            if (oy > 0)
+            {
+                textInfo.StartLine--;
+            }
+            else
+            {
+                textInfo.StartLine++;
+            }
+            lineChanged = true;
+            if (LineChanged != null)
+                LineChanged(this);
+            base.OnMouseWheel(action);
         }
         internal override void OnDragEnd(UserAction action)
         {
@@ -253,11 +337,45 @@ namespace huqiang.UIEvent
                 if (x < ClickArea)
                     return;
             }
-            textInfo.endSelect= GetPressIndex(textInfo, this,action,ref textInfo.endDock);
+            textInfo.endSelect = GetPressIndex(textInfo, this, action, ref textInfo.endDock)+textInfo.StartIndex;
             Selected();
+            selectChanged = true;
             if (OnSelectEnd != null)
                 OnSelectEnd(this, action);
-            ThreadMission.InvokeToMain((o) => { InputCaret.ChangeCaret(textInfo); }, null);
+            base.OnDragEnd(action);
+        }
+        void OnClick(EventCallBack eventCall, UserAction action)
+        {
+            TextInput input = eventCall as TextInput;
+            if (input == null)
+                return;
+            InputEvent = input;
+            textInfo.startSelect = GetPressIndex(textInfo, this, action, ref textInfo.startDock)+textInfo.StartIndex;
+            textInfo.endSelect = -1;
+            textInfo.CaretStyle = 1;
+            selectChanged = true;
+            ThreadMission.InvokeToMain((o) => {
+                bool pass = InputEvent.contentType == ContentType.Password ? true : false;
+                Keyboard.OnInput(textInfo.text, InputEvent.touchType, InputEvent.multiLine, pass, CharacterLimit);
+                InputCaret.SetParent(Context.Context);
+                InputCaret.ChangeCaret(textInfo);
+            }, null);
+        }
+        void OnLostFocus(EventCallBack eventCall, UserAction action)
+        {
+            TextInput text = eventCall as TextInput;
+            if (text == InputEvent)
+            {
+                if (InputEvent.OnDone != null)
+                    InputEvent.OnDone(InputEvent);
+                InputEvent = null;
+            }
+            Editing = false;
+            SetShowText();
+            ThreadMission.InvokeToMain((o) => {
+                Keyboard.EndInput();
+                InputCaret.Hide();
+            }, null);
         }
         string ValidateString(string input)
         {
@@ -305,7 +423,8 @@ namespace huqiang.UIEvent
             textInfo.text = textInfo.buffer.FullString;
             SetShowText();
             textInfo.CaretStyle = 1;
-            ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
+            selectChanged = true;
+            textChanged = true;
             return input;
         }
         string TouchInputChanged(string input)
@@ -318,40 +437,12 @@ namespace huqiang.UIEvent
             textInfo.text = textInfo.buffer.FullString;
             SetShowText();
             textInfo.CaretStyle = 1;
-            ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
+            //ChangePoint(textInfo);
+            selectChanged = true;
+            textChanged = true;
             return input;
         }
-        void OnClick(EventCallBack eventCall, UserAction action)
-        {
-            TextInput input = eventCall as TextInput;
-            if (input == null)
-                return;
-            InputEvent = input;
-            textInfo.startSelect = GetPressIndex(textInfo, this, action,ref textInfo.startDock);
-            textInfo.endSelect = -1;
-            textInfo.CaretStyle = 1;
-            ChangePoint(textInfo);
-            ThreadMission.InvokeToMain((o) => {
-                bool pass = InputEvent.contentType == ContentType.Password ? true : false;
-                Keyboard.OnInput(textInfo.text, InputEvent.touchType, InputEvent.multiLine, pass, CharacterLimit);
-                InputCaret.SetParent(Context.Context);
-                InputCaret.ChangeCaret(textInfo);
-            },null);
-        }
         public bool Editing;
-        void OnLostFocus(EventCallBack eventCall, UserAction action)
-        {
-            TextInput text = eventCall as TextInput;
-            if (text == InputEvent)
-            {
-                if (InputEvent.OnSubmit != null)
-                    InputEvent.OnSubmit(InputEvent);
-                InputEvent = null;
-            }
-            Editing = false;
-            SetShowText();
-            ThreadMission.InvokeToMain((o)=> { Keyboard.EndInput(); },null);
-        }
         public static void SetCurrentInput(TextInput input, UserAction action)
         {
             if (input == null)
@@ -369,8 +460,25 @@ namespace huqiang.UIEvent
             textInfo.selectVertex.Clear();
             textInfo.selectTri.Clear();
             textInfo.CaretStyle = 2;
-            GetChoiceArea(textInfo);
+            selectChanged = true;
         }
+        bool textChanged;
+        bool selectChanged;
+        bool lineChanged;
+        public string SelectString { get  {
+                if (textInfo.endSelect == -1)
+                    return "";
+                int s = textInfo.startSelect;
+                int e = textInfo.endSelect;
+                if(s>e)
+                {
+                    var t = e;
+                    e = s;
+                    s = t;
+                }
+                int c = e - s;
+                return textInfo.buffer.SubString(s,c);
+            } }
         TextInfo textInfo = new TextInfo();
         void SetSelectPoint(int index)
         {
@@ -385,8 +493,113 @@ namespace huqiang.UIEvent
             textInfo.startSelect = index;
             textInfo.endSelect = -1;
             textInfo.CaretStyle = 1;
-            ChangePoint(textInfo);
-            ThreadMission.InvokeToMain((o) => { InputCaret.ChangeCaret(textInfo); }, null);
+            if (index < textInfo.StartIndex)
+            {
+                textInfo.StartLine--;
+                lineChanged = true;
+                if (LineChanged != null)
+                    LineChanged(this);
+            }
+            else if(index > textInfo.EndIndex)
+            {
+                textInfo.StartLine++;
+                lineChanged = true;
+                if (LineChanged != null)
+                    LineChanged(this);
+            }
+            selectChanged = true;
+            var lines = textInfo.fullLines;
+            if(lines!=null)
+            {
+                int i = lines.Length - 1;
+                int start = textInfo.startSelect;
+                for (; i >= 0; i--)
+                {
+                    int t = lines[i].startCharIdx;
+                    if (t <= start)
+                    {
+                        textInfo.lineIndex = start - t;
+                        break;
+                    }
+                }
+            }
+        }
+        void MoveUp()
+        {
+            var lines = textInfo.fullLines;
+            if (lines != null)
+            {
+                int start = textInfo.startSelect;
+                int i = lines.Length - 1;
+                for (; i >=1; i--)
+                {
+                    int t = lines[i].startCharIdx;
+                    if (t<=start)
+                    {
+                        if (i > 0)
+                        {
+                            int a = lines[i - 1].startCharIdx + textInfo.lineIndex;
+                            if (a >= t)
+                                a = t - 1;
+                            if (a < textInfo.StartIndex)
+                            {
+                                textInfo.StartLine--;
+                                lineChanged = true;
+                                if (LineChanged != null)
+                                    LineChanged(this);
+                            }
+                            textInfo.startSelect = a;
+                            selectChanged = true;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        void MoveDown()
+        {
+            var lines = textInfo.fullLines;
+            if (lines != null)
+            {
+                int start = textInfo.startSelect;
+                int c= lines.Length - 1;
+                for (int i=c-1; i >= 0; i--)
+                {
+                    int t = lines[i].startCharIdx;
+                    if (t <= start)
+                    {
+                        if (i <c)
+                        {
+                            int a = lines[i + 1].startCharIdx + textInfo.lineIndex;
+                            if (a >= textInfo.buffer.Length)
+                                a = textInfo.buffer.Length;
+                            else if (i < c - 1)
+                            {
+                                int s = lines[i + 2].startCharIdx;
+                                if (a >= s)
+                                    a = s - 1;
+                            }
+                            if (a > textInfo.EndIndex)
+                            {
+                                textInfo.StartLine++;
+                                lineChanged = true;
+                                if (LineChanged != null)
+                                    LineChanged(this);
+                            }
+                            textInfo.startSelect = a;
+                            selectChanged = true;
+                        }
+                        else
+                        {
+                            textInfo.StartLine++;
+                            lineChanged = true;
+                            textInfo.startSelect = textInfo.buffer.Length;
+                            selectChanged = true;
+                        }
+                        break;
+                    }
+                }
+            }
         }
         void Delete(int dir)
         {
@@ -411,39 +624,88 @@ namespace huqiang.UIEvent
                 }
             }
             label:;
+            if (OnValueChanged != null)
+                OnValueChanged(this);
             textInfo.text = textInfo.buffer.FullString;
             textInfo.CaretStyle = 1;
-            ThreadMission.InvokeToMain(TextChanged, textInfo, ChangeApplyed);
+            textChanged = true;
+            selectChanged = true;
         }
-        void TextChanged(object obj)
+        void Update()
         {
             var te = TextCom;
             if (te.Context != null)
             {
-                var text = te.Context;
-                text.text = textInfo.text;
-                SetShowText();
-                string str = textInfo.buffer.FilterString;
-                Populate(text, str);
-                var g = text.cachedTextGenerator;
-                UIVertex[] vert = new UIVertex[g.verts.Count];
-                for (int i = 0; i < vert.Length; i++)
-                    vert[i] = g.verts[i];
-                textInfo.vertex = vert;
-                UILineInfo[] us = new UILineInfo[g.lines.Count];
-                for (int i = 0; i < us.Length; i++)
-                    us[i] = g.lines[i];
-                textInfo.lines = us;
-                textInfo.characterCount = g.characterCount;
-                textInfo.visibleCount = g.characterCountVisible;
+                if(textChanged)
+                {
+                    textInfo.fontSize = TextCom.data.fontSize;
+                    textChanged = false;
+                    GetPreferredHeight(TextCom,textInfo);
+                    textInfo.StartLine += textInfo.LineChange;
+                    textInfo.EndLine += textInfo.LineChange;
+                    lineChanged = true;
+                    var lines = textInfo.fullLines;
+                    if (lines != null)
+                    {
+                        int i = lines.Length - 1;
+                        int start = textInfo.startSelect;
+                        for (; i >= 0; i--)
+                        {
+                            int t = lines[i].startCharIdx;
+                            if (t <= start)
+                            {
+                                textInfo.lineIndex = start - t;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(lineChanged)
+                {
+                    lineChanged = false;
+                    FilterPopulate(TextCom, textInfo);
+                    TextCom.text =
+                    TextCom.Context.text = textInfo.ShowString.FullString;
+                }
+                if(selectChanged)
+                {
+                    textInfo.fontSize = TextCom.data.fontSize;
+                    textInfo.caretColor = PointColor;
+                    textInfo.areaColor = SelectionColor;
+                    selectChanged = false;
+                    if (textInfo.CaretStyle == 2)
+                        FilterChoiceArea(TextCom, textInfo);
+                    else ChangePoint(textInfo,this);
+                    InputCaret.ChangeCaret(textInfo);
+                }
             }
         }
-        void ChangeApplyed(object obj)
+        public void SizeChanged()
         {
-            ChangePoint(textInfo);
-            ThreadMission.InvokeToMain((o) => {
-                InputCaret.ChangeCaret(textInfo);
-            }, null);
+            textChanged = true;
+            selectChanged = true;
         }
+        public float Percentage { get {
+                float a = textInfo.LineCount;
+                float b = textInfo.EndLine - textInfo.StartLine;
+                float c = a - b;
+                return b / c; }
+            set {
+                if (value < 0)
+                    value = 0;
+                else if (value > 1)
+                    value = 1;
+                float a = textInfo.LineCount;
+                float b = textInfo.EndLine - textInfo.StartLine;
+                float c = a - b;
+                if (c < 0)
+                    c = 0;
+                int i = (int)(c * value);
+                textInfo.StartLine = i;
+                if(textInfo.StartLine!=i)
+                {
+                    lineChanged = true;
+                }
+            } }
     }
 }

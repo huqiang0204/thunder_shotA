@@ -19,9 +19,11 @@ namespace huqiang
         {
             ModelManagerUI.RegComponent(new ComponentType<RectTransform, ModelElement>(ModelElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Image, ImageElement>(ImageElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<ShareTextChild, ShareTextChildElement>(null));
+            ModelManagerUI.RegComponent(new ComponentType<ShareText, ShareTextElement>(null));
             ModelManagerUI.RegComponent(new ComponentType<EmojiText, EmojiElement>(TextElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Text, TextElement>(TextElement.LoadFromObject));
-            ModelManagerUI.RegComponent(new ComponentType<ShareChild, ShareChildElement>(ShareChildElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<ShareImageChild, ShareImageChildElement>(null));
             ModelManagerUI.RegComponent(new ComponentType<ShareImage, ShareImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<CustomRawImage, RawImageElement>(RawImageElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<RenderImage, RenderImageElement>(RawImageElement.LoadFromObject));
@@ -30,6 +32,7 @@ namespace huqiang
             ModelManagerUI.RegComponent(new ComponentType<Mask, MaskElement>(MaskElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Outline, OutLineElement>(ShadowElement.LoadFromObject));
             ModelManagerUI.RegComponent(new ComponentType<Shadow, ShadowElement>(ShadowElement.LoadFromObject));
+            ModelManagerUI.RegComponent(new ComponentType<UILayout, huqiang.UI.LayoutElement>(null));
         }
         public static RenderForm uiroot;
         static void CreateUI() 
@@ -86,6 +89,7 @@ namespace huqiang
             InputCaret.UpdateCaret();
             Keyboard.DispatchEvent();
             RenderForm.ApplyAll();
+            TextInput.MainDispath();
             ThreadMission.ExtcuteMain();
             ModelManagerUI.RecycleGameObject();
             AnimationManage.Manage.Update();

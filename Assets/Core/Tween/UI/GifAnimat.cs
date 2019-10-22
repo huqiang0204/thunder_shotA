@@ -1,4 +1,5 @@
-﻿using System;
+﻿using huqiang.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,13 +10,14 @@ namespace huqiang
 {
     public class GifAnimat : AnimatInterface
     {
-        public RawImage image;
-        public GifAnimat(RawImage img)
+        public RawImageElement image;
+        public GifAnimat(RawImageElement img)
         {
             image = img;
             AnimationManage.Manage.AddAnimat(this);
         }
         List<Texture2D> texture2s;
+        public int gifCount;
         public void Play(List<Texture2D> gif)
         {
             lifetime = 0;
@@ -25,6 +27,7 @@ namespace huqiang
                 image.texture = texture2s[0];
                 Playing = true;
             }
+            gifCount = gif.Count;
         }
         public void Pause()
         {
@@ -35,15 +38,16 @@ namespace huqiang
         bool Playing;
         float lifetime = 0;
         int index = 0;
+        public int Interval = 66;
         public void Update(float time)
         {
             if (Playing)
             {
-                lifetime += time;
+                float a = lifetime + time;
                 if (texture2s != null)
                 {
-                    int c = (int)lifetime / 66;
-                    if (c >= texture2s.Count)
+                    int c = (int)a / Interval;
+                    if (c >= gifCount)
                     {
                         if (Loop)
                         {
@@ -59,7 +63,11 @@ namespace huqiang
                     }
                     else
                     {
-                        image.texture = texture2s[c];
+                        if (c < texture2s.Count )
+                        {
+                            image.texture = texture2s[c];
+                            lifetime = a;
+                        }
                     }
                 }
             }

@@ -1,16 +1,4 @@
-﻿/*  Copyright © 2016 Graeme Collins. All Rights Reserved.
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
-3. The name of the author may not be used to endorse or promote products derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY GRAEME COLLINS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
-
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -24,8 +12,8 @@ public class GifDecoder
         GifData gifData = new GifData();
 
         gifData.header = Encoding.UTF8.GetString(bytes, 0, 6);
-        gifData.canvasWidth = BitHelper.getInt16FromBytes(bytes, 6);
-        gifData.canvasHeight = BitHelper.getInt16FromBytes(bytes, 8);
+        gifData.canvasWidth = bytes.ReadInt16(6); //BitHelper.getInt16FromBytes(bytes, 6);
+        gifData.canvasHeight = bytes.ReadInt16(8); //BitHelper.getInt16FromBytes(bytes, 8);
         gifData.globalColorTableFlag = BitHelper.getIntFromPackedByte(bytes[10], 0, 1) == 1;
         gifData.bitsPerPixel = BitHelper.getIntFromPackedByte(bytes[10], 1, 4) + 1;
         gifData.sortFlag = BitHelper.getIntFromPackedByte(bytes[10], 4, 5) == 1;
@@ -38,20 +26,20 @@ public class GifDecoder
             gifData.globalColorTable = readColorTable(bytes, 13, 1 << (gifData.globalColorTableSize + 1));
         }
         readBlocks(gifData, bytes);
-
         return gifData;
     }
 
-    static GifColor[] readColorTable(byte[] bytes, int offset, int size)
+    static Color[] readColorTable(byte[] bytes, int offset, int size)
     {
-        GifColor[] colorTable = new GifColor[size];
+        Color[] colorTable = new Color[size];
 
         for (int i = 0; i < size; i++)
         {
             int startIndex = offset + i * 3;
-            GifColor color = new GifColor(bytes[startIndex], bytes[startIndex + 1], bytes[startIndex + 2], 1);
-
-            colorTable[i] = color;
+            colorTable[i].r = ((float)bytes[startIndex])/255;
+            colorTable[i].g = ((float)bytes[startIndex+1])/255;
+            colorTable[i].b = ((float)bytes[startIndex+2])/255;
+            colorTable[i].a = 1;
         }
 
         return colorTable;
@@ -96,7 +84,9 @@ public class GifDecoder
                 }
 
                 // Image data
+
                 imageData = readImageData(gifData, bytes, currentOffset);
+
                 gifData.imageDatas.Add(imageData);
 
                 // Connect graphics control extension, image descriptor, and image data
@@ -108,8 +98,7 @@ public class GifDecoder
                 imageDescriptor.imageData = imageData;
 
                 // Decode image data
-                imageData.decode();
-
+                //imageData.decode();
                 // Advance
                 currentOffset = imageData.endingOffset;
             }
@@ -126,7 +115,7 @@ public class GifDecoder
 
         gce.disposalMethod = BitHelper.getIntFromPackedByte(bytes[offset + 3], 3, 6);
         gce.transparentColorFlag = BitHelper.getIntFromPackedByte(bytes[offset + 3], 7, 8) == 1;
-        gce.delayTime = BitHelper.getInt16FromBytes(bytes, offset + 4);
+        gce.delayTime = bytes.ReadInt16(offset+4); //BitHelper.getInt16FromBytes(bytes, offset + 4);
         gce.transparentColorIndex = bytes[offset + 6];
 
         return gce;
@@ -136,10 +125,10 @@ public class GifDecoder
     {
         GifImageDescriptor id = new GifImageDescriptor(gifData);
 
-        id.imageLeft = BitHelper.getInt16FromBytes(bytes, offset + 1);
-        id.imageTop = BitHelper.getInt16FromBytes(bytes, offset + 3);
-        id.imageWidth = BitHelper.getInt16FromBytes(bytes, offset + 5);
-        id.imageHeight = BitHelper.getInt16FromBytes(bytes, offset + 7);
+        id.imageLeft = bytes.ReadInt16(offset + 1); //BitHelper.getInt16FromBytes(bytes, offset + 1);
+        id.imageTop = bytes.ReadInt16(offset + 3);  //BitHelper.getInt16FromBytes(bytes, offset + 3);
+        id.imageWidth = bytes.ReadInt16(offset + 5);  //BitHelper.getInt16FromBytes(bytes, offset + 5);
+        id.imageHeight = bytes.ReadInt16(offset + 7); //BitHelper.getInt16FromBytes(bytes, offset + 7);
         id.localColorTableFlag = BitHelper.getIntFromPackedByte(bytes[offset + 9], 0, 1) == 1;
         id.interlaceFlag = BitHelper.getIntFromPackedByte(bytes[offset + 9], 1, 2) == 1;
         id.sortFlag = BitHelper.getIntFromPackedByte(bytes[offset + 9], 2, 3) == 1;
@@ -183,15 +172,11 @@ public class GifDecoder
             }
         }
         imgData.endingOffset = subblockOffset;
-
-        //Debug.Log("Number of subblocks read: " + subblockCount);
-
         return imgData;
     }
 
-    static List<Texture2D> createAnimator(GifData gifData)
+    static void CalculColors(GifData gifData)
     {
-        List<Texture2D> sprites = new List<Texture2D>();
         Color[] previousFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
         Color[] currentFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
         Color[] transparentFrame = new Color[gifData.canvasWidth * gifData.canvasHeight];
@@ -205,31 +190,10 @@ public class GifDecoder
             int top = imageDescriptor.imageTop;
             int left = imageDescriptor.imageLeft;
             int disposalMethod = graphicsControlExt.disposalMethod;
-            Texture2D texture = new Texture2D(gifData.canvasWidth, gifData.canvasHeight);
+
             int transparencyIndex = graphicsControlExt.transparentColorFlag ? graphicsControlExt.transparentColorIndex : -1;
+            Color[] colorTabel = imageData.imageDescriptor.localColorTableFlag ? imageData.imageDescriptor.localColorTable : gifData.globalColorTable;
 
-            // Determine base pixels
-            if (i == 0)
-            {
-                texture.SetPixels(transparentFrame);
-            }
-            else
-            {
-                if (disposalMethod == 1)
-                {
-                    texture.SetPixels(previousFrame);
-                }
-                else if (disposalMethod == 2)
-                {
-                    texture.SetPixels(transparentFrame);
-                }
-                else if (disposalMethod == 3)
-                {
-                    throw new NotImplementedException("Disposal method 3 is not implemented.");
-                }
-            }
-
-            // Set pixels from image data
             for (int j = 0; j < imageDescriptor.imageWidth; j++)
             {
                 for (int k = 0; k < imageDescriptor.imageHeight; k++)
@@ -241,34 +205,51 @@ public class GifDecoder
 
                     if (colorIndex != transparencyIndex)
                     {
-                        GifColor gifColor = imageData.getColor(colorIndex);
-
-                        currentFrame[pixelOffset] = new Color(gifColor.r / 255f, gifColor.g / 255f, gifColor.b / 255f);
+                        currentFrame[pixelOffset] = colorTabel[colorIndex];//imageData.getColor(colorIndex);
                     }
                 }
             }
-
             // Set texture pixels and create sprite
-            texture.SetPixels(currentFrame);
-            texture.Apply();
-            texture.filterMode = FilterMode.Point;
-            sprites.Add(texture);
-
             // Store current frame as previous before continuing, and reset current frame
             currentFrame.CopyTo(previousFrame, 0);
             if (disposalMethod == 0 || disposalMethod == 2)
             {
                 currentFrame = new Color[currentFrame.Length];
+                imageData.colors = currentFrame;
             }
+            else
+            {
+                imageData.colors = new Color[currentFrame.Length];
+                currentFrame.CopyTo(imageData.colors,0);
+            }
+        }
+    }
+    static List<Texture2D> CreateAnimator(GifData gifData)
+    {
+        List<Texture2D> sprites = new List<Texture2D>();
+        // Create sprites
+        for (int i = 0; i < gifData.graphicsControlExtensions.Count; i++)
+        {
+            GifGraphicsControlExtension graphicsControlExt = gifData.graphicsControlExtensions[i];
+            GifImageDescriptor imageDescriptor = graphicsControlExt.imageDescriptor;
+            GifImageData imageData = imageDescriptor.imageData;
+
+            Texture2D texture = new Texture2D(gifData.canvasWidth, gifData.canvasHeight);
+    
+            // Set texture pixels and create sprite
+            texture.SetPixels(imageData.colors);
+            texture.Apply();
+            texture.filterMode = FilterMode.Point;
+            sprites.Add(texture);
         }
         return sprites;
     }
-
     public class Mission
     {
         public string tag;
         public byte[] dat;
-        public Action<object> CallBack;
+        public int count;
+        public Action<Mission> CallBack;
         public GifData gifdata;
         public List<Texture2D> texture2Ds;
     }
@@ -278,7 +259,7 @@ public class GifDecoder
     /// <param name="dat"></param>
     /// <param name="tag"></param>
     /// <param name="callback">返回Mission</param>
-    public static void AsyncDecode(byte[] dat,string tag,Action<object> callback)
+    public static void AsyncDecode(byte[] dat,string tag,Action<Mission> callback)
     {
         Mission m = new Mission();
         m.dat = dat;
@@ -291,13 +272,24 @@ public class GifDecoder
     {
         Mission m = mis as Mission;
         m.gifdata = parseGifData(m.dat);
-        ThreadMission.InvokeToMain(DataToTexture,m);
+        m.count = m.gifdata.graphicsControlExtensions.Count;
+        while(m.gifdata.DecodeNext())
+        {
+            //ThreadMission.AddMission();
+            ThreadMission.InvokeToMain(DataToTexture,m);
+        }
+        //CalculColors(m.gifdata);
+        //ThreadMission.InvokeToMain(DataToTexture,m);
     }
     static void DataToTexture(object mis)
     {
         Mission m = mis as Mission;
-        m.texture2Ds= createAnimator(m.gifdata);
-        if (m.CallBack != null)
-            m.CallBack(m);
+        m.gifdata.CreateNextTexture();
+
+        ThreadMission.AddMission((o) =>
+        {
+            if (m.CallBack != null)
+                m.CallBack(m);
+        }, mis, "UI");
     }
 }

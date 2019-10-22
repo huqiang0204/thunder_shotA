@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace huqiang.UI
 {
+    public class AssociatedInstance
+    {
+        public Int32 id;
+        public ModelElement target;
+    }
     public unsafe struct ElementData
     {
         public Int64 type;
@@ -27,6 +32,7 @@ namespace huqiang.UI
         public ScaleType scaleType;
         public AnchorType anchorType;
         public MarginType marginType;
+        public Vector2 anchorOffset;
         public AnchorPointType anchorpointType;
         public ParentType parentType;
         public Margin margin;
@@ -40,10 +46,11 @@ namespace huqiang.UI
         /// </summary>
         public Int32 child;
         public Int32 ex;
+        public Int32 instanceID;
         public static int Size = sizeof(ElementData);
         public static int ElementSize = Size / 4;
     }
-    public class ModelElement : DataConversion,UITransform
+    public class ModelElement : DataConversion
     {
         public static Coordinates GetGlobaInfo(ModelElement rect, bool Includeroot = true)
         {
@@ -100,7 +107,6 @@ namespace huqiang.UI
         {
             var mod = new ModelElement();
             mod.name = name;
-       
             return mod;
         }
         public ModelElement()
@@ -131,7 +137,7 @@ namespace huqiang.UI
         public RectTransform Context;
         public GameObject Main;
         public Coloring ColorController;
-        public GraphicE graphic;
+        public Action updating;
         public int regIndex;
         public ElementData data;
         public string name;
@@ -148,6 +154,7 @@ namespace huqiang.UI
         public List<DataConversion> components = new List<DataConversion>();
         public List<ModelElement> child = new List<ModelElement>();
         bool parentChanged;
+        internal Int64 EnityType = 1;
         public virtual void SetParent(ModelElement element)
         {
             if (element == this)
@@ -207,6 +214,52 @@ namespace huqiang.UI
             }
             return null;
         }
+        unsafe public void Clone(FakeStruct fake,List<AssociatedInstance> table)
+        {
+            data = *(ElementData*)fake.ip;
+            ModData = fake;
+            var buff = fake.buffer;
+            Int16[] coms = buff.GetData(data.coms) as Int16[];
+            if (coms != null)
+            {
+                for (int i = 0; i < coms.Length; i++)
+                {
+                    int index = coms[i];
+                    i++;
+                    int type = coms[i];
+                    var fs = buff.GetData(index) as FakeStruct;
+                    var dc = ModelManagerUI.Load(type);
+                    if (dc != null)
+                    {
+                        dc.model = this;
+                        if (fs != null)
+                            dc.Load(fs);
+                        components.Add(dc);
+                        if (dc.Entity)
+                            EnityType |= ((long)1 << type);
+                    }
+                }
+            }
+            Int16[] chi = fake.buffer.GetData(data.child) as Int16[];
+            if (chi != null)
+                for (int i = 0; i < chi.Length; i++)
+                {
+                    var fs = buff.GetData(chi[i]) as FakeStruct;
+                    if (fs != null)
+                    {
+                        ModelElement model = new ModelElement();
+                        model.Clone(fs,table);
+                        child.Add(model);
+                        model.parent = this;
+                        AssociatedInstance instance = new AssociatedInstance();
+                        instance.id = model.data.instanceID;
+                        instance.target = model;
+                        table.Add(instance);
+                    }
+                }
+            name = buff.GetData(data.name) as string;
+            tag = buff.GetData(data.tag) as string;
+        }
         unsafe public override void Load(FakeStruct fake)
         {
             data = *(ElementData*)fake.ip;
@@ -228,6 +281,8 @@ namespace huqiang.UI
                         if (fs != null)
                             dc.Load(fs);
                         components.Add(dc);
+                        if (dc.Entity)
+                            EnityType |= ((long)1 << type);
                     }
                 }
             }
@@ -297,6 +352,7 @@ namespace huqiang.UI
             ed->offsetMin = trans.offsetMin;
             ed->pivot = trans.pivot;
             ed->sizeDelta = trans.sizeDelta;
+            ed->instanceID = trans.GetInstanceID();
             ed->name = buffer.AddData(trans.name);
             ed->tag = buffer.AddData(trans.tag);
             var coms = com.GetComponents<Component>();
@@ -313,8 +369,9 @@ namespace huqiang.UI
                         ed->SizeScale = true;
                         ed->scaleType = ss.scaleType;
                         ed->anchorType = ss.anchorType;
-                        ed->marginType = ss.marginType;
                         ed->anchorpointType = ss.anchorPointType;
+                        ed->anchorOffset = ss.anchorOffset;
+                        ed->marginType = ss.marginType;
                         ed->parentType = ss.parentType;
                         ed->margin = ss.margin;
                         ed->DesignSize = ss.DesignSize;
@@ -332,6 +389,27 @@ namespace huqiang.UI
                             tmp.Add((Int16)buffer.AddData(fs));
                             tmp.Add(type);
                         }
+#if UNITY_EDITOR
+                        else if (com.name != "Canvas")
+                        {
+                            var t= com.transform;
+                            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                            for (int j = 0; j < 32; j++)
+                            {
+                                if (t.parent == null)
+                                {
+                                    sb.Insert(0, t.name);
+                                    break;
+                                }
+                                else
+                                {
+                                    sb.Insert(0, "/" + t.name);
+                                }
+                                t = t.parent;
+                            }
+                            Debug.Log(sb.ToString());
+                        }
+#endif
                     }
                 }
             }
@@ -387,7 +465,6 @@ namespace huqiang.UI
             switch (dock)
             {
                 case ScaleType.None:
-                    rect.data.localScale = Vector3.one;
                     break;
                 case ScaleType.FillX:
                     float sx = pSize.x / ds.x;
@@ -418,10 +495,10 @@ namespace huqiang.UI
             switch(type)
             {
                 case AnchorType.Anchor:
-                    AnchorEx(ele, ele.data.anchorpointType, new Vector2(ele.data.margin.left, ele.data.margin.right), p, psize);
+                    AnchorEx(ele, ele.data.anchorpointType, ele.data.anchorOffset, p, psize);
                     break;
                 case AnchorType.Alignment:
-                    AlignmentEx(ele, ele.data.anchorpointType, new Vector2(ele.data.margin.left, ele.data.margin.right), p, psize);
+                    AlignmentEx(ele, ele.data.anchorpointType, ele.data.anchorOffset, p, psize);
                     break;
             }
         }
@@ -578,11 +655,24 @@ namespace huqiang.UI
                 ScaleSize(child[i]);
             }
         }
+        public static void ScaleSize(ModelElement element,int level)
+        {
+            if (element.data.SizeScale)
+            {
+                Resize(element);
+                if (element.SizeChanged != null)
+                    element.SizeChanged(element);
+                element.IsChanged = true;
+            }
+            level--;
+            if (level > 0)
+            {
+                var child = element.child;
+                for (int i = 0; i < child.Count; i++)
+                    ScaleSize(child[i], level);
+            }
+        }
         #endregion
-        /// <summary>
-        /// 当此物体为非实体时,不予创建GameObject
-        /// </summary>
-        public bool Entity = true;
         /// <summary>
         /// 自动回收
         /// </summary>
@@ -612,12 +702,15 @@ namespace huqiang.UI
             }
             baseEvent = EventCallBack.RegEvent<T>(this);
         }
-        public void VertexCalculation()
+        public void Update()
         {
-            if (graphic != null)
-                graphic.VertexCalculation();
-            for (int i = 0; i < child.Count; i++)
-                child[i].VertexCalculation();
+            if(_active)
+            {
+                if (updating != null)
+                    updating();
+                for (int i = 0; i < child.Count; i++)
+                    child[i].Update();
+            }
         }
         public override void Apply()
         {
@@ -627,7 +720,7 @@ namespace huqiang.UI
                 {
                     if (Context == null)
                     {
-                        var obj = ModelManagerUI.CreateNew(data.type);
+                        var obj = ModelManagerUI.CreateNew(EnityType);
                         if (obj != null)
                             LoadToObject(obj.transform);
                     }
@@ -660,7 +753,8 @@ namespace huqiang.UI
                         var com = components[i];
                         if (com != null)
                         {
-                            com.Apply();
+                            if (com.Entity)
+                                com.Apply();
                         }
                     }
                     for (int i = 0; i < child.Count; i++)

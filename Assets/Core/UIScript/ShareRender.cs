@@ -12,29 +12,25 @@ public class ShareRender:MonoBehaviour
     MeshFilter filter;
     MeshRenderer render;
     Mesh mesh;
-    public List<ShareElement> elements = new List<ShareElement>();
+    public List<ShareChild3D> Child = new List<ShareChild3D>();
     public Texture2D texture;
     public string textureName;
-    private void Initial()
+    private void Awake()
     {
         filter = GetComponent<MeshFilter>();
         render = GetComponent<MeshRenderer>();
         mesh = filter.mesh;
         render.material = new Material(Shader.Find("UI/Default"));
-        if (texture != null)
+        if(texture!=null)
         {
             textureName = texture.name;
             render.material.mainTexture = texture;
         }
     }
-    private void Awake()
-    {
-        Initial();
-    }
-    public List<Vector3> Vertex = new List<Vector3>();
-    public List<Vector2> UV = new List<Vector2>();
-    public List<Color> Colors = new List<Color>();
-    public List<int> Tri = new List<int>();
+    List<Vector3> Vertex = new List<Vector3>();
+    List<Vector2> UV = new List<Vector2>();
+    List<Color> Colors = new List<Color>();
+    List<int> Tri = new List<int>();
     public Vector3 Position;
     public void VertexCalculation()
     {
@@ -42,8 +38,8 @@ public class ShareRender:MonoBehaviour
         List<Vector2> uv = new List<Vector2>();
         List<Color> colors = new List<Color>();
         List<int> tri = new List<int>();
-        for (int i = 0; i < elements.Count; i++)
-            elements[i].GetUVInfo(vert,uv,colors, tri, Vector3.zero, Quaternion.identity, Vector3.one);
+        for (int i = 0; i < Child.Count; i++)
+            Child[i].GetUVInfo(vert,uv,colors, tri, Vector3.zero, Quaternion.identity, Vector3.one);
         Vertex = vert;
         UV = uv;
         Colors = colors;
@@ -56,8 +52,8 @@ public class ShareRender:MonoBehaviour
         List<Vector2> uv = new List<Vector2>();
         List<Color> colors = new List<Color>();
         List<int> tri = new List<int>();
-        for (int i = 0; i < elements.Count; i++)
-            elements[i].GetUVInfo(vert, uv, colors, tri, Vector3.zero, Quaternion.identity, Vector3.one);
+        for (int i = 0; i < Child.Count; i++)
+            Child[i].GetUVInfo(vert, uv, colors, tri, Vector3.zero, Quaternion.identity, Vector3.one);
         Vertex = vert;
         UV = uv;
         Colors = colors;
@@ -65,8 +61,6 @@ public class ShareRender:MonoBehaviour
     }
     public void Aplly()
     {
-        if (mesh == null)
-            Initial();
         mesh.triangles = null;
         if (Vertex == null)
             return;
@@ -88,11 +82,11 @@ public enum CollisionType
 {
     None, Circle, Rectangle, Polygon
 }
-public class ShareElement
+public class ShareChild3D
 {
     public object DataContext;
     public bool activeSelf = true;
-    public List<ShareElement> Child = new List<ShareElement>();
+    public List<ShareChild3D> Child = new List<ShareChild3D>();
     public ShareRender Render;
     public Vector3 localPosition;
     public Vector3 localScale = Vector3.one;
@@ -345,7 +339,7 @@ public class ShareElement
 }
 public class ElementCollider
 {
-    public ShareElement Target;
+    public ShareChild3D Target;
     public Vector3 Position;
     public CollisionType collisionType;
     public float Radius;

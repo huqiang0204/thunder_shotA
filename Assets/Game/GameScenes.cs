@@ -55,7 +55,6 @@ namespace Assets.Game
             BulletManager.Update(delta);
             EffectManager.Update(delta);
             PropsManager.Update(delta);
-            root.VertexCalculation();
         }
         public static void Dispose()
         {

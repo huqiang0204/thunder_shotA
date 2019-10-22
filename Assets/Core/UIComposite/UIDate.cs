@@ -11,7 +11,7 @@ namespace huqiang.UIComposite
     {
         class ItemView
         {
-            public TextElement Item;
+            public ShareTextChildElement Item;
         }
         ModelElement model;
         EventCallBack callBack;
@@ -71,10 +71,11 @@ namespace huqiang.UIComposite
         public override void Initial(ModelElement mod)
         {
             model = mod;
-            var y= model.Find("Year");
+            var mask = model.Find("mask");
+            var y= mask.Find("Year");
             Year = new ScrollY();
             Year.Initial(y);
-            Year.SetItemUpdate<ItemView,int>((o,e,i)=> { o.Item.text = e.ToString(); });
+            Year.SetItemUpdate<ItemView,int>((o,e,i)=> { o.Item.text = e.ToString()+unitY; });
             Year.Scroll = Scrolling;
             Year.ScrollEnd = YearScrollToEnd;
             Year.ItemDockCenter = true;
@@ -82,10 +83,10 @@ namespace huqiang.UIComposite
             Year.eventCall.boxSize = new Vector2(120,160);
             Year.eventCall.UseAssignSize = true;
 
-            var m = model.Find("Month");
+            var m = mask.Find("Month");
             Month = new ScrollY();
             Month.Initial(m);
-            Month.SetItemUpdate<ItemView,string>((o,e,i)=> { o.Item.text = e; });
+            Month.SetItemUpdate<ItemView,string>((o,e,i)=> { o.Item.text = e+unitM; });
             Month.Scroll = Scrolling;
             Month.ScrollEnd = MonthScrollToEnd;
             Month.ItemDockCenter = true;
@@ -93,10 +94,10 @@ namespace huqiang.UIComposite
             Month.eventCall.boxSize = new Vector2(120, 160);
             Month.eventCall.UseAssignSize = true;
 
-            var d = model.Find("Day");
+            var d = mask.Find("Day");
             Day = new ScrollY();
             Day.Initial(d);
-            Day.SetItemUpdate<ItemView, string>((o,e,i)=> { o.Item.text = e; });
+            Day.SetItemUpdate<ItemView, string>((o,e,i)=> { o.Item.text = e+unitD; });
             Day.Scroll = Scrolling;
             Day.ScrollEnd = DayScrollToEnd;
             Day.ItemDockCenter = true;

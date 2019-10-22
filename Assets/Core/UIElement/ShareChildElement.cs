@@ -26,6 +26,7 @@ namespace huqiang.UI
         public string spriteName;
 
         public Color color { get => data.color; set => data.color = value; }
+        public override ModelElement model { get => base.model; set { base.model = value; value.ColorController = this; } }
         UIVertex[] buff = new UIVertex[4];
         Vector2[] uvs = new Vector2[4];
         public override void Reset()
@@ -133,7 +134,7 @@ namespace huqiang.UI
         }
         public static unsafe FakeStruct LoadFromObject(Component com, DataBuffer buffer)
         {
-            var share = com as ShareChild;
+            var share = com as ShareImageChild;
             if (share == null)
                 return null;
             FakeStruct fake = new FakeStruct(buffer, ShareChildData.ElementSize);
