@@ -46,12 +46,12 @@ namespace Assets.Page
             if (level > 1)
             {
                 item.icon.forbid = true;
-                img.SetSprite("lock1","lock1");
+                img.SetSprite("Icon_Locked","icons");
             }
             else
             {
                 item.icon.forbid = false;
-                img.SetSprite("lock", "lock");
+                img.SetSprite("Btn_sci-fi button02_n", "scientific");
             }
         }
         void ItemClick(EventCallBack eve,UserAction action)
